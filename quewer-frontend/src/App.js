@@ -1,23 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import QuestionCard from './components/question-card/question-card';
+
+const tagsArray = ['stackoverflow', 'Crystal', 'C#', 'Visual studio']
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <QuestionCard postedBy='Anonymous' on='19/02/2021 12:12pm' tags={tagsArray} question='Crystal Report Does not Render' desc="I installed the Visual Studio 2019 in Other Driver Not In C, and crystal report installed in C. Now, project attached the crystal reports dll's but did not render. Is their any issue due to different path installation?" />
     </div>
   );
 }
