@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "15.9.x"
+    "node": "15.9.x",
+    "npm":"7.5.x"
   },
   "main": "server/index.js",
   "dependencies": {
@@ -23,7 +24,8 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
+    "start:dev": "nodemon server",
     "build": "cd quewer-frontend/ && npm install && npm run build",
     "frontend": "cd quewer-frontend/ && npm start",
     "test": "nodemon --exec 'mocha ./test/ --recursive'",
