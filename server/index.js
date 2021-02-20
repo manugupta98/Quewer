@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const mongoose = require('mongoose');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
@@ -25,6 +26,16 @@ if (!isDev && cluster.isMaster) {
   });
 
 } else {
+
+  var uri = process.env.DB_URI;
+
+  connection = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+  mongoose.connection.on('error', (err) => {
+    console.log(err);
+  })
+
+  const db = mongoose.connection;
+
   const app = express();
   app.use(cors({ origin: true, credentials: true }));
 
