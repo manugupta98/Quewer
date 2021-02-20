@@ -1,5 +1,4 @@
 import React from "react";
-// import displayCardImage from "../../assets/display_card.jpg";
 import Button from "../Button/Button";
 import InfoDisplay from "../InfoDisplay/InfoDisplay";
 import "./DisplayCard.css";
@@ -10,7 +9,6 @@ export default function DisplayCard() {
       <div className="row float-top">
         <div className="card bg-white text-white">
           <div id="grad"> </div>
-          {/* <img src={displayCardImage} class="card-img" id=  alt="Display Card"></img> */}
           <div className="card-img-overlay cardContent">
             <h5 className="card-title"> Card title </h5>
             <p className="card-text">
@@ -33,7 +31,7 @@ export default function DisplayCard() {
             </div>
             <div className="container">
               <div className="row">
-                <div class="mt-4 col-md-12"> </div>
+                <div className="mt-4 col-md-12"> </div>
               </div>
             </div>
             <div className="container-fluid float-left">

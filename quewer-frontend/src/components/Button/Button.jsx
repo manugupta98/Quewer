@@ -4,7 +4,7 @@ export class Button extends Component {
     render() {
         return (
             <div>
-                <button type="button" class="btn btn-primary text-left text-nowrap">{this.props.value}</button> 
+                <button type="button" className="btn btn-primary text-left text-nowrap">{this.props.value}</button> 
             </div>
         )
     }
