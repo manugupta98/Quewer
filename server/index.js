@@ -57,6 +57,7 @@ if (!isDev && cluster.isMaster) {
     });
   }
   ));
+
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
@@ -81,8 +82,9 @@ if (!isDev && cluster.isMaster) {
   app.use(express.static(path.resolve(__dirname, '../quewer-frontend/build')));
 
   // Answer API requests.
-  app.use("./api", userRouter);
-  app.use("./api", authRouter);
+
+  app.use("/api", userRouter);
+  app.use("/api", authRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
