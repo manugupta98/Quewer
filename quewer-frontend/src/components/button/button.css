@@ -1,0 +1,12 @@
+.self-button {
+    font-size: 15px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+}
+
+.self-button:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.4); 
+}
