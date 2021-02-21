@@ -1,0 +1,34 @@
+@import '../Global.css';
+
+.SideBar {
+    background-color: blueviolet;
+    max-width: 12%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 var(--largeRadius) var(--largeRadius) 0;
+    height: 100vh;
+    justify-content: flex-start;
+}
+
+.SideBar > * {
+    margin: var(--midGap) var(--smallestGap);
+    font-weight: bold;
+    color: white;
+    width: 90%;
+}
+
+#enrollButton {
+    transition: transform 0.5s;
+    font-size: 16px;
+    width: 80%;
+    background-color: antiquewhite;
+    border-radius: var(--smallRadius);
+    color: blueviolet;
+}
+#enrollButton:hover {
+    transform: scale(1.1);
+}
+#enrollButton:active {
+    background-color: black;
+    color: white;
+}
