@@ -1,8 +1,8 @@
 import React from 'react';
 import { FaCheckCircle } from "react-icons/fa";
-import Button from '../button/button';
-import Description from '../description/description';
-import './course-enroll-card.css';
+import Button from './button';
+import Description from './description';
+import '../style/course-enroll-card.css';
 
 class CourseEnrollCard extends React.Component {
     constructor(props) {

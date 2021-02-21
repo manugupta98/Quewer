@@ -1,9 +1,9 @@
 import React from 'react';
-import './question-card.css';
-import Description from '../description/description';
-import Tag from '../tag/tag';
-import QFooter from '../q-footer/q-footer';
-import UpvoteBookmark from '../upvote-bookmark/upvote-bookmark';
+import '../style/question-card.css';
+import Description from './description';
+import Tag from './tag';
+import QFooter from './q-footer';
+import UpvoteBookmark from './upvote-bookmark';
 
 class QuestionCard extends React.Component {
     render() {

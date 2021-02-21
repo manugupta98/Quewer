@@ -1,5 +1,5 @@
 import React from 'react';
-import './q-footer.css';
+import '../style/q-footer.css';
 
 class QFooter extends React.Component {
     render() {

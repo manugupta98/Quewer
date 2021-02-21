@@ -1,5 +1,5 @@
 import React from 'react';
-import './upvote-bookmark.css';
+import '../style/upvote-bookmark.css';
 import { FaCaretSquareUp, FaBookmark, FaCaretSquareDown } from 'react-icons/fa';
 
 class UpvoteBookmark extends React.Component {

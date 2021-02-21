@@ -1,0 +1,15 @@
+@import '../Global.css';
+
+li {
+    margin: 0 0 var(--midGap) 0;
+    transition: transform 0.2s;
+}
+
+li:hover {
+    transform: scale(1.1);
+}
+
+.Selected {
+    color: orange;
+    transform: scale(1.1);
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import CourseEnrollCard from '../course-enroll-card/course-enroll-card';
-import QuestionCard from '../question-card/question-card';
+import CourseEnrollCard from './course-enroll-card';
+import QuestionCard from './question-card';
 
 class CardList extends React.Component {
 
