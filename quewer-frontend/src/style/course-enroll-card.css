@@ -1,0 +1,46 @@
+.course-enroll-card {
+    display: flex;
+    width: 80%;
+    height: 100%;
+    margin: 10px auto 5px auto;
+    flex-direction: row;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow: hidden;
+    transition: all 0.7s ease-in-out;
+}
+
+.course-enroll-card:hover {
+    transform: scale(1.05);
+}
+
+.course {
+    flex: 9;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    font-size: 30px;
+    font-weight: 600;
+    width:100%;
+}
+
+.course-name {
+    margin: 5px 10px;
+}
+
+.status {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+.status div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,19 @@
+.upvote-bookmark {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+}
+
+.upvote-bookmark div {
+    text-align: center;
+}
+
+.count {
+    margin: 5px auto;
+}
+
+.fa-icon:hover {
+    cursor: pointer;
+}
