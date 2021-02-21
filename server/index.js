@@ -50,10 +50,11 @@ if (!isDev && cluster.isMaster) {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://quewer-bits.herokuapp.com/auth/google/callback"
+    callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    console.log("passport access");
+    User.create({ googleId: profile.id }, function (err, user) {
       return done(err, user);
     });
   }
