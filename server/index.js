@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
+const courseRouter = require('./api/routes/course');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
@@ -68,7 +69,6 @@ if (!isDev && cluster.isMaster) {
     });
   });
 
-
   const app = express();
   app.use(require('serve-static')(__dirname + '/../../public'));
   app.use(require('cookie-parser')());
@@ -85,6 +85,7 @@ if (!isDev && cluster.isMaster) {
 
   app.use("/api", userRouter);
   app.use("/api", authRouter);
+  app.use("/api", courseRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
