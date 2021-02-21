@@ -4,7 +4,7 @@
   "description": "",
   "engines": {
     "node": "15.9.x",
-    "npm":"7.5.x"
+    "npm": "7.5.x"
   },
   "main": "server/index.js",
   "dependencies": {

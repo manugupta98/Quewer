@@ -12,7 +12,7 @@ function App() {
       </div>
       <div className="LoginCard FlexCard ColumnCard">
         <h3>{loginPhrase}</h3>
-        <button id="loginButton">Login using Google</button>
+        <a /*onClick = {req}*/ href="http://localhost:5000/api/auth/google">Login using Google</a>
       </div>
     </div>
   );
