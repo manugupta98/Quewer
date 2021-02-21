@@ -1,20 +1,19 @@
-import '../style/App.css';
-import '../Global.css'
-import {quotes, loginPhrase} from '../GlobalVariables'
-import logo from '../views/logo.png'
+import { Route, Switch } from 'react-router-dom';
+import HomePage from './pages/homepage';
+import AboutPage from './pages/about';
 
 function App() {
   return (
-    <div className="App FlexCard RowCard">
-      <div className="QuoteCard FlexCard ColumnCard">
-        <h1>{quotes}</h1>
-        <img src={logo} alt="Quewer Logo" id="logoImage"></img>
-      </div>
-      <div className="LoginCard FlexCard ColumnCard">
-        <h3>{loginPhrase}</h3>
-        <a /*onClick = {req}*/ href="http://localhost:5000/api/auth/google">Login using Google</a>
-      </div>
-    </div>
+
+  <div>
+      <Switch>
+    <Route exact path='/' component={HomePage} />
+    <Route exact path='/about' component={AboutPage} />
+    {/* <Route path='/about' component={AboutPage} />
+    <Route path='/product' component={ProductPage} />
+    <Route path='/contact' component={ContactPage} /> */}
+  </Switch>
+  </div>
   );
 }
 

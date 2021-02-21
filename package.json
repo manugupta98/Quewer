@@ -16,6 +16,7 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.11.16",
     "passport": "^0.4.1",
+    "react-router-dom": "^5.2.0",
     "validator": "^13.5.2"
   },
   "devDependencies": {
