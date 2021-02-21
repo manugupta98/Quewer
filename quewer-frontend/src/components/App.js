@@ -1,6 +1,6 @@
 import './style/App.css';
 import './Global.css'
-import {quotes, loginPhrase} from './GlobalVariables'
+import {quotes, loginPhrase} from '../GlobalVariables'
 import logo from './views/logo.png'
 
 function App() {
