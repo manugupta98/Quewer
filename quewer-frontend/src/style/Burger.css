@@ -1,0 +1,8 @@
+.BurgerLine {
+    width: 1.5rem;
+    height: 0.25rem;
+    border-radius: 5px;
+    transition: all 0.3s linear;
+    margin: 2px 0;
+    background-color: black;
+}
