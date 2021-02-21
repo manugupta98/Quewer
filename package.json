@@ -2,23 +2,32 @@
   "name": "quewer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "engines": {
+    "node": "15.9.x",
+    "npm":"7.5.x"
+  },
+  "main": "server/index.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-errors": "^1.8.0",
     "lodash": "^4.17.20",
     "mongoose": "^5.11.16",
-    "validator": "^13.5.2",
-    "body-parser": "^1.19.0",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
     "enzyme": "^3.11.0",
+    "jest": "26.6.0",
     "nodemon": "^2.0.4"
   },
   "scripts": {
+    "start": "node server",
+    "start:dev": "nodemon server",
+    "build": "cd quewer-frontend/ && npm install && npm run build",
+    "frontend": "cd quewer-frontend/ && npm start",
     "test": "nodemon --exec 'mocha ./test/ --recursive'",
     "test-file": "nodemon --exec 'mocha --recursive'"
   },
