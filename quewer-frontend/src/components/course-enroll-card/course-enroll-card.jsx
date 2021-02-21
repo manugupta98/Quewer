@@ -25,8 +25,8 @@ class CourseEnrollCard extends React.Component {
             <div className='course-enroll-card'>
                 <div className='course'>
                     <p className='course-name'>{ this.props.course }</p>
-                    <hr />
-                    <Description>{ this.props.desc }</Description>
+                    { (this.props.desc) ? <hr /> : null }
+                    { (this.props.desc) ? <Description>{ this.props.desc }</Description> : null }
                 </div>
                 <div className='status'>
                     { 
