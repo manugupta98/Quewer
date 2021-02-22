@@ -1,0 +1,28 @@
+ .DisplayCard {
+    display: flex;
+    flex-flow: column;
+    margin: 0 0 20px 0;
+    padding: 20px 50px;
+    color: white;
+    background-color: blue;
+}
+
+.QuestionStats, .ButtonsRow {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.QuestionStats {
+    margin: 40px 0;
+}
+
+.QuestionData {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.QuestionData, .Buttons {
+    margin: 0 40px;
+}

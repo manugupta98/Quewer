@@ -1,0 +1,31 @@
+.navbar {
+    height: 10vh;
+    margin: 0 20px;
+}
+.navbar, .user-nav {
+    display: flex;
+    align-items: center;
+}
+
+.user-nav {
+    justify-content: end;
+}
+
+.appbarTitle {
+    margin-right: auto;
+}
+.appbarTitle, .colorText {
+    font-size: 30px;
+    font-weight: bolder;
+}
+.colorText {
+    color:aqua;
+}
+.avatar {
+    height: 50px;
+    border-radius: 50%;
+}
+.userName {
+    font-weight: bolder;
+    font-size: large;
+}

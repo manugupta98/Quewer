@@ -1,0 +1,11 @@
+.desc {
+    flex: 1;
+    width: 100%;
+}
+
+.text {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    font-size: 15px;
+}
