@@ -4,6 +4,14 @@
     font-weight: bold;
 }
 
+.App {
+    background: linear-gradient(to top, pink, purple);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+}
+
 .QuoteCard, .LoginCard {
     border-radius: var(--largeRadius);
     box-shadow: var(--inactiveShadow);

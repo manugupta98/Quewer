@@ -30,6 +30,7 @@
     width: 100%;
 }
 .user-nav {
+    display: block;
     float: right;
     margin-right: 20px;
 }

@@ -8,7 +8,6 @@
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;
-    transition: all 0.7s ease-in-out;
     background-color: white;
 }
 
@@ -23,8 +22,4 @@
 .q-question {
     flex: 8;
     width: 100%;
-}
-
-.q-card-main:hover {
-    transform: scale(1.05);
 }

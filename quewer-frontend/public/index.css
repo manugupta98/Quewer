@@ -2,9 +2,3 @@ html, body {
     margin: 0;
     padding: 0;
 }
-body {
-    background: linear-gradient(to top, pink, purple);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-}

@@ -5,8 +5,7 @@
     max-width: 12%;
     margin: 0;
     padding: 0;
-    border-radius: 0 var(--largeRadius) var(--largeRadius) 0;
-    height: 100vh;
+    border-radius: 0;
     justify-content: flex-start;
     flex: 2;
     height: 100vh;
@@ -27,6 +26,8 @@
     border-radius: var(--smallRadius);
     color: blueviolet;
     cursor: pointer;
+    display: block;
+    margin: auto;
 }
 #enrollButton:hover {
     transform: scale(1.1);

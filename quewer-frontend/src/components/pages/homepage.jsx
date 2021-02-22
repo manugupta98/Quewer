@@ -14,7 +14,7 @@ class HomePage extends React.Component {
             </div>
             <div className="LoginCard FlexCard ColumnCard">
               <h3>{loginPhrase}</h3>
-              <a /*onClick = {req}*/ href="http://localhost:5000/api/auth/google">Login using Google</a>
+              <button id="loginButton" /*onClick = {req}*/ href="http://localhost:5000/api/auth/google">Login using Google</button>
             </div>
           </div>
         );

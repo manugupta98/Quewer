@@ -20,8 +20,8 @@ const handleClick = () => {
 export default function SideBar() {
     return (
         <div className="SideBar FlexCard ColumnCard">
-            <FaBars style={{ fontSize:'20px', position:'relative', right:'40px' }} />
-            <Link to='/enroll'><button id="enrollButton">Enroll New Courses</button></Link>
+            <FaBars style={{ fontSize:'20px', position:'relative', right:'80px' }} />
+            <Link to="/enroll"><button id="enrollButton">Enroll New Courses</button></Link>
             <hr></hr>
             <h2>Your Courses:</h2>
             <CourseList onClick={handleClick}></CourseList>
