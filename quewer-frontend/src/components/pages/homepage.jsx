@@ -16,7 +16,6 @@ class HomePage extends React.Component {
               <h3>{loginPhrase}</h3>
               <a /*onClick = {req}*/ href="http://localhost:5000/api/auth/google">Login using Google</a>
             </div>
-      
           </div>
         );
     }

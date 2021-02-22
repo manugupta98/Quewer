@@ -3,6 +3,7 @@
 li {
     margin: 0 0 var(--midGap) 0;
     transition: transform 0.2s;
+    cursor: pointer;
 }
 
 li:hover {

@@ -1,18 +1,17 @@
 import { Route, Switch } from 'react-router-dom';
 import HomePage from './pages/homepage';
-import AboutPage from './pages/about';
+import MainPage from './pages/main';
+import EnrollPage from './pages/enroll'
 
 function App() {
   return (
 
   <div>
-      <Switch>
-    <Route exact path='/' component={HomePage} />
-    <Route exact path='/about' component={AboutPage} />
-    {/* <Route path='/about' component={AboutPage} />
-    <Route path='/product' component={ProductPage} />
-    <Route path='/contact' component={ContactPage} /> */}
-  </Switch>
+    <Switch>
+      <Route exact path='/' component={HomePage} />
+      <Route exact path='/main' component={MainPage} />
+      <Route path='/enroll' component={EnrollPage} />
+    </Switch>
   </div>
   );
 }

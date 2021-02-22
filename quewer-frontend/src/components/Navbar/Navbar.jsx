@@ -5,23 +5,15 @@ import avatarImage from "../../assets/avatar.png";
 class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-light navbar-expand bg-light">
-        <div className="container-fluid">
+        <div className="navbar">
           <h2 className="appbarTitle">
             Que<span className="colorText">wer</span>
           </h2>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-                <p className="userName">{this.props.username}</p>
-            </li>
-            <li className="nav-item">
-              <a href="#">
-                <img src={avatarImage} alt="Avatar" class="avatar"></img>
-              </a>
-            </li>
-          </ul>
+          <div className='user-nav'>
+            <p className="userName">{this.props.username}</p>
+            <img src={avatarImage} alt="Avatar" className="avatar"></img>
+          </div>
         </div>
-      </nav>
     );
   }
 }

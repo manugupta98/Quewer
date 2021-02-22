@@ -8,6 +8,8 @@
     border-radius: 0 var(--largeRadius) var(--largeRadius) 0;
     height: 100vh;
     justify-content: flex-start;
+    flex: 2;
+    height: 100vh;
 }
 
 .SideBar > * {
@@ -24,6 +26,7 @@
     background-color: antiquewhite;
     border-radius: var(--smallRadius);
     color: blueviolet;
+    cursor: pointer;
 }
 #enrollButton:hover {
     transform: scale(1.1);

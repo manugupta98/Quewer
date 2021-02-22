@@ -6,17 +6,30 @@
     margin-top: 5px;
 }
 .appbarTitle {
-    flex-grow: '1';
+    width: fit-content;
+    display: inline;
+    margin-left: 20px;
+    margin-right: 0;
+    position: relative;
+    font-size: 30px;
+    top: 30px;
 }
 .colorText {
     color:aqua;
 }
-li {
-    margin-right: 20px;
-}
 .userName {
-    margin-top: 20px;
-    margin-right: 20px;
+    margin: 0;
     font-weight: bolder;
     font-size: large;
+    top: 30px;
+    /* position: relative; */
+}
+.navbar {
+    background-color: white;
+    height: 10vh;
+    width: 100%;
+}
+.user-nav {
+    float: right;
+    margin-right: 20px;
 }
