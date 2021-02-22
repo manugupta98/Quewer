@@ -49,13 +49,14 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics.findOrCreate = function(filter){
     return new Promise((resolve, reject) => {
-        this.findOne(filter).then((user) => {
+        this.findOne({googleId: filter.googleId}).then((user) => {
             if (user){
                 resolve(user);
+            }else{
+                this.create(filter).then((user) => {
+                    resolve(user);
+                })
             }
-            this.create(user).then((user) => {
-                resolve(user);
-            })
         }).catch((err) => {
             reject(err);
         })

@@ -62,8 +62,10 @@ if (!isDev && cluster.isMaster) {
       displayName: profile.displayName,
       name: profile.name,
       photos: profile.photos,
-    }, function (err, user) {
-      return done(err, user);
+    }).then((user) => {
+      return done(null, user);
+    }).catch((err) => {
+      return donr(err, null);
     });
   }
   ));
