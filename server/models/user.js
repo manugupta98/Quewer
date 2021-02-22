@@ -53,8 +53,8 @@ userSchema.statics.findOrCreate = function(filter){
             if (user){
                 resolve(user);
             }else{
-                this.create(filter).then((user) => {
-                    resolve(user);
+                this.create(filter).then((newUser) => {
+                    resolve(newUser);
                 })
             }
         }).catch((err) => {

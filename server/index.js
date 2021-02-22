@@ -38,11 +38,7 @@ if (!isDev && cluster.isMaster) {
 
   var uri = process.env.DB_URI;
 
-  let db;
-
-  mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).then((conn) => {
-    db = mongoose.connection;
-  }).catch((err) => {
+  mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
     console.error(err);
   })
 
@@ -54,9 +50,6 @@ if (!isDev && cluster.isMaster) {
     callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log('accesse tooken', accessToken);
-    // console.log(refrehToken);
-    console.log(profile);
     User.findOrCreate({
       googleId: profile.id,
       displayName: profile.displayName,
@@ -84,7 +77,6 @@ if (!isDev && cluster.isMaster) {
   app.use(require('serve-static')(__dirname + '/../../public'));
   app.use(require('cookie-parser')());
   app.use(cors({ origin: true, credentials: true, }));
-  // app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
   app.use(passport.initialize());
