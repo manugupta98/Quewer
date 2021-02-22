@@ -2,7 +2,8 @@
 
 .SideBar {
     background-color: blueviolet;
-    max-width: 12%;
+    max-width: 200px;
+    min-width: 200px;
     margin: 0;
     padding: 0;
     border-radius: 0;

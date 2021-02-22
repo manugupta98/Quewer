@@ -1,7 +1,7 @@
 import React from 'react';
 import CardList from '../card-list';
 import CourseEnrollCard from '../course-enroll-card';
-import Page from './page';
+import Page from './Page';
 
 const array = [
     {

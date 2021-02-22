@@ -1,7 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
-import HomePage from './pages/homepage';
-import MainPage from './pages/main';
-import EnrollPage from './pages/enroll'
+import HomePage from './pages/HomePage';
+import MainPage from './pages/MainPage';
+import EnrollPage from './pages/EnrollPage'
 
 function App() {
   return (
