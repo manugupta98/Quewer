@@ -1,0 +1,139 @@
+:root {
+    --largeRadius: 30px;
+    --midRadius: 24px;
+    --smallRadius: 16px;
+    --smallestRadius: 10px;
+
+    /* For Padding or Margin */
+    --biggestGap: 30px;
+    --bigGap: 20px;
+    --midGap: 15px;
+    --smallGap: 10px;
+    --smallestGap: 6px;
+
+
+    --inactiveShadow:
+        4px 4px 8px 0 rgba(0, 0, 0, 0.5),
+        -2px -2px 6px 0 rgba(255, 255, 255, 0.5);
+    --activeShadow:
+        inset 6px 6px 8px rgba(0, 0, 0, 0.5),
+        inset -4px -4px 6px rgba(255, 255, 255, 0.5);
+        color: rgba(0, 0, 0, 0.8);
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.FlexCard {
+    display: flex;
+    margin: var(--bigGap);
+    align-items: center;
+    justify-content: space-evenly;
+    transition: all 0.5s;
+    animation: card-launch 1s linear;
+}
+@keyframes card-launch{
+    0% {
+        transform: scale(0.8);
+    } 80% {
+        transform: scale(1.02);
+    } 100% {
+        transform: scale(1);
+    }
+}
+
+
+.RowCard {
+    flex-flow: row wrap;
+}
+
+.ColumnCard {
+    flex-flow: column;
+}
+
+button {
+    padding: var(--smallestGap) var(--smallGap);
+    outline: none;
+    border: none;
+}
+
+hr {
+    width: 100%;
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0; 
+}
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 450px) and (max-width: 700px) {
+    :root {
+        --largeRadius: 24px;
+        --midRadius: 18px;
+        --smallRadius: 12px;
+        --smallestRadius: 8px;
+
+        --biggestGap: 24px;
+        --bigGap: 18px;
+        --midGap: 12px;
+        --smallGap: 8px;
+        --smallestGap: 4px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    h2 {
+        font-size: 1.17em;
+    }
+    h3 {
+        font-size: 1em;
+    }
+    h4 {
+        font-size: 0.83em;
+    }
+    h5 {
+        font-size: 0.67em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    :root {
+        --largeRadius: 18px;
+        --midRadius: 14px;
+        --smallRadius: 10px;
+        --smallestRadius: 6px;
+
+        --biggestGap: 18px;
+        --bigGap: 14px;
+        --midGap: 10px;
+        --smallGap: 6px;
+        --smallestGap: 2px;
+    }
+    h1 {
+        font-size: 1.2em;
+    }
+    h2 {
+        font-size: 1.06em;
+    }
+    h3 {
+        font-size: 0.95em;
+    }
+    h4 {
+        font-size: 0.7em;
+    }
+    h5 {
+        font-size: 0.6em;
+    }
+}

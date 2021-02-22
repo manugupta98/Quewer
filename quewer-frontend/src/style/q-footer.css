@@ -1,0 +1,17 @@
+.q-footer {
+    background-color: rgba(128, 128, 128, 0.3);
+    flex: 1;
+    width: 100%;
+}
+
+.q-user {
+    float: left;
+    font-size: 10px; 
+    margin: 10px 0px 10px 10px;
+}
+
+.q-time {
+    float: right;
+    font-size: 10px;
+    margin: 10px 10px 10px 0px;
+}

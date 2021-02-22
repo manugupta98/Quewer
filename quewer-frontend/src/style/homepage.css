@@ -1,0 +1,61 @@
+@import '../Global.css';
+
+* {
+    font-weight: bold;
+}
+
+.App {
+    background: linear-gradient(to top, pink, purple);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+}
+
+.QuoteCard, .LoginCard {
+    border-radius: var(--largeRadius);
+    box-shadow: var(--inactiveShadow);
+}
+.QuoteCard *, .LoginCard * {
+    margin: var(--midGap);
+}
+
+.QuoteCard {
+    background-color: pink;
+}
+.LoginCard {
+    background-color: aqua;
+}
+
+#logoImage {
+    border-radius: var(--midRadius);
+    max-width: 95%;
+    height: auto;
+}
+
+#loginButton {
+    border-radius: var(--smallestRadius);
+    background-color: white;
+    border: none;
+    outline: none;
+    transition: transform 0.5s;
+}
+#loginButton:hover {
+    transform: scale(1.1);
+    background-color: black;
+    color: white;
+}
+#loginButton:active {
+    background-color: white;
+    color: black;
+}
+
+
+
+
+
+@media only screen and (min-width: 700px) {
+    .App {
+        height: 100vh;
+    }
+}

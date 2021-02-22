@@ -1,0 +1,14 @@
+.tag {
+    height: 15px;
+    background-color: rgb(158, 160, 161);
+    border-radius: 0px 10px;
+    display: inline-block;
+    margin: 5px 0px 0px 10px;
+}
+
+.tag-text {
+    margin: 0 auto;
+    font-size: 10px;
+    padding: 0 5px;
+    width: auto;
+}
