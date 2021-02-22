@@ -4,6 +4,8 @@ import '../../Global.css';
 import {quotes, loginPhrase} from '../../GlobalVariables';
 import logo from '../../views/logo.png';
 
+const loginUrl = "http://localhost:5000/api/auth/google?uri=http://localhost:3000/main"
+
 class HomePage extends React.Component {
     render() {
         return (
@@ -14,7 +16,7 @@ class HomePage extends React.Component {
             </div>
             <div className="LoginCard FlexCard ColumnCard">
               <h3>{loginPhrase}</h3>
-              <button id="loginButton" /*onClick = {req}*/ href="http://localhost:5000/api/auth/google">Login using Google</button>
+              <button id="loginButton" href={loginUrl}>Login using Google</button>
             </div>
           </div>
         );
