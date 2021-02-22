@@ -2,6 +2,7 @@ import React from 'react';
 import CardList from '../card-list';
 import QuestionCard from '../question-card';
 import Page from './page';
+import DisplayCard from '../DisplayCard/DisplayCard';
 
 const array = [
     {
@@ -65,6 +66,7 @@ const array = [
 function MainPage() {
     return (
         <Page>
+            <DisplayCard />
             <CardList component={QuestionCard} list={array} />
         </Page>
     );
