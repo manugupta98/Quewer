@@ -1,7 +1,6 @@
 .q-card-main {
     display: flex;
     width: 80%;
-    height: 100%;
     margin: 10px auto 5px auto;
     flex-direction: column;
     border: none;

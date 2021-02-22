@@ -9,6 +9,7 @@
     justify-content: flex-start;
     flex: 2;
     height: 100vh;
+    animation: none;
 }
 
 .SideBar > * {
