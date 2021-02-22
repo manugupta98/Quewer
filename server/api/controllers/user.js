@@ -8,7 +8,7 @@ module.exports = {
       res.send(req.user);
     }
   },
-  course: async (req, res) => {
+  courses: async (req, res) => {
     let user = req.user;
     User.findOne({ _id : user.id })
       .populate("registeredCourses") // only works if we pushed refs to person.eventsAttended

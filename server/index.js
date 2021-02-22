@@ -13,6 +13,7 @@ const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
+const { options } = require('./api/routes/course');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
@@ -53,19 +54,26 @@ if (!isDev && cluster.isMaster) {
     callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log("passport access");
-    User.create({ googleId: profile.id }, function (err, user) {
+    console.log('accesse tooken', accessToken);
+    // console.log(refrehToken);
+    console.log(profile);
+    User.findOrCreate({
+      googleId: profile.id,
+      displayName: profile.displayName,
+      name: profile.name,
+      photos: profile.photos,
+    }, function (err, user) {
       return done(err, user);
     });
   }
   ));
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user.googleId);
   });
   
   passport.deserializeUser(function(id, done) {
-    User.findById(id, function (err, user) {
+    User.findById(googleId, function (err, user) {
       done(err, user);
     });
   });
@@ -73,7 +81,8 @@ if (!isDev && cluster.isMaster) {
   const app = express();
   app.use(require('serve-static')(__dirname + '/../../public'));
   app.use(require('cookie-parser')());
-  app.use(cors({ origin: true, credentials: true }));
+  app.use(cors({ origin: true, credentials: true, }));
+  // app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
   app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
   app.use(passport.initialize());
