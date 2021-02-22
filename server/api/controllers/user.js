@@ -12,9 +12,9 @@ module.exports = {
     let user = req.user;
     User.findOne({ _id : user.id })
       .populate("registeredCourses") // only works if we pushed refs to person.eventsAttended
-      .exec(function (err, user) {
+      .exec(function (err, usr) {
         if (err) return handleError(err);
-        console.log(user.registeredCourses);
+        res.send(usr.registeredCourses);
       });
   },
 };
