@@ -9,6 +9,4 @@ courseRouter.get('/course/list', authMiddleware.isAuthenticated, courseControlle
 
 courseRouter.get('/course/enroll', authMiddleware.isAuthenticated,courseController.enroll);
 
-// courseRouter.get('/course', authMiddleware.isAuthenticated,userController.userInfo);
-
 module.exports = courseRouter;

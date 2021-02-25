@@ -4,7 +4,9 @@ import '../../Global.css';
 import {quotes, loginPhrase} from '../../GlobalVariables';
 import logo from '../../views/logo.png';
 
-const loginUrl = "http://localhost:5000/api/auth/google?uri=http://localhost:3000/main"
+const dotenv = require('dotenv').config();
+
+const loginUrl = process.env.SERVER_URL + "/api/auth/google?uri=" + process.env.CLIENT_URL + "/main"
 
 class HomePage extends React.Component {
     render() {

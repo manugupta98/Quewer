@@ -74,6 +74,7 @@ if (!isDev && cluster.isMaster) {
   });
 
   const app = express();
+  app.disable("x-powered-by");
   app.use(require('serve-static')(__dirname + '/../../public'));
   app.use(require('cookie-parser')());
   app.use(cors({ origin: true, credentials: true, }));
