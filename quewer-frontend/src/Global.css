@@ -36,7 +36,6 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: space-evenly;
     transition: all 0.5s;
-    animation: card-launch 1s linear;
 }
 @keyframes card-launch{
     0% {
