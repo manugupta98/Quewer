@@ -2,7 +2,7 @@ import CourseItem from './CourseItem';
 import '../style/CourseList.css'
 
 export default function CourseList() {
-    const courses = ["DSA", "DBMS", "OOPS", "Comp Arch", "CN", "DSA", "DBMS", "OOPS", "Comp Arch", "CN", "DSA", "DBMS", "OOPS", "Comp Arch", "CN"];
+    const courses = ["DSA", "DBMS", "OOPS", "Comp Arch"];
     
     return (
         <div className="CourseList">

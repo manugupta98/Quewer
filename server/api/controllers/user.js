@@ -4,7 +4,11 @@ const createError = require("http-errors");
 
 module.exports = {
   userInfo: async (req, res) => {
+    console.log(req.cookies);
+    console.log(req.signedCookies);
+
     if (req.user) {
+      console.log(req.user);
       res.send(req.user);
     }
   },

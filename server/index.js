@@ -58,17 +58,20 @@ if (!isDev && cluster.isMaster) {
     }).then((user) => {
       return done(null, user);
     }).catch((err) => {
-      return donr(err, null);
+      return done(err, null);
     });
   }
   ));
 
   passport.serializeUser(function(user, done) {
+    console.log("ser");
     done(null, user.googleId);
   });
   
   passport.deserializeUser(function(id, done) {
+    console.log("hello");
     User.findById(googleId, function (err, user) {
+      console.log("passportLog", user, err);
       done(err, user);
     });
   });
