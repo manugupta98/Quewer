@@ -1,4 +1,3 @@
-const dotenv = require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -16,11 +15,15 @@ const courseRouter = require('./api/routes/course');
 const { options } = require('./api/routes/course');
 
 const isDev = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 5000;
 
-if (dotenv.error){
-  console.log(dotenv.error)
+if (isDev){
+  const dotenv = require('dotenv').config();
+  if (dotenv.error){
+    console.log(dotenv.error)
+  }
 }
+
+const PORT = process.env.PORT || 5000;
 
 if (!isDev && cluster.isMaster) {
   console.error(`Node cluster master ${process.pid} is running`);
@@ -64,15 +67,12 @@ if (!isDev && cluster.isMaster) {
   ));
 
   passport.serializeUser(function(user, done) {
-    console.log("ser");
     done(null, user.googleId);
   });
   
-  passport.deserializeUser(function(id, done) {
-    console.log("hello");
-    User.findById(googleId, function (err, user) {
-      console.log("passportLog", user, err);
-      done(err, user);
+  passport.deserializeUser(function(googleId, done) {
+    User.find({googleId: googleId}, function (err, user) {
+      done(err, user[0]);
     });
   });
 
@@ -82,7 +82,7 @@ if (!isDev && cluster.isMaster) {
   app.use(require('cookie-parser')());
   app.use(cors({ origin: true, credentials: true, }));
   app.use(bodyParser.json());
-  app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+  app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
   app.use(passport.initialize());
   app.use(passport.session());
 

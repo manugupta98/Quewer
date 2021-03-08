@@ -29,14 +29,8 @@ const userSchema = new mongoose.Schema({
         },
     }],
     registeredCourses: [{
-        courseId: {
-            type: Schema.Types.ObjectID,
-            ref: 'Course', 
-        },
-        name: {
-            type: String,
-            required: true,
-        }
+        type: Schema.Types.ObjectID,
+        ref: 'Course', 
     }],
     userQuestions: [{
         type: Schema.Types.ObjectID,
