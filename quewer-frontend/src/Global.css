@@ -1,11 +1,12 @@
 @import './variables.css';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap');
 
 html, body{
     background-color: var(--backgroundColor);
 }
 
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: nunito;
 }
 
 h1, h2, h3, h4, h5, h6 {
