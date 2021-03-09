@@ -1,24 +1,7 @@
-:root {
-    --largeRadius: 30px;
-    --midRadius: 24px;
-    --smallRadius: 16px;
-    --smallestRadius: 10px;
+@import './variables.css';
 
-    /* For Padding or Margin */
-    --biggestGap: 30px;
-    --bigGap: 20px;
-    --midGap: 15px;
-    --smallGap: 10px;
-    --smallestGap: 6px;
-
-
-    --inactiveShadow:
-        4px 4px 8px 0 rgba(0, 0, 0, 0.5),
-        -2px -2px 6px 0 rgba(255, 255, 255, 0.5);
-    --activeShadow:
-        inset 6px 6px 8px rgba(0, 0, 0, 0.5),
-        inset -4px -4px 6px rgba(255, 255, 255, 0.5);
-        color: rgba(0, 0, 0, 0.8);
+html, body{
+    background-color: var(--backgroundColor);
 }
 
 * {

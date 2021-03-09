@@ -1,7 +1,6 @@
 .CourseList {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 40%;
 }
 
 ul {
@@ -9,14 +8,11 @@ ul {
 }
 
 .CourseList::-webkit-scrollbar {
-    width: 0.4em;
-}
-
-.CourseList::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    width: 5px;
 }
    
 .CourseList::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: var(--primaryColor2);
     outline: 1px solid slategrey;
+    /* visibility: hidden; */
 }

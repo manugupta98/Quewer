@@ -1,0 +1,36 @@
+:root {
+    --largeRadius: 30px;
+    --midRadius: 24px;
+    --smallRadius: 16px;
+    --smallestRadius: 10px;
+
+    /* For Padding or Margin */
+    --biggestGap: 30px;
+    --bigGap: 20px;
+    --midGap: 15px;
+    --smallGap: 10px;
+    --smallestGap: 6px;
+
+
+    --inactiveShadow:
+        4px 4px 8px 0 rgba(0, 0, 0, 0.5),
+        -2px -2px 6px 0 rgba(255, 255, 255, 0.5);
+    --activeShadow:
+        inset 6px 6px 8px rgba(0, 0, 0, 0.5),
+        inset -4px -4px 6px rgba(255, 255, 255, 0.5);
+        color: rgba(0, 0, 0, 0.8);
+
+    --primaryColor: #29348EEE; 
+    --primaryColor2: #618CFB; 
+    --primaryColor3: #E8EBFF;
+    --onPrimaryColor: #FFFFFF;
+    --secondaryColor: #03DAC6;
+    --secondaryHighliightColo: #018786;
+    --onSecondaryColor: #000000;
+    --backgroundColor: #F7F6FB;
+    --onBackground: #000000;
+    --errorColor: #B00020;
+    --onErrorColor: #FFFFFF;
+    --surfaceColor: #FFFFFF;
+    --onSurfaceColor: #000000;
+}

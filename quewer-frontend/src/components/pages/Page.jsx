@@ -25,13 +25,13 @@ class Page extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {name: "User"}
+        this.state = {name: "", profileImg: ""}
 
         getUserDeails().then((body) => {
             console.log(body);
             let name = body.data.attributes.displayName;
-            console.log("name", name);
-            this.setState({name: name})
+            let img = body.data.attributes.photos[0].value;
+            this.setState({name: name, profileImg: img});
           });
     }
 
@@ -40,7 +40,7 @@ class Page extends React.Component{
             <div className='page'>
                 <SideBar />
                 <div className='page-content'>
-                    <Navbar username={this.state.name} />
+                    <Navbar username={this.state.name} image={this.state.profileImg} />
                     <div className='page-col'>
                         {this.props.children}
                     </div>

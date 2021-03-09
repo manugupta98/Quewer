@@ -22,8 +22,7 @@ export default function DisplayCard() {
             </div>
             <div className="ButtonsRow">
                 <button className="Buttons">Ask a Question</button>
-                <button className="Buttons">Subscribe</button>
-                <button className="Buttons">I'm an expert</button>
+                <button className="Buttons">Mail Instructor</button>
             </div>
         </div>
   );

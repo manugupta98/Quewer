@@ -1,4 +1,4 @@
-@import '../Global.css';
+@import '../variables.css';
 
 li {
     margin: 0 0 var(--midGap) 0;
@@ -11,6 +11,6 @@ li:hover {
 }
 
 .Selected {
-    color: orange;
+    color: var(--primaryColor2);
     transform: scale(1.1);
 }

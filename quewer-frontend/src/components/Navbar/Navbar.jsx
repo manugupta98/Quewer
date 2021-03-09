@@ -11,7 +11,7 @@ class Navbar extends Component {
           </h2>
           <div className='user-nav'>
             <p className="userName">{this.props.username}</p>
-            <img src={avatarImage} alt="Avatar" className="avatar"></img>
+            <img src={this.props.image} alt="Avatar" className="avatar"></img>
           </div>
         </div>
     );

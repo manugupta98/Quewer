@@ -1,13 +1,16 @@
+@import '../variables.css';
+
 .q-card-main {
     display: flex;
     width: 80%;
-    margin: 10px auto 5px auto;
+    margin: 10px auto 25px auto;
     flex-direction: column;
     border: none;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: var(--smallestRadius);
+    box-shadow: var(--inactiveShadow);
     overflow: hidden;
-    background-color: white;
+    background-color: var(--surfaceColor);
+    color: var(--onSurfaceColor);
 }
 
 .q-question-upvote {
