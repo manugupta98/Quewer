@@ -7,12 +7,13 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const bodyParser = require('body-parser');
+const MongoStore = require('connect-mongo');
 
 const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
-const { options } = require('./api/routes/course');
+const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -41,7 +42,7 @@ if (!isDev && cluster.isMaster) {
 
   var uri = process.env.DB_URI;
 
-  mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
+  var mongooseConnection = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
     console.error(err);
   })
 
@@ -82,7 +83,17 @@ if (!isDev && cluster.isMaster) {
   app.use(require('cookie-parser')());
   app.use(cors({ origin: true, credentials: true, }));
   app.use(bodyParser.json());
-  app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+  app.use(require('express-session')({
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URI,
+      mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+      dbName: 'quewer',
+      ttl: 7 * 24 * 60 * 60,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }));
   app.use(passport.initialize());
   app.use(passport.session());
 
