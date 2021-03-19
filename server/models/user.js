@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
 
-//creating the exam schema
-
 const userSchema = new mongoose.Schema({
     googleId: {
         type: String,
@@ -64,7 +62,5 @@ userSchema.statics.findOrCreate = function(filter){
 
 }
 
-
-// making a exam model in mongodb
 const User = mongoose.model('User', userSchema);
 module.exports = User;
