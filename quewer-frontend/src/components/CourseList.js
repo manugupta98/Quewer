@@ -1,16 +1,23 @@
 import CourseItem from './CourseItem';
 import '../style/CourseList.css'
+import { connect } from 'react-redux';
 
-export default function CourseList() {
-    const courses = ["DSA", "DBMS", "OOPS", "Comp Arch"];
+function CourseList({enrolledCourses}) {
+    const courses = enrolledCourses;
     
     return (
         <div className="CourseList">
             <ul>
-                {courses.map(course => {
-                    return <CourseItem key={course} name={course}/>;
+                {courses.map((course, id) => {
+                    return <CourseItem key={id} name={course}/>;
                 })}
             </ul>
         </div>
     );
 }
+
+const mapStateToProps = state => ({
+    enrolledCourses: state.course.enrolledCourses
+});
+
+export default connect(mapStateToProps)(CourseList);

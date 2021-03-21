@@ -30,10 +30,11 @@ const array = [
 
 function MainPage() {
     return (
-        <Page>
+        <div style={{width: '100%'}}>
             <DisplayCard />
             <CardList component={QuestionCard} list={array} />
-        </Page>
+        </div>
+
     );
 }
 

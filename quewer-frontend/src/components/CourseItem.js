@@ -1,5 +1,7 @@
-import '../style/CourseItem.css'
+import '../style/CourseItem.css';
 import jQuery from 'jquery';
+import store from '../Redux/store';
+import { selectCourse } from '../Redux/actions';
 
 export default function CourseItem(props) {
     jQuery(document).ready(function(){
@@ -8,7 +10,10 @@ export default function CourseItem(props) {
             jQuery('.Selected').removeClass('Selected');
     
             //add the active class to the link we clicked
-            jQuery(this).addClass('Selected');     
+            jQuery(this).addClass('Selected');
+
+            // store.dispatch(selectCourse(props.name));
+
             event.preventDefault();
         });
     });
