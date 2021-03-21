@@ -1,0 +1,11 @@
+@import '../../variables.css';
+
+.Wrapper, .Editor {
+    border: 1px solid var(--primaryColor3);
+}
+
+.Editor {
+    background-color: var(--primaryColor3);
+    height: 200px;
+    padding: 0px 10px;
+}
