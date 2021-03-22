@@ -1,5 +1,10 @@
-import appState from '../appState';
 import { COURSE_ADD, COURSE_ENROLL, COURSE_SELECT, COURSE_UNENROLL, COURSE_DELETE } from '../constants';
+
+const appState = {
+    enrolledCourses: [],
+    courseList: [],
+    currentCourse: { questions: null }
+};
 
 export default function courseReducer(state = appState, action) {
     switch(action.type) {

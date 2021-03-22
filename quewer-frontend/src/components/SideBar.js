@@ -1,7 +1,7 @@
 import '../style/SideBar.css';
 import CourseList from './CourseList';
-import { FaBars } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const handleClick = () => {
     console.log("Clicked");
@@ -17,13 +17,25 @@ const handleClick = () => {
     });
 };
 
-export default function SideBar() {
+function SideBar({style}) {
+    const visible = style;
+
     return (
-        <div className="SideBar FlexCard ColumnCard">
-            <FaBars style={{ fontSize:'20px', position:'relative', right:'80px' }} />
+        <div className="SideBar FlexCard ColumnCard" style={ visible }>
             <Link to="/enroll"><button id="enrollButton">Enroll New Courses</button></Link>
             <h2>Your Courses:</h2>
             <CourseList onClick={handleClick}></CourseList>
         </div>
     );
 }
+
+const mapStateToProps = state => {
+    console.log(state.user.sideBar);
+    if(state.user.sideBar) {
+        return { style: {visibility: 'visible', width: '200px'} }
+    }
+    else
+        return { style: {visibility: 'hidden', width: '0px'} }
+}
+
+export default connect(mapStateToProps)(SideBar);

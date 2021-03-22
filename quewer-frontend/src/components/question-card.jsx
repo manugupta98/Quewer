@@ -18,7 +18,7 @@ class QuestionCard extends React.Component {
                     </div>
                 </div>
                 <QFooter username={this.props.postedBy} time={this.props.on}>
-                    {this.props.tags.map(tag => <Tag tag={tag} />)}
+                    {this.props.tags.map((tag, index) => <Tag key={index} tag={tag} />)}
                 </QFooter>
             </div>
         );

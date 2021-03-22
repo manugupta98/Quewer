@@ -1,7 +1,8 @@
 import courseReducer from './courseReducer';
 import { combineReducers } from '@reduxjs/toolkit';
-import { useReducer } from 'react';
+import userReducer from './userReducer';
 
 export default combineReducers({
-    course: courseReducer
+    course: courseReducer,
+    user: userReducer
 });
