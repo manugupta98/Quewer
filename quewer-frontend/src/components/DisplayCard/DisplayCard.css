@@ -3,7 +3,7 @@
     flex-flow: column;
     width: 80%;
     align-self:center;
-    margin: 20px;
+    margin: 20px auto;
     padding: 20px 50px;
     color: white;
     background-image: url('../../assets/display_card2.jpg');

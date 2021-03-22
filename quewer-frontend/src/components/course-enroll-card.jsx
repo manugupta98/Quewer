@@ -3,6 +3,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import Button from './button';
 import Description from './description';
 import '../style/course-enroll-card.css';
+import store from '../Redux/store';
+import { enrollCourse, unenrollCourse } from '../Redux/actions';
 
 class CourseEnrollCard extends React.Component {
     constructor(props) {
@@ -15,6 +17,11 @@ class CourseEnrollCard extends React.Component {
 
     handleClick = () => {
         const enroll = this.state.enroll;
+        if(!enroll) {
+            store.dispatch(enrollCourse(this.props.course));
+        } else {
+            store.dispatch(unenrollCourse(this.props.course));
+        }
         this.setState({
             enroll: !enroll
         })

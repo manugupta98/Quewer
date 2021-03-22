@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development'){
   axios.defaults.withCredentials = true;
 }
 
-async function getUserDeails(){
+async function getUserDetails(){
     let data = 8;
     await axios.get(process.env.REACT_APP_SERVER_URL + "/api/user").then((res) => {
         data = res.data;
@@ -27,7 +27,7 @@ class Page extends React.Component{
         super(props);
         this.state = {name: "", profileImg: ""}
 
-        getUserDeails().then((body) => {
+        getUserDetails().then((body) => {
             console.log(body);
             let name = body.data.attributes.displayName;
             let img = body.data.attributes.photos[0].value;

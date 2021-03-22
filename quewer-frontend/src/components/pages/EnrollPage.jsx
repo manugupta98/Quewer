@@ -32,9 +32,7 @@ const array = [
 
 function EnrollPage(props) {
     return (
-        <Page>
-            <CardList component={CourseEnrollCard} list={array} />
-        </Page>
+        <CardList component={CourseEnrollCard} list={array} />
     );
 }
 
