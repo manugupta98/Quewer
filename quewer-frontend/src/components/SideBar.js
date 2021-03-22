@@ -22,7 +22,7 @@ function SideBar({style}) {
 
     return (
         <div className="SideBar FlexCard ColumnCard" style={ visible }>
-            <Link to="/enroll"><button id="enrollButton">Enroll New Courses</button></Link>
+            <Link style={{ textDecoration: 'none' }} to="/enroll"><button id="enrollButton">Enroll New Courses</button></Link>
             <h2>Your Courses:</h2>
             <CourseList onClick={handleClick}></CourseList>
         </div>
@@ -30,7 +30,6 @@ function SideBar({style}) {
 }
 
 const mapStateToProps = state => {
-    console.log(state.user.sideBar);
     if(state.user.sideBar) {
         return { style: {visibility: 'visible', width: '200px'} }
     }
