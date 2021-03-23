@@ -3,6 +3,7 @@ import "./Navbar.css";
 import { FaBars } from "react-icons/fa";
 import store from '../../Redux/store';
 import { toggleSideBar } from '../../Redux/actions';
+import { Link } from "react-router-dom";
 
 class Navbar extends Component {
 
@@ -22,9 +23,11 @@ class Navbar extends Component {
     return (
         <div className="navbar">
           <FaBars style={{ marginRight: '20px', fontSize: '20px', cursor: 'pointer' }} onClick={this.handleClick} value={this.props.isOpen} />
-          <h2 className="appbarTitle">
-            Que<span className="colorText">wer</span>
-          </h2>
+          <Link to="/" className="appbarTitle">
+            <h2 className="appbarTitle" style={{cursor: 'pointer'}}>
+              Que<span className="colorText">wer</span>
+            </h2>
+          </Link>
           <div className='user-nav'>
             <p className="userName">{this.props.username}</p>
             <img src={this.props.image} alt="Avatar" className="avatar"></img>

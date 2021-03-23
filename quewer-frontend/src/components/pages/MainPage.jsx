@@ -3,6 +3,7 @@ import CardList from '../card-list';
 import QuestionCard from '../question-card';
 import Page from './Page';
 import DisplayCard from '../DisplayCard/DisplayCard';
+import QuewerEditor from '../QuewerEditor/QuewerEditor';
 
 const array = [
     {
@@ -30,11 +31,10 @@ const array = [
 
 function MainPage() {
     return (
-        <div style={{width: '100%'}}>
+        <div>
             <DisplayCard />
             <CardList component={QuestionCard} list={array} />
         </div>
-
     );
 }
 
