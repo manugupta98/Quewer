@@ -6,8 +6,8 @@ const UserSerializer = require('../../serializers/user');
 module.exports = {
   userInfo: async (req, res) => {
     if (req.user) {
-      console.log(UserSerializer.serialize(req.user));
-      res.send(UserSerializer.serialize(req.user));
+      console.log(req.user);
+      res.json(UserSerializer.serialize(req.user));
     }
   },
   courses: async (req, res) => {

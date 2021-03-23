@@ -13,6 +13,7 @@ const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
+const questionRouter = require('./api/routes/question')
 const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -82,7 +83,10 @@ if (!isDev && cluster.isMaster) {
   app.use(require('serve-static')(__dirname + '/../../public'));
   app.use(require('cookie-parser')());
   app.use(cors({ origin: true, credentials: true, }));
-  app.use(bodyParser.json());
+  app.use(express.json());
+  app.use(express.urlencoded({
+    extended: true,
+  }));
   app.use(require('express-session')({
     store: MongoStore.create({
       mongoUrl: process.env.DB_URI,
@@ -105,6 +109,7 @@ if (!isDev && cluster.isMaster) {
   app.use("/api", userRouter);
   app.use("/api", authRouter);
   app.use("/api", courseRouter);
+  app.use("/api", questionRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {

@@ -1,32 +1,28 @@
 const express = require('express');
 const Course = require('../../models/course');
 const createError = require('http-errors');
+const CourseSerializer = require('../../serializers/course')
+const CourseServices = require('../../services/course')
 
 module.exports = {
-    list: async (req, res) => {
-        Course.find({}).then((courses) => {
-            res.send(courses);
+    course: (req, res) => {
+        filter = {};
+        if ('course' in req.params){
+            filter = {_id: req.params.course};
+        }
+        Course.find(filter).then((courses) => {
+            res.send(CourseSerializer.serialize(courses));
         }).catch((err) => {
             res.status(500).send();
         })
     },
-    enroll: async (req, res) => {
+    enroll: (req, res) => {
         let user = req.user;
-        let courseId = req.params.id;
-        Course.findOne({_id: courseId}).then((course) => {
-            user.registeredCourses.push(course._id);
-            user.save();
-            res.send(`${user.displayName} successfully registered for the course ${course.title}`);
+        let courseId = req.params.course;
+        CourseServices.enroll(user, courseId).then(() => {
+            res.json("Successfully registered");
         }).catch((err) => {
-            res.status(500).send();
+            res.status(err.status).send(err.message);
         })
     },
-    courseInfo: async (req, res) => {
-        let courseId = req.params.id;
-        Course.findOne({_id: courseId}).then((course) => {
-            res.send(course);
-        }).catch((err) => {
-            res.status(500).send();
-        })
-    }
 }

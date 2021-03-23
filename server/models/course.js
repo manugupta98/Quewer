@@ -15,8 +15,10 @@ const courseSchema = new mongoose.Schema({
         ref: 'User',
     },
     registeredUsers:[{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
     }],
 })
 

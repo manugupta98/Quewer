@@ -27,21 +27,35 @@ const userSchema = new mongoose.Schema({
         },
     }],
     registeredCourses: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Course', 
+        id: {
+            type: Schema.Types.ObjectID,
+            ref: 'Course', 
+        },
     }],
     userQuestions: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Question', 
+        id: {
+            type: Schema.Types.ObjectID,
+            ref: 'Question', 
+        }
     }],
     userAnswers: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Answers', 
+        id: {
+            type: Schema.Types.ObjectID,
+            ref: 'Answers',
+        }, 
     }],
     userComments: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Answers', 
+        id: {
+            type: Schema.Types.ObjectID,
+            ref: 'Answers', 
+        },
     }],  
+    questionBookmarks:  [{
+        id: {
+            type: Schema.Types.ObjectID,
+            ref: 'Question', 
+        }
+    }],
 })
 
 

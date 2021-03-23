@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
 
 const questinAndAnswerBaseSchema = new mongoose.Schema({
-    Course:{
+    course:{
         type: Schema.Types.ObjectId,
         ref: 'Course',
         required: true
@@ -57,7 +57,7 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         ref: 'Tags',
         required: true
     }],
-}, questinAndAnswerBaseOptions)
+})
 
 const questionSchema = new mongoose.Schema({
     answers: [{
