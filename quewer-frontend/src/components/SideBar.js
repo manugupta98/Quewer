@@ -2,29 +2,21 @@ import '../style/SideBar.css';
 import CourseList from './CourseList';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-const handleClick = () => {
-    console.log("Clicked");
-    const list = document.getElementById('courseList');
-    list.addEventListener("click", () => {
-        const content = this.nextElementSibling;
-        console.log(content);
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-};
+import CourseItem from './CourseItem';
+import { FaFolderPlus, FaBook } from "react-icons/fa";
+import sidebar from '../assets/sidebar.png';
 
 function SideBar({style}) {
     const visible = style;
 
     return (
         <div className="SideBar FlexCard ColumnCard" style={ visible }>
-            <Link style={{ textDecoration: 'none' }} to="/enroll"><button id="enrollButton">Enroll New Courses</button></Link>
-            <h2>Your Courses:</h2>
-            <CourseList onClick={handleClick}></CourseList>
+            <img src={sidebar} />
+            <h2>Menu</h2>
+            <Link style={{ textDecoration: 'none' }} to="/enroll"><CourseItem name={'Enroll Courses'} icon={<FaFolderPlus style={{marginRight: '5px'}}/>} /></Link>
+            <br />
+            <h2 style={{marginTop: '0px'}}>Your Courses:</h2>
+            <CourseList icon={<FaBook style={{marginRight: '5px'}} />}></CourseList>
         </div>
     );
 }

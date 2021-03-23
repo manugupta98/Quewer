@@ -1,16 +1,24 @@
 @import '../variables.css';
 
-li {
-    margin: 0 0 var(--midGap) 0;
+.menu-item {
+    margin: 0 0 var(--midGap) 10px;
     transition: transform 0.2s;
     cursor: pointer;
+    border-radius: 5px;
+    width: 140px;
+    padding: 5px 10px;
 }
 
-li:hover {
+.menu-item:hover {
+    background-color: var(--primaryColor2Hover);
     transform: scale(1.1);
 }
 
 .Selected {
-    color: var(--primaryColor2);
+    background-color: var(--primaryColor2);
     transform: scale(1.1);
+}
+
+.Selected:hover {
+    background-color: var(--primaryColor2);
 }
