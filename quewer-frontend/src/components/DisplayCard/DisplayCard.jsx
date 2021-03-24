@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import Button from '../button';
 import "./DisplayCard.css";
 
-export default function DisplayCard() {
+export default function DisplayCard({name}) {
   return (
     <div className="DisplayCard">
-            <h1>Solar eclipses:</h1>
-            <h1>When is the next one?</h1>
+            <h1>{name}</h1>
+            <h3>When is the next one?</h3>
             <div className="QuestionStats">
                 <div className="QuestionData">
                     <h3>1237</h3>
@@ -22,8 +23,8 @@ export default function DisplayCard() {
                 </div>
             </div>
             <div className="ButtonsRow">
-                <Link to="/postquestion"><button className="Buttons">Ask a Question</button></Link>
-                <button className="Buttons">Mail Instructor</button>
+                <Link to="/postquestion"><Button color="#618CFB" textColor="white" text="Ask a question" /></Link>
+                <Button color="#618CFB" textColor="white" text="Mail instructor" />
             </div>
         </div>
   );

@@ -6,16 +6,16 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './QuewerEditor.css';
 
 class QuewerEditor extends React.Component {
-    state = { editorState: EditorState.createEmpty() }
-    onChange = (editorState) => this.setState({editorState})
+    state = { contentState: null }
+    onChange = (contentState) => this.setState({ contentState });
 
     render() {
         return (
             <Editor 
-                editorState={this.state.editorState}
+                initialContentState={this.state.contentState}
                 wrapperClassName="Wrapper"
                 editorClassName="Editor"
-                onEditorStateChange={this.onChange}
+                onContentStateChange={this.onChange}
                 toolbar={{
                     options: ['inline', 'fontSize']
                 }}

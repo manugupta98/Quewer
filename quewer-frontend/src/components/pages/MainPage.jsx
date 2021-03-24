@@ -1,9 +1,8 @@
 import React from 'react';
 import CardList from '../card-list';
 import QuestionCard from '../question-card';
-import Page from './Page';
+import store from '../../Redux/store';
 import DisplayCard from '../DisplayCard/DisplayCard';
-import QuewerEditor from '../QuewerEditor/QuewerEditor';
 
 const array = [
     {
@@ -29,11 +28,12 @@ const array = [
     }
 ]
 
-function MainPage() {
+function MainPage({match}) {
+    console.log(store.getState());
     return (
         <div>
-            <DisplayCard />
-            <CardList component={QuestionCard} list={array} />
+            <DisplayCard name={match.params.courseID} />
+            <CardList component={QuestionCard} list={store.getState().course.currentCourse.questions} />
         </div>
     );
 }

@@ -16,6 +16,7 @@ function App() {
           <Route path='/enroll' component={EnrollPage} />
           <Route path='/postanswer' component={PostAnswer} />
           <Route path='/postquestion' component={PostQuestion} />
+          <Route path='/course/:courseID' component={MainPage} />
         </Page>
     </Switch>
   </div>
