@@ -16,6 +16,8 @@
 
 .appbarTitle {
     margin-right: auto;
+    text-decoration: none;
+    color: black;
 }
 .appbarTitle, .colorText {
     font-size: 30px;

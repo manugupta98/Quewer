@@ -16,15 +16,3 @@
     color: var(--onPrimaryColor);
     width: 90%;
 }
-
-#enrollButton {
-    font-size: 16px;
-    width: 80%;
-    background-color: var(--primaryColor2);
-    border-radius: var(--smallRadius);
-    color: var(--onPrimaryColor);
-    cursor: pointer;
-    display: block;
-    margin: auto;
-    text-decoration: none;
-}

@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, SIDEBAR_TOGGLE } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, SIDEBAR_TOGGLE, ADD_QUESTION } from './constants';
 
 export const enrollCourse = name => {
     return {
@@ -44,5 +44,12 @@ export const toggleSideBar = isOpen => {
     return {
         type: SIDEBAR_TOGGLE,
         payload: !isOpen
+    }
+}
+
+export const addQuestion = question => {
+    return {
+        type: ADD_QUESTION,
+        payload: question
     }
 }

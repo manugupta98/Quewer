@@ -2,14 +2,6 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
-
-ul {
-    margin: 0;
-}
-
-.CourseList::-webkit-scrollbar {
-    width: 5px;
-}
    
 .CourseList::-webkit-scrollbar-thumb {
     background-color: var(--primaryColor2);

@@ -1,0 +1,18 @@
+@import '../variables.css';
+
+.post {
+    margin: 20px auto 0px auto;
+    width: 90%;
+}
+
+.post h1 {
+    margin: 20px 0px;
+}
+
+.input {
+    background-color: var(--primaryColor3);
+    outline: none;
+    width: 100%;
+    font-size: 25px;
+    padding: 10px;
+}

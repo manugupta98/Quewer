@@ -1,7 +1,7 @@
 import React from 'react';
 import CardList from '../card-list';
 import QuestionCard from '../question-card';
-import Page from './Page';
+import store from '../../Redux/store';
 import DisplayCard from '../DisplayCard/DisplayCard';
 
 const array = [
@@ -28,13 +28,13 @@ const array = [
     }
 ]
 
-function MainPage() {
+function MainPage({match}) {
+    console.log(store.getState());
     return (
-        <div style={{width: '100%'}}>
-            <DisplayCard />
-            <CardList component={QuestionCard} list={array} />
+        <div>
+            <DisplayCard name={match.params.courseID} />
+            <CardList component={QuestionCard} list={store.getState().course.currentCourse.questions} />
         </div>
-
     );
 }
 

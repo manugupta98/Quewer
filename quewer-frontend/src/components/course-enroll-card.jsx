@@ -33,7 +33,7 @@ class CourseEnrollCard extends React.Component {
                 <div className='course'>
                     <p className='course-name'>{ this.props.course }</p>
                     { (this.props.desc) ? <hr /> : null }
-                    { (this.props.desc) ? <Description>{ this.props.desc }</Description> : null }
+                    { (this.props.desc) ? <Description enroll>{ this.props.desc }</Description> : null }
                 </div>
                 <div className='status'>
                     { 
