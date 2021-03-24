@@ -11,5 +11,4 @@ questionRouter.get('/courses/:courseID/questions/:questionID', authMiddleware.is
 
 questionRouter.post('/courses/:courseID/questions', authMiddleware.isAuthenticated, questionController.newQuestion);
 
-
 module.exports = questionRouter;

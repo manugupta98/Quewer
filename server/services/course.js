@@ -11,16 +11,12 @@ class CourseServices{
             console.log("Exam not found");
             throw createError.NotFound("Exam not found", {expose: true});
         }).then((course) => {
-            if (user.registeredCourses.some(item => item.id == course.id) || course.registeredUsers.some(item => item.id == user.id)){
+            if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id)){
                 console.log("Already Registered");
                 throw createError.Conflict("Already Registered", {expose: true});
             }
-            user.registeredCourses.push({
-                id: course.id,
-            });
-            course.registeredUsers.push({
-                id: user.id,
-            });
+            user.registeredCourses.push(course.id,);
+            course.registeredUsers.push(user.id,);
             user.save();
             course.save();
         });

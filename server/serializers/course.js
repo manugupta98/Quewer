@@ -3,12 +3,11 @@ const JSONAPISerializer = require('jsonapi-serializer').Serializer;
 const CourseSerializer = new JSONAPISerializer('courses', {
     attributes:['title', 'description', 'teachers', 'registeredUsers'],
     teacher: {
-        ref: 'id',
+        ref: '_id',
         included: false,
     },
     registeredUsers: {
-        ref: 'id',
-        attributes: ['id'],
+        ref: '_id',
         inluded: false,
     },
     typeForAttribute: (attribute, data) =>{

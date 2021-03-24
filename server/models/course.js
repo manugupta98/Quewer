@@ -14,12 +14,12 @@ const courseSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    registeredUsers:[{
-        id: {
+    registeredUsers:[
+        {
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
-    }],
+    ],
 })
 
 const Course = mongoose.model('Course', courseSchema);

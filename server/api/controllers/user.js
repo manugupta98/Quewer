@@ -2,12 +2,13 @@ const express = require("express");
 const User = require("../../models/user");
 const createError = require("http-errors");
 const UserSerializer = require('../../serializers/user');
+const { template } = require("lodash");
 
 module.exports = {
   userInfo: async (req, res) => {
     if (req.user) {
       console.log(req.user);
-      res.json(UserSerializer.serialize(req.user));
+      res.status(201).json(UserSerializer.serialize(req.user, TEMPLATE));
     }
   },
   courses: async (req, res) => {

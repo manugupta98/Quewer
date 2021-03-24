@@ -26,36 +26,36 @@ const userSchema = new mongoose.Schema({
             required: true,
         },
     }],
-    registeredCourses: [{
-        id: {
+    registeredCourses: [
+        {
             type: Schema.Types.ObjectID,
             ref: 'Course', 
         },
-    }],
-    userQuestions: [{
-        id: {
+    ],
+    userQuestions: [
+        {
             type: Schema.Types.ObjectID,
             ref: 'Question', 
         }
-    }],
-    userAnswers: [{
-        id: {
+    ],
+    userAnswers: [
+        {
             type: Schema.Types.ObjectID,
             ref: 'Answers',
         }, 
-    }],
-    userComments: [{
-        id: {
+    ],
+    userComments: [
+        {
             type: Schema.Types.ObjectID,
             ref: 'Answers', 
         },
-    }],  
-    questionBookmarks:  [{
-        id: {
+    ],  
+    questionBookmarks:  [
+        {
             type: Schema.Types.ObjectID,
             ref: 'Question', 
         }
-    }],
+    ],
 })
 
 

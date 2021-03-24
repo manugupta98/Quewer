@@ -5,29 +5,17 @@ const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 //TODO: attachments and comments ko serializer karna bacha hai, complex type hai woh isliye chordiya hai
 
 const AnswerSerializer = new JSONAPISerializer('answer', {
-    attributes:['course', 'postedBy', 'title', 'description', 'date', 'upvotes', 'usersUpvoted', 'usersDownvoted', 'tags', 'question'],
+    attributes:['course', 'postedBy', 'title', 'description', 'date', 'upvotes', 'tags', 'question'],
     course: {
         ref: '_id',
-        included: false,
-    },
-    usersUpvoted: {
-        ref: 'id',
-        included: false,
-    },
-    usersDownvoted: {
-        ref: 'id',
         included: false,
     },
     postedBy: {
         ref: '_id',
         inluded: false,
     },
-    tags: {
-        ref: 'id',
-        included: false,
-    },
     question: {
-        ref: 'id',
+        ref: '_id',
         included: false,
     },
     typeForAttribute: (attribute, data) =>{
