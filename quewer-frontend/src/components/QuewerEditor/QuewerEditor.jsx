@@ -8,6 +8,7 @@ import './QuewerEditor.css';
 class QuewerEditor extends React.Component {
     state = { editorState: EditorState.createEmpty() }
     onChange = (editorState) => this.setState({editorState})
+
     render() {
         return (
             <Editor 

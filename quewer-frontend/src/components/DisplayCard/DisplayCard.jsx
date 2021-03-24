@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import "./DisplayCard.css";
 
 export default function DisplayCard() {
@@ -21,7 +22,7 @@ export default function DisplayCard() {
                 </div>
             </div>
             <div className="ButtonsRow">
-                <button className="Buttons">Ask a Question</button>
+                <Link to="/postquestion"><button className="Buttons">Ask a Question</button></Link>
                 <button className="Buttons">Mail Instructor</button>
             </div>
         </div>

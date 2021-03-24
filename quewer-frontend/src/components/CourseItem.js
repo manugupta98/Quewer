@@ -12,13 +12,14 @@ export default function CourseItem(props) {
             
             //add the active class to the link we clicked
             jQuery(this).addClass('Selected');
-            
-            event.preventDefault();
         });
     });
     
     function handleClick() {
-        store.dispatch(selectCourse(props.name));
+        if(props.name !== 'Enroll Courses') {
+            store.dispatch(selectCourse(props.name));
+            console.log(store.getState())
+        }
     }
     return (
         <h4 className="menu-item" onClick={handleClick}>{props.icon}{props.name}</h4>

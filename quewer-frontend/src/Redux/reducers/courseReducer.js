@@ -1,9 +1,12 @@
-import { COURSE_ADD, COURSE_ENROLL, COURSE_SELECT, COURSE_UNENROLL, COURSE_DELETE } from '../constants';
+import { COURSE_ADD, COURSE_ENROLL, COURSE_SELECT, COURSE_UNENROLL, COURSE_DELETE, ADD_QUESTION } from '../constants';
 
 const appState = {
     enrolledCourses: [],
     courseList: [],
-    currentCourse: { questions: null }
+    currentCourse: { 
+        name: null,
+        questions: [] 
+    }
 };
 
 export default function courseReducer(state = appState, action) {
@@ -44,7 +47,21 @@ export default function courseReducer(state = appState, action) {
         case COURSE_SELECT: {
             return {
                 ...state,
-                currentCourse: action.payload
+                currentCourse: {
+                    ...state.currentCourse,
+                    name: action.payload
+                }
+            }
+        }
+        case ADD_QUESTION: {
+            var questions = [...state.currentCourse.questions];
+            questions.push(action.payload);
+            return {
+                ...state,
+                currentCourse: {
+                    ...state.currentCourse,
+                    questions: questions
+                }
             }
         }
         default:
