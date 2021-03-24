@@ -21,15 +21,6 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: space-evenly;
     transition: all 0.5s;
 }
-@keyframes card-launch{
-    0% {
-        transform: scale(0.8);
-    } 80% {
-        transform: scale(1.02);
-    } 100% {
-        transform: scale(1);
-    }
-}
 
 
 .RowCard {

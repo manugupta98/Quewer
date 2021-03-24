@@ -40,10 +40,9 @@ export const selectCourse = course => {
     }
 }
 
-export const toggleSideBar = isOpen => {
+export const toggleSideBar = () => {
     return {
-        type: SIDEBAR_TOGGLE,
-        payload: !isOpen
+        type: SIDEBAR_TOGGLE
     }
 }
 
@@ -54,8 +53,9 @@ export const addQuestion = question => {
     }
 }
 
-export const userInfo = () => {
+export const userInfo = user => {
     return {
-        type: USER_INFO
+        type: USER_INFO,
+        payload: user
     }
 }

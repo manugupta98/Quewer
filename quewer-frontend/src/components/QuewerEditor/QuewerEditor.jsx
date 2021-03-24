@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './QuewerEditor.css';

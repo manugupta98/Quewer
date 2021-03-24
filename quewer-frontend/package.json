@@ -16,11 +16,12 @@
     "react-draft-wysiwyg": "^1.14.5",
     "react-google-button": "^0.7.2",
     "react-icons": "^4.2.0",
+    "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
+    "redux": "^4.0.5",
     "remote-redux-devtools": "^0.5.16",
-    "web-vitals": "^1.0.1",
-    "react-redux": "^7.2.3"
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -8,7 +8,7 @@ module.exports = {
   userInfo: async (req, res) => {
     if (req.user) {
       console.log(req.user);
-      res.status(201).json(UserSerializer.serialize(req.user, TEMPLATE));
+      res.status(201).json(UserSerializer.serialize(req.user, template));
     }
   },
   courses: async (req, res) => {

@@ -27,14 +27,9 @@ export default class PostQuestion extends React.Component {
     }
 
     handleAnon = () => {
-        if(this.state.anonymous)
-            this.setState({
-                anonymous: false
-            });
-        else
-            this.setState({
-                anonymous: true
-            });
+        this.setState({
+            anonymous: this.state.anonymous ? false : true
+        });   
     }
 
     onSubmit = () => {
