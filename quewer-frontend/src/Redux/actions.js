@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, SIDEBAR_TOGGLE, ADD_QUESTION } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO } from './constants';
 
 export const enrollCourse = name => {
     return {
@@ -51,5 +51,11 @@ export const addQuestion = question => {
     return {
         type: ADD_QUESTION,
         payload: question
+    }
+}
+
+export const userInfo = () => {
+    return {
+        type: USER_INFO
     }
 }

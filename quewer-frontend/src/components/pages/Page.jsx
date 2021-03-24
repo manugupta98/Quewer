@@ -9,39 +9,14 @@ if (process.env.NODE_ENV === 'development'){
   axios.defaults.withCredentials = true;
 }
 
-async function getUserDetails(){
-    let data = 8;
-    await axios.get(process.env.REACT_APP_SERVER_URL + "/api/user").then((res) => {
-        data = res.data;
-    }).catch((err) => {
-        console.error(err);
-        data = err;
-    })
-    return data;
-}
-
-
 class Page extends React.Component{
-
-    constructor(props){
-        super(props);
-        this.state = {name: "", profileImg: ""}
-
-        getUserDetails().then((body) => {
-            console.log(body);
-            let name = body.data.attributes.displayName;
-            let img = body.data.attributes.photos[0].value;
-            this.setState({name: name, profileImg: img});
-          });
-    }
-
     render(){
         return (
             <div className='page'>
                 <SideBar />
                 <div className='page-content'>
-                    <Navbar username={this.state.name} image={this.state.profileImg} />
-                    <div className='page-col'>
+                    <Navbar />
+                    <div>
                         {this.props.children}
                     </div>
                 </div>

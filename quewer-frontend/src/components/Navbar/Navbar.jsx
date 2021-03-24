@@ -29,8 +29,8 @@ class Navbar extends Component {
             </h2>
           </Link>
           <div className='user-nav'>
-            <p className="userName">{this.props.username}</p>
-            <img src={this.props.image} alt="Avatar" className="avatar"></img>
+            <p className="userName">{store.getState().user.user.name}</p>
+            <img src={store.getState().user.user.profileImg} alt="Avatar" className="avatar"></img>
           </div>
         </div>
     );
