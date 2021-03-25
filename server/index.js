@@ -6,7 +6,6 @@ const numCPUs = require('os').cpus().length;
 const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo');
 
 const User = require('./models/user');
