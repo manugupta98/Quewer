@@ -28,8 +28,4 @@ function App({loading}) {
   );
 }
 
-const mapStateToProps = state => ({
-  loading: state.user.loading
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -6,7 +6,11 @@ class Description extends React.Component {
     render() {
         return (
             <div className='desc'>
-                <p className='text'>{parse(this.props.children.slice(0, this.props.length))}</p>
+            {
+                (this.props.enroll) ? 
+                <p className='text'>{parse(this.props.children.slice(0, this.props.length))}</p> : 
+                parse(this.props.children.slice(0, this.props.length))
+            }
             </div>    
         );
     }

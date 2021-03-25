@@ -7,6 +7,8 @@ import { addQuestion } from '../../Redux/actions';
 import draftToHtml from 'draftjs-to-html';
 import { Redirect } from 'react-router';
 
+const {QuestionSerializer, QuestionDeserializer} = require('../../Redux/serializer/question');
+
 export default class PostQuestion extends React.Component {
     constructor() {
         super();
@@ -29,32 +31,41 @@ export default class PostQuestion extends React.Component {
     handleAnon = () => {
         this.setState({
             anonymous: this.state.anonymous ? false : true
-        });   
+        });
     }
 
     onSubmit = () => {
-        var d = Date();
         const question = {
-            question: this.state.value,
-            desc: draftToHtml(this.ref.current.state.contentState),
-            tags: [],
-            postedBy: (this.state.anonymous) ? "anonymous" : store.getState().user.user.name,
-            on: d
+            title: this.state.value,
+            description: draftToHtml(this.ref.current.state.contentState),
+            date: Date(),
+            attachments: [],
+            anonymous: this.state.anonymous,
+            course: {
+                id: store.getState().course.currentCourse.id
+            },
+            postedBy: {
+                id: store.getState().user.user.id
+            }
         };
-        store.dispatch(addQuestion(question));
+        console.log(question);
+        const JSONBody = QuestionSerializer.serialize(question);
+        console.log(JSONBody);
+
+        store.dispatch(addQuestion(JSONBody, store.getState().course.currentCourse.id));
         this.setState({
             submit: true
         })
     }
 
     render() {
-        return(
+        return (
             <div className='post'>
                 <h1>Your Question:</h1>
                 <textarea className="input" value={this.state.value} onChange={this.handleChange} />
                 <h1>Question Description:</h1>
                 <QuewerEditor ref={this.ref} />
-                <div style={{marginTop: '10px'}}>
+                <div style={{ marginTop: '10px' }}>
                     {
                         (this.state.submit) ? <Redirect to={`/course/${store.getState().course.currentCourse.name}`} /> : <Button onClick={this.onSubmit} color='#29348EEE' textColor='white' text='Submit' />
                     }

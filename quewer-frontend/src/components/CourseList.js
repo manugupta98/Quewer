@@ -9,14 +9,14 @@ function CourseList({enrolledCourses, icon}) {
     return (
         <div className="CourseList">
             {courses.map((course, id) => {
-                return <Link key={id} to={`/course/${course}`} style={{ textDecoration: "none", color: "white" }}><CourseItem name={course} icon={icon} /></Link>;
+                return <Link key={id} to={`/course/${course.type}`} style={{ textDecoration: "none", color: "white" }}><CourseItem name={course.type} id={course.id} icon={icon} /></Link>;
             })}
         </div>
     );
 }
 
 const mapStateToProps = state => ({
-    enrolledCourses: state.course.enrolledCourses
+    enrolledCourses: state.user.user.registeredCourses
 });
 
 export default connect(mapStateToProps)(CourseList);

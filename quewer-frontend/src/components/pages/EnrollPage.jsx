@@ -1,39 +1,30 @@
 import React from 'react';
 import CardList from '../card-list';
 import CourseEnrollCard from '../course-enroll-card';
-import Page from './Page';
+import { connect } from 'react-redux';
+import { fetchCourses } from '../../Redux/actions';
+import store from '../../Redux/store';
 
-const array = [
-    {
-        course: 'BITS F464',
-        desc: 'Machine Learning'
-    },
-    {
-        course: 'CS F303',
-        desc: 'Computer Networks'
-    },
-    {
-        course: 'CS F363',
-        desc: 'Compiler Construction'
-    },
-    {
-        course: 'CS F364',
-        desc: 'Design and Analysis of Algorithms'
-    },
-    {
-        course: 'CS F407',
-        desc: 'Artificial Intelligence'
-    },
-    {
-        course: 'IS F341',
-        desc: 'Software Engineering'
-    },
-]
+class EnrollPage extends React.Component {
+    constructor(props) {
+        super(props);
+        
+    }
+    
+    componentDidMount() {
+        store.dispatch(fetchCourses());
+    }
 
-function EnrollPage(props) {
-    return (
-        <CardList component={CourseEnrollCard} list={array} />
-    );
+    render() {
+        return (
+            <CardList component={CourseEnrollCard} list={this.props.courseList} />
+        );
+    }
+    
 }
 
-export default EnrollPage;
+const mapStateToProps = state => ({
+    courseList: state.course.courseList
+});
+
+export default connect(mapStateToProps)(EnrollPage);

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const appState = {
     sideBar: true,
-    user: { name: null, profileImg: null },
+    user: { id: null, name: null, profileImg: null, registeredCourses: [] },
     loading: false
 };
 
@@ -36,4 +36,6 @@ class Course {
         this.teacher = teacher;
         this.registeredUsers = regUsers;
     }
+
+
 }

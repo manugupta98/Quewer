@@ -4,27 +4,12 @@ import { FaBars } from "react-icons/fa";
 import { toggleSideBar, userInfo } from '../../Redux/actions';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
-
-async function fetchUserDetails(dispatch) {
-  await axios.get(process.env.REACT_APP_SERVER_URL + "/api/users").then((res) => {
-    const data = res.data.data.attributes;
-    console.log(data);
-    const user = {
-      name: data.displayName,
-      profileImg: data.photos[0].value
-    };
-    dispatch(userInfo(user));
-  }).catch((err) => {
-    console.error(err);
-  })
-}
 
 export default function NavBar() {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.user.user);
-  if (user.name === null) fetchUserDetails(dispatch)
+  if (user.name === null) dispatch(userInfo());
 
   const handleClick = () => dispatch(toggleSideBar());
 

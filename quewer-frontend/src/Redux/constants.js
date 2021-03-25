@@ -1,3 +1,4 @@
+export const FETCH_COURSE_LIST = "courses/fetch";
 export const COURSE_ENROLL = "enroll/enrollCourse";
 export const COURSE_UNENROLL = "enroll/unerollCourse";
 export const COURSE_ADD = "enroll/addCourse";

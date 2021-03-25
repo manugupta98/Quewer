@@ -17,7 +17,7 @@ export default function CourseItem(props) {
     
     function handleClick() {
         if(props.name !== 'Enroll Courses') {
-            store.dispatch(selectCourse(props.name));
+            store.dispatch(selectCourse(props.id, props.name));
         }
     }
     return (

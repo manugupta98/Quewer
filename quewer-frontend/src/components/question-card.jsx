@@ -12,12 +12,12 @@ class QuestionCard extends React.Component {
                 <div className='q-question-upvote'>
                     <UpvoteBookmark />
                     <div className='q-question'>
-                        {this.props.question}  
+                        {this.props.title}  
                         <hr />
-                        <Description length={300}>{this.props.desc}</Description>
+                        <Description length={300}>{this.props.description}</Description>
                     </div>
                 </div>
-                <QFooter username={this.props.postedBy} time={this.props.on}>
+                <QFooter username={this.props.postedBy} time={this.props.date}>
                     {this.props.tags.map((tag, index) => <Tag key={index} tag={tag} />)}
                 </QFooter>
             </div>

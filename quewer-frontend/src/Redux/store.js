@@ -1,5 +1,6 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import appReducers from "./reducers/appReducer";
+import thunk from 'redux-thunk';
 
-const store = createStore(appReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(appReducers, applyMiddleware(thunk));
 export default store;
