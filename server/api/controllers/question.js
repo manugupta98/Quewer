@@ -12,7 +12,6 @@ module.exports = {
         }
         console.log('filter', filter);
         Question.find(filter).then((question) => {
-            console.log(question);
             res.send(QuestionSerializer.serialize(question));
         }).catch((err) => {
             res.status(500).send();
@@ -21,7 +20,7 @@ module.exports = {
     newQuestion: (req, res) => {
         QuestionDeserializer.deserialize(req.body).then((questionJSON)=>{
             Question.create(questionJSON).then((question) => {
-                res.json(QuestionSerializer.serialize(question));
+                res.status(201).json(QuestionSerializer.serialize(question));
             });
         }).catch((err) => {
             console.log(err);
