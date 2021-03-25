@@ -1,15 +1,13 @@
 import React from 'react';
 import '../style/description.css';
+import parse from 'html-react-parser';
 
 class Description extends React.Component {
     render() {
         return (
-            <div>
-                {
-                    (this.props.enroll) ? <div className='desc'><p className='text'>{this.props.children.slice(0, this.props.length)}</p></div> : 
-                    <div className='desc' dangerouslySetInnerHTML={{__html: this.props.children.slice(0, this.props.length)}} />    
-                }
-            </div>
+            <div className='desc'>
+                <p className='text'>{parse(this.props.children.slice(0, this.props.length))}</p>
+            </div>    
         );
     }
 }
