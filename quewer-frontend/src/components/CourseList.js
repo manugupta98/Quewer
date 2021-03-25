@@ -8,8 +8,8 @@ function CourseList({enrolledCourses, icon}) {
     
     return (
         <div className="CourseList">
-            {courses.map((course, id) => {
-                return <Link key={id} to={`/course/${course.type}`} style={{ textDecoration: "none", color: "white" }}><CourseItem name={course.type} id={course.id} icon={icon} /></Link>;
+            {courses.map(course => {
+                return <Link key={course.id} to={`/course/${course.title}`} style={{ textDecoration: "none", color: "white" }}><CourseItem name={course.title} id={course.id} icon={icon} /></Link>;
             })}
         </div>
     );

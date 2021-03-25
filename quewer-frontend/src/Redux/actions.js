@@ -1,6 +1,7 @@
 import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO } from './constants';
 import axios from 'axios';
 const {QuestionSerializer, QuestionDeserializer} = require('./serializer/question');
+const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 
 
 export function enrollCourse(courseID, courseName) {
@@ -109,18 +110,21 @@ export function addQuestion(question, courseID) {
 export function userInfo() {
     return dispatch => {
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
-            const data = res.data.data;
-            console.log(data);
-            const user = {
-                id: data.id,
-                name: data.attributes.displayName,
-                profileImg: data.attributes.photos[0].value,
-                registeredCourses: data.relationships.registeredCourses.data
-            };
-            dispatch({
-                type: USER_INFO,
-                payload: user
-            });
+            new JSONAPIDeserializer({
+                keyForAttribute: 'camelCase',
+            }).deserialize(res.data).then((user) => {
+              console.log(user);  
+              const newUser = {
+                  id: user.id,
+                  name: user.displayName,
+                  profileImg: user.photos[0].value,
+                  registeredCourses: user.registeredCourses
+              };
+              dispatch({
+                  type: USER_INFO,
+                  payload: newUser
+              });
+            })
         }).catch((err) => {
             console.error(err);
         })
