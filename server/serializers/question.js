@@ -12,7 +12,6 @@ const QuestionSerializer = new JSONAPISerializer('questions', {
         inluded: false,
     },
     typeForAttribute: (attribute, data) =>{
-        console.log(attribute, data);
         return data.customType;
     },
     keyForAttribute: 'camelCase',

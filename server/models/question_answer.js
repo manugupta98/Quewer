@@ -90,7 +90,7 @@ const answerSchema = new mongoose.Schema({
     }],
 })
 
-const questinAndAnswerBase = mongoose.model('questionAndAnswer', questinAndAnswerBaseSchema);
-const Question = questinAndAnswerBase.discriminator('Question', questionSchema);
-const Answer = questinAndAnswerBase.discriminator('Answer', answerSchema);
-module.exports = {Question, Answer};
+const QuestinAndAnswer = mongoose.model('questionAndAnswer', questinAndAnswerBaseSchema);
+const Question = QuestinAndAnswer.discriminator('Question', questionSchema);
+const Answer = QuestinAndAnswer.discriminator('Answer', answerSchema);
+module.exports = {Question, Answer, QuestinAndAnswer};

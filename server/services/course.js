@@ -8,11 +8,9 @@ const UserSerializer = require("../serializers/user.js");
 class CourseServices{
     static async enroll(user, courseId){
         await Course.findOne({_id: courseId}).catch((err) => {
-            console.log("Exam not found");
-            throw createError.NotFound("Exam not found", {expose: true});
+            throw createError.NotFound("Course not found", {expose: true});
         }).then((course) => {
             if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id)){
-                console.log("Already Registered");
                 throw createError.Conflict("Already Registered", {expose: true});
             }
             user.registeredCourses.push(course.id,);
