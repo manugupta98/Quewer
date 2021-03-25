@@ -1,8 +1,8 @@
 import React from 'react';
 import CardList from '../card-list';
 import QuestionCard from '../question-card';
-import Page from './Page';
 import DisplayCard from '../DisplayCard/DisplayCard';
+import {useSelector} from 'react-redux';
 
 const array = [
     {
@@ -28,12 +28,13 @@ const array = [
     }
 ]
 
-function MainPage() {
+function MainPage({match}) {
+    const list = useSelector(state => state.course.currentCourse.questions);
     return (
-        <Page>
-            <DisplayCard />
-            <CardList component={QuestionCard} list={array} />
-        </Page>
+        <div>
+            <DisplayCard name={match.params.courseID} />
+            <CardList component={QuestionCard} list={list} />
+        </div>
     );
 }
 

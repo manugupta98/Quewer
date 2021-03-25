@@ -1,28 +1,12 @@
-:root {
-    --largeRadius: 30px;
-    --midRadius: 24px;
-    --smallRadius: 16px;
-    --smallestRadius: 10px;
+@import './variables.css';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap');
 
-    /* For Padding or Margin */
-    --biggestGap: 30px;
-    --bigGap: 20px;
-    --midGap: 15px;
-    --smallGap: 10px;
-    --smallestGap: 6px;
-
-
-    --inactiveShadow:
-        4px 4px 8px 0 rgba(0, 0, 0, 0.5),
-        -2px -2px 6px 0 rgba(255, 255, 255, 0.5);
-    --activeShadow:
-        inset 6px 6px 8px rgba(0, 0, 0, 0.5),
-        inset -4px -4px 6px rgba(255, 255, 255, 0.5);
-        color: rgba(0, 0, 0, 0.8);
+html, body{
+    background-color: var(--backgroundColor);
 }
 
 * {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: nunito, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -36,16 +20,6 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: space-evenly;
     transition: all 0.5s;
-    animation: card-launch 1s linear;
-}
-@keyframes card-launch{
-    0% {
-        transform: scale(0.8);
-    } 80% {
-        transform: scale(1.02);
-    } 100% {
-        transform: scale(1);
-    }
 }
 
 

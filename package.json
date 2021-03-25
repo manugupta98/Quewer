@@ -8,15 +8,17 @@
   },
   "main": "server/index.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "connect-mongo": "^4.4.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "enum": "^3.0.4",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "http-errors": "^1.8.0",
-    "lodash": "^4.17.20",
-    "mongoose": "^5.11.16",
+    "jsonapi-serializer": "^3.6.7",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.12.2",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "validator": "^13.5.2"
@@ -32,7 +34,8 @@
     "build": "cd quewer-frontend/ && npm install && npm run build",
     "frontend": "cd quewer-frontend/ && npm start",
     "test": "nodemon --exec 'mocha ./test/ --recursive'",
-    "test-file": "nodemon --exec 'mocha --recursive'"
+    "test-file": "nodemon --exec 'mocha --recursive'",
+    "postinstall": "cd quewer-frontend/ && npm i"
   },
   "repository": {
     "type": "git",

@@ -3,10 +3,10 @@ const courseRouter = express.Router();
 const courseController = require('../controllers/course');
 const authMiddleware = require('../middleware/auth');
 
-courseRouter.get('/course', authMiddleware.isAuthenticated, courseController.courseInfo);
+courseRouter.get('/courses', authMiddleware.isAuthenticated, courseController.course);
 
-courseRouter.get('/course/list', authMiddleware.isAuthenticated, courseController.list);
+courseRouter.get('/courses/:course', authMiddleware.isAuthenticated, courseController.course);
 
-courseRouter.get('/course/enroll', authMiddleware.isAuthenticated,courseController.enroll);
+courseRouter.post('/courses/:course/enroll', authMiddleware.isAuthenticated,courseController.enroll);
 
 module.exports = courseRouter;

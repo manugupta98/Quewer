@@ -3,6 +3,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import Button from './button';
 import Description from './description';
 import '../style/course-enroll-card.css';
+import store from '../Redux/store';
+import { enrollCourse, unenrollCourse } from '../Redux/actions';
 
 class CourseEnrollCard extends React.Component {
     constructor(props) {
@@ -13,8 +15,23 @@ class CourseEnrollCard extends React.Component {
         }
     }
 
+    componentDidMount() {
+        store.getState().user.user.registeredCourses.filter((course) => {
+            if(this.props.id === course.id) {
+                this.setState({
+                    enroll: true
+                })
+            } 
+        })
+    }
+
     handleClick = () => {
         const enroll = this.state.enroll;
+        if(!enroll) {
+            store.dispatch(enrollCourse(this.props.id, this.props.title));
+        } else {
+            store.dispatch(unenrollCourse(this.props.id, this.props.title));
+        }
         this.setState({
             enroll: !enroll
         })
@@ -24,9 +41,9 @@ class CourseEnrollCard extends React.Component {
         return (
             <div className='course-enroll-card'>
                 <div className='course'>
-                    <p className='course-name'>{ this.props.course }</p>
-                    { (this.props.desc) ? <hr /> : null }
-                    { (this.props.desc) ? <Description>{ this.props.desc }</Description> : null }
+                    <p className='course-name'>{ this.props.title }</p>
+                    { (this.props.description) ? <hr /> : null }
+                    { (this.props.description) ? <Description enroll>{ this.props.description }</Description> : null }
                 </div>
                 <div className='status'>
                     { 

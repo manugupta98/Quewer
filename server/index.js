@@ -1,4 +1,3 @@
-const dotenv = require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -7,20 +6,25 @@ const numCPUs = require('os').cpus().length;
 const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const bodyParser = require('body-parser');
+const MongoStore = require('connect-mongo');
 
 const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
-const { options } = require('./api/routes/course');
+const questionRouter = require('./api/routes/question')
+const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 5000;
 
-if (dotenv.error){
-  console.log(dotenv.error)
+if (isDev){
+  const dotenv = require('dotenv').config();
+  if (dotenv.error){
+    console.log(dotenv.error)
+  }
 }
+
+const PORT = process.env.PORT || 5000;
 
 if (!isDev && cluster.isMaster) {
   console.error(`Node cluster master ${process.pid} is running`);
@@ -38,7 +42,7 @@ if (!isDev && cluster.isMaster) {
 
   var uri = process.env.DB_URI;
 
-  mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
+  var mongooseConnection = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
     console.error(err);
   })
 
@@ -58,7 +62,7 @@ if (!isDev && cluster.isMaster) {
     }).then((user) => {
       return done(null, user);
     }).catch((err) => {
-      return donr(err, null);
+      return done(err, null);
     });
   }
   ));
@@ -67,9 +71,9 @@ if (!isDev && cluster.isMaster) {
     done(null, user.googleId);
   });
   
-  passport.deserializeUser(function(id, done) {
-    User.findById(googleId, function (err, user) {
-      done(err, user);
+  passport.deserializeUser(function(googleId, done) {
+    User.find({googleId: googleId}, function (err, user) {
+      done(err, user[0]);
     });
   });
 
@@ -78,8 +82,21 @@ if (!isDev && cluster.isMaster) {
   app.use(require('serve-static')(__dirname + '/../../public'));
   app.use(require('cookie-parser')());
   app.use(cors({ origin: true, credentials: true, }));
-  app.use(bodyParser.json());
-  app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+  app.use(express.json());
+  app.use(express.urlencoded({
+    extended: true,
+  }));
+  app.use(require('express-session')({
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URI,
+      mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+      dbName: 'quewer',
+      ttl: 7 * 24 * 60 * 60,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }));
   app.use(passport.initialize());
   app.use(passport.session());
 
@@ -91,6 +108,7 @@ if (!isDev && cluster.isMaster) {
   app.use("/api", userRouter);
   app.use("/api", authRouter);
   app.use("/api", courseRouter);
+  app.use("/api", questionRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {

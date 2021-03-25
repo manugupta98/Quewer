@@ -1,40 +1,18 @@
 @import '../Global.css';
+@import '../variables.css';
 
 .SideBar {
-    background-color: blueviolet;
-    max-width: 200px;
-    min-width: 200px;
+    background-color: var(--primaryColor);
     margin: 0;
     padding: 0;
     border-radius: 0;
     justify-content: flex-start;
-    flex: 2;
     height: 100vh;
     animation: none;
 }
 
 .SideBar > * {
     margin: var(--midGap) var(--smallestGap);
-    font-weight: bold;
-    color: white;
+    color: var(--onPrimaryColor);
     width: 90%;
-}
-
-#enrollButton {
-    transition: transform 0.5s;
-    font-size: 16px;
-    width: 80%;
-    background-color: antiquewhite;
-    border-radius: var(--smallRadius);
-    color: blueviolet;
-    cursor: pointer;
-    display: block;
-    margin: auto;
-}
-#enrollButton:hover {
-    transform: scale(1.1);
-}
-#enrollButton:active {
-    background-color: black;
-    color: white;
 }

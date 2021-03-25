@@ -1,5 +1,8 @@
+@import '../variables.css';
+
 .q-footer {
-    background-color: rgba(128, 128, 128, 0.3);
+    background-color: var(--primaryColor3);
+    color: #597699;
     flex: 1;
     width: 100%;
 }

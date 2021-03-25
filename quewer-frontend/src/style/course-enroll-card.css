@@ -1,3 +1,5 @@
+@import '../variables.css';
+
 .course-enroll-card {
     display: flex;
     width: 80%;
@@ -5,10 +7,11 @@
     flex-direction: row;
     border: none;
     border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--inactiveShadow);
     overflow: hidden;
     transition: all 0.7s ease-in-out;
-    background-color: white;
+    background-color: var(--surfaceColor);
+    color: var(--onSurfaceColor);
 }
 
 .course {

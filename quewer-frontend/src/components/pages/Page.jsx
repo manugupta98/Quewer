@@ -3,18 +3,26 @@ import SideBar from '../SideBar';
 import Navbar from '../Navbar/Navbar';
 import '../../style/page.css';
 
-function Page(props) {
-    return (
-        <div className='page'>
-            <SideBar />
-            <div className='page-content'>
-                <Navbar username='John' />
-                <div className='page-col'>
-                    {props.children}
+import axios from 'axios'
+
+if (process.env.NODE_ENV === 'development'){
+  axios.defaults.withCredentials = true;
+}
+
+class Page extends React.Component{
+    render(){
+        return (
+            <div className='page'>
+                <SideBar />
+                <div className='page-content'>
+                    <Navbar />
+                    <div>
+                        {this.props.children}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Page;

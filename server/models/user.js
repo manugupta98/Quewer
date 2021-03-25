@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
 
-//creating the exam schema
-
 const userSchema = new mongoose.Schema({
     googleId: {
         type: String,
@@ -28,28 +26,36 @@ const userSchema = new mongoose.Schema({
             required: true,
         },
     }],
-    registeredCourses: [{
-        courseId: {
+    registeredCourses: [
+        {
             type: Schema.Types.ObjectID,
             ref: 'Course', 
         },
-        name: {
-            type: String,
-            required: true,
+    ],
+    userQuestions: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Question', 
         }
-    }],
-    userQuestions: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Question', 
-    }],
-    userAnswers: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Answers', 
-    }],
-    userComments: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Answers', 
-    }],  
+    ],
+    userAnswers: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Answers',
+        }, 
+    ],
+    userComments: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Answers', 
+        },
+    ],  
+    questionBookmarks:  [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Question', 
+        }
+    ],
 })
 
 
@@ -70,7 +76,5 @@ userSchema.statics.findOrCreate = function(filter){
 
 }
 
-
-// making a exam model in mongodb
 const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -1,16 +1,22 @@
 import CourseItem from './CourseItem';
 import '../style/CourseList.css'
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-export default function CourseList() {
-    const courses = ["DSA", "DBMS", "OOPS", "Comp Arch", "CN", "DSA", "DBMS", "OOPS", "Comp Arch", "CN", "DSA", "DBMS", "OOPS", "Comp Arch", "CN"];
+function CourseList({enrolledCourses, icon}) {
+    const courses = enrolledCourses;
     
     return (
         <div className="CourseList">
-            <ul>
-                {courses.map(course => {
-                    return <CourseItem key={course} name={course}/>;
-                })}
-            </ul>
+            {courses.map((course, id) => {
+                return <Link key={id} to={`/course/${course.type}`} style={{ textDecoration: "none", color: "white" }}><CourseItem name={course.type} id={course.id} icon={icon} /></Link>;
+            })}
         </div>
     );
 }
+
+const mapStateToProps = state => ({
+    enrolledCourses: state.user.user.registeredCourses
+});
+
+export default connect(mapStateToProps)(CourseList);

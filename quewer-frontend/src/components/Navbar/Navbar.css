@@ -1,6 +1,9 @@
+@import '../../variables.css';
+
 .navbar {
     height: 10vh;
-    margin: 0 20px;
+    padding: 5px 20px;
+    background-color: var(--primaryColor3);
 }
 .navbar, .user-nav {
     display: flex;
@@ -13,6 +16,8 @@
 
 .appbarTitle {
     margin-right: auto;
+    text-decoration: none;
+    color: black;
 }
 .appbarTitle, .colorText {
     font-size: 30px;
@@ -23,9 +28,10 @@
 }
 .avatar {
     height: 50px;
+    width: 50px;
     border-radius: 50%;
 }
 .userName {
-    font-weight: bolder;
-    font-size: large;
+    font-size: 15px;
+    padding: 0 15px 0 0;
 }

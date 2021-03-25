@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
 
-//creating the exam schema
-
-const questionSchema = new mongoose.Schema({
-    Course:{
+const questinAndAnswerBaseSchema = new mongoose.Schema({
+    course:{
         type: Schema.Types.ObjectId,
         ref: 'Course',
         required: true
@@ -59,6 +57,9 @@ const questionSchema = new mongoose.Schema({
         ref: 'Tags',
         required: true
     }],
+})
+
+const questionSchema = new mongoose.Schema({
     answers: [{
         type: Schema.Types.ObjectID,
         ref: 'Answer',
@@ -66,8 +67,30 @@ const questionSchema = new mongoose.Schema({
     }]
 })
 
+const answerSchema = new mongoose.Schema({
+    question: {
+        type: Schema.Types.ObjectID,
+        ref: 'Question',
+        required: true
+    },
+    comments: [{
+        postedBy: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        },
+        comment: {
+            type: String,
+            required: true,
+        },
+    }],
+})
 
-
-// making a exam model in mongodb
-const Question = mongoose.model('Question', questionSchema);
-module.exports = Question;
+const QuestinAndAnswer = mongoose.model('questionAndAnswer', questinAndAnswerBaseSchema);
+const Question = QuestinAndAnswer.discriminator('Question', questionSchema);
+const Answer = QuestinAndAnswer.discriminator('Answer', answerSchema);
+module.exports = {Question, Answer, QuestinAndAnswer};
