@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../style/homepage.css';
 import '../../Global.css';
-import {quotes, loginPhrase} from '../../GlobalVariables';
+import {loginPhrase} from '../../GlobalVariables';
 import logo from '../../views/logo.gif';
 import GoogleButton from 'react-google-button';
 

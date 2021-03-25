@@ -5,10 +5,15 @@ import EnrollPage from './pages/EnrollPage';
 import PostAnswer from './pages/PostAnswer';
 import PostQuestion from './pages/PostQuestion';
 import Page from './pages/Page';
+import { connect } from 'react-redux';
+import Loading from './Loading';
 
-function App() {
+function App({loading}) {
   return (
   <div>
+    {
+      (loading) ? <Loading /> : null
+    }
     <Switch>
         <Route exact path='/' component={HomePage} />
         <Page>
@@ -23,5 +28,8 @@ function App() {
   );
 }
 
+const mapStateToProps = state => ({
+  loading: state.user.loading
+});
 
-export default App;
+export default connect(mapStateToProps)(App);

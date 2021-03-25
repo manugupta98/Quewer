@@ -3,7 +3,8 @@ import axios from 'axios';
 
 const appState = {
     sideBar: true,
-    user: { name: null, profileImg: null }
+    user: { name: null, profileImg: null },
+    loading: false
 };
 
 
