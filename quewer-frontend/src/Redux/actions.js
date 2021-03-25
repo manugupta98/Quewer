@@ -108,7 +108,7 @@ export function addQuestion(question, courseID) {
 
 export function userInfo() {
     return dispatch => {
-        return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users").then((res) => {
+        return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
             const data = res.data.data;
             console.log(data);
             const user = {
