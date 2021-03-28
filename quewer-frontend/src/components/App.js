@@ -5,7 +5,6 @@ import EnrollPage from './pages/EnrollPage';
 import PostAnswer from './pages/PostAnswer';
 import PostQuestion from './pages/PostQuestion';
 import Page from './pages/Page';
-import { connect } from 'react-redux';
 import Loading from './Loading';
 
 function App({loading}) {

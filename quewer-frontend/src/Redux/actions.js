@@ -49,10 +49,6 @@ export const unenrollCourse = (courseID, courseName) => {
             console.log(err);
         });
     }
-    // return {
-    //     type: COURSE_UNENROLL,
-    //     payload: name
-    // }
 }
 
 // would be used in case of admin portal

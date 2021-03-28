@@ -11,9 +11,10 @@ const appState = {
 };
 
 export default function courseReducer(state = appState, action) {
+    const list = [];
     switch(action.type) {
         case COURSE_ENROLL: {
-            var list = [...state.enrolledCourses];
+            list = [...state.enrolledCourses];
             list.push(action.payload.courseName);
             list.sort();
             return {
@@ -22,7 +23,7 @@ export default function courseReducer(state = appState, action) {
             }
         }
         case COURSE_UNENROLL: {
-            var list = [...state.enrolledCourses];
+            list = [...state.enrolledCourses];
             list = list.filter(word => word !== action.payload.name);
             return {
                 ...state,
@@ -30,7 +31,7 @@ export default function courseReducer(state = appState, action) {
             }
         }
         case COURSE_ADD: {
-            var list = [...state.courseList];
+            list = [...state.courseList];
             list.push(action.payload);
             return {
                 ...state,
@@ -38,7 +39,7 @@ export default function courseReducer(state = appState, action) {
             }
         }
         case COURSE_DELETE: {
-            var list = [...state.courseList];
+            list = [...state.courseList];
             list = list.filter(course => course.name !== action.payload);
             return {
                 ...state,
