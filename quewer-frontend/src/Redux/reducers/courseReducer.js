@@ -11,7 +11,7 @@ const appState = {
 };
 
 export default function courseReducer(state = appState, action) {
-    const list = [];
+    let list = [];
     switch(action.type) {
         case COURSE_ENROLL: {
             list = [...state.enrolledCourses];
