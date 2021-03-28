@@ -1,5 +1,4 @@
 import { SIDEBAR_TOGGLE, USER_INFO } from '../constants';
-import axios from 'axios';
 
 const appState = {
     sideBar: true,
