@@ -35,7 +35,7 @@
     "frontend": "cd quewer-frontend/ && npm start",
     "test": "nodemon --exec 'mocha ./test/ --recursive'",
     "test-file": "nodemon --exec 'mocha --recursive'",
-    "postinstall": "cd quewer-frontend/ && npm i"
+    "postinstall": "cd quewer-frontend/ && npm i -f"
   },
   "repository": {
     "type": "git",
