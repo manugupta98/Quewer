@@ -1,4 +1,4 @@
-import { SIDEBAR_TOGGLE, USER_INFO } from '../constants';
+import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO } from '../constants';
 
 const appState = {
     sideBar: true,
@@ -9,6 +9,7 @@ const appState = {
 
 
 export default function userReducer(state = appState, action) {
+    let list = [];
     switch(action.type) {
         // to be filled after getting API
         case SIDEBAR_TOGGLE: {
@@ -21,6 +22,19 @@ export default function userReducer(state = appState, action) {
             return {
                 ...state,
                 user: action.payload
+            }
+        }
+        case COURSE_ENROLL: {
+            list = [...state.user.registeredCourses];
+            list.push(action.payload.courseName);
+            list.sort();
+            console.log(list);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    registeredCourses: list
+                }
             }
         }
         default:

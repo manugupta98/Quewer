@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, UPDATE_COURSE_LIST } from './constants';
 import axios from 'axios';
 const {QuestionSerializer, QuestionDeserializer} = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
