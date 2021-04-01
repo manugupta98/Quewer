@@ -11,8 +11,8 @@ export function enrollCourse(courseID, courseName) {
             dispatch({
                 type: COURSE_ENROLL,
                 payload: {
-                    courseID: courseID,
-                    courseName: courseName
+                    id: courseID,
+                    title: courseName
                 }
             });
         }).catch(err => {
@@ -70,13 +70,31 @@ export const deleteCourse = course => {
     }
 }
 
-export const selectCourse = (courseID, courseName) => {
-    return {
-        type: COURSE_SELECT,
-        payload: {
-            id: courseID,
-            name: courseName
-        }
+// export const selectCourse = (courseID, courseName) => {
+//     return {
+//         type: COURSE_SELECT,
+//         payload: {
+//             id: courseID,
+//             name: courseName
+//         }
+//     }
+// }
+
+export function selectCourse(courseID, courseName) {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses/" + courseID + "/questions").then(res => {
+            console.log(res.data.data);
+            dispatch({
+                type: COURSE_SELECT,
+                payload: {
+                    id: courseID,
+                    name: courseName,
+                    questions: res.data.data
+                }
+            });
+        }).catch(err => {
+            console.log(err);
+        })
     }
 }
 

@@ -45,8 +45,8 @@ export default function courseReducer(state = appState, action) {
                 currentCourse: {
                     ...state.currentCourse,
                     id: action.payload.id,
-                    name: action.payload.name
-                    // questions: action.payload
+                    name: action.payload.name,
+                    questions: action.payload.questions
                 }
             }
         }
