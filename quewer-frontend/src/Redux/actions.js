@@ -41,8 +41,8 @@ export const unenrollCourse = (courseID, courseName) => {
             dispatch({
                 type: COURSE_UNENROLL,
                 payload: {
-                    courseID: courseID,
-                    courseName: courseName
+                    id: courseID,
+                    title: courseName
                 }
             });
         }).catch(err => {

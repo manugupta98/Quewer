@@ -1,4 +1,4 @@
-import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO } from '../constants';
+import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL } from '../constants';
 
 const appState = {
     sideBar: true,
@@ -28,6 +28,17 @@ export default function userReducer(state = appState, action) {
             list = [...state.user.registeredCourses];
             list.push(action.payload);
             console.log(list);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    registeredCourses: list
+                }
+            }
+        }
+        case COURSE_UNENROLL: {
+            list = [...state.user.registeredCourses];
+            list = list.filter(word => word.id !== action.payload.id);
             return {
                 ...state,
                 user: {

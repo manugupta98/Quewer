@@ -25,12 +25,12 @@ class CourseEnrollCard extends React.Component {
         })
     }
 
-    handleClick = () => {
+    handleClick = async () => {
         const enroll = this.state.enroll;
         if(!enroll) {
-            store.dispatch(enrollCourse(this.props.id, this.props.title));
+            await store.dispatch(enrollCourse(this.props.id, this.props.title));
         } else {
-            store.dispatch(unenrollCourse(this.props.id, this.props.title));
+            await store.dispatch(unenrollCourse(this.props.id, this.props.title));
         }
         this.setState({
             enroll: !enroll

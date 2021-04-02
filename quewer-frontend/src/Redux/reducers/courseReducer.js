@@ -15,14 +15,6 @@ const appState = {
 export default function courseReducer(state = appState, action) {
     let list = [];
     switch(action.type) {
-        case COURSE_UNENROLL: {
-            list = [...state.enrolledCourses];
-            list = list.filter(word => word !== action.payload.name);
-            return {
-                ...state,
-                enrolledCourses: list
-            }
-        }
         case COURSE_ADD: {
             list = [...state.courseList];
             list.push(action.payload);
