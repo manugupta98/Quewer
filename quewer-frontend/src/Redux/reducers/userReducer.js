@@ -1,9 +1,8 @@
-import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL } from '../constants';
+import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL, START, END } from '../constants';
 
 const appState = {
     sideBar: true,
     user: { id: null, name: null, profileImg: null, registeredCourses: [] },
-    loading: false
 };
 
 
@@ -50,15 +49,4 @@ export default function userReducer(state = appState, action) {
         default:
             return state;
     }
-}
-
-class Course {
-    constructor(title, description, teacher, regUsers) {
-        this.title = title;
-        this.desc = description;
-        this.teacher = teacher;
-        this.registeredUsers = regUsers;
-    }
-
-
 }

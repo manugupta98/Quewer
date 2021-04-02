@@ -1,6 +1,4 @@
-import { COURSE_ADD, COURSE_ENROLL, COURSE_SELECT, COURSE_UNENROLL, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST } from '../constants';
-import state from '../store';
-import updateRegisteredCourses from '../actions';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST } from '../constants';
 
 const appState = {
     enrolledCourses: [],
