@@ -90,9 +90,9 @@ export const deleteCourse = course => {
 
 export function selectCourse(courseID, courseName) {
     return dispatch => {
-        // dispatch({
-        //     type: START
-        // })
+        dispatch({
+            type: START
+        })
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses/" + courseID + "/questions").then(res => {
             console.log(res.data.data);
             dispatch({
@@ -103,9 +103,9 @@ export function selectCourse(courseID, courseName) {
                     questions: res.data.data
                 }
             });
-            // dispatch({
-            //     type: END
-            // })
+            dispatch({
+                type: END
+            })
         }).catch(err => {
             console.log(err);
         })
