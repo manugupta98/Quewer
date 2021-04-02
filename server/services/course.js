@@ -30,7 +30,7 @@ class CourseServices{
                 throw createError.Conflict("Not Registered", {expose: true});
             }
             user.registeredCourses.splice(user.registeredCourses.indexOf(course.id,), 1);
-            course.registeredUsers.pop(course.registeredUsers.indexOf(user.id,), 1);
+            course.registeredUsers.splice(course.registeredUsers.indexOf(user.id,), 1);
             user.save();
             course.save();
         });
