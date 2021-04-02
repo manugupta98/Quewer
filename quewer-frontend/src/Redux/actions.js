@@ -124,14 +124,6 @@ export function addQuestion(question, courseID) {
             type: START
         })
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
-            QuestionDeserializer.deserialize(res.data).then((newQuestion) => {
-                console.log(newQuestion);
-                console.log(`Question ${question} posted!`);
-                dispatch({
-                    type: ADD_QUESTION,
-                    payload: newQuestion,
-                });
-            }); 
             dispatch({
                 type: END
             })
