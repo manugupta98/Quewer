@@ -21,6 +21,8 @@ module.exports = {
         var action;
         if ('action' in req.query){
             action = VOTE.get(req.query.action);
+        }else if ('action' in req.body){
+            action = VOTE.get(req.body.action);
         }else{
             res.status(400).send("action absent");
         }
