@@ -6,6 +6,8 @@ const Enum = require('enum');
 
 const VOTE = new Enum(['upvoe', 'downvote', 'cancel']);
 
+const BOOKMARK = new Enum(['bookmark', 'cancel']);
+
 class QuestionAndAnswerServices{
     static async vote(user, questionId, action){
         return new Promise((resolve, reject) => {
@@ -49,6 +51,34 @@ class QuestionAndAnswerServices{
             })
         })
     }
+
+    static async bookmark(user, questionId, action){
+        return new Promise((resolve, reject) => {
+            QuestionAndAnswer.findOne({_id: questionId}).then((questionAndAnswer) => {
+
+                // @todo change to mongoose operations for synchronous upvotes
+
+                if (action === BOOKMARK.bookmark){
+                    if (user.questionBookmarks.some(item => item == questionId) == false){
+                        user.questionBookmarks.push(questionId);
+                    }
+                    if (user.questionBookmarks.some(item => item == questionId)){
+                        user.questionBookmarks.remove(questionId);
+                    }
+                }
+                else if (action === BOOKMARK.cancel){
+                    if (user.questionBookmarks.some(item => item == questionId)){
+                        user.questionBookmarks.remove(questionId);
+                    }
+                }
+
+                user.save();
+                console.log(user);
+                console.log(questionAndAnswer);
+                resolve(user);
+            })
+        })
+    }
 }
 
-module.exports = {QuestionAndAnswerServices, VOTE};
+module.exports = {QuestionAndAnswerServices, VOTE, BOOKMARK};

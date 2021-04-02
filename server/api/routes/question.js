@@ -14,4 +14,6 @@ questionRouter.post('/courses/:courseID/questions', authMiddleware.isAuthenticat
 
 questionRouter.post('/courses/:courseID/questions/:questionID/vote', authMiddleware.isAuthenticated, QuestionAndAnswerController.vote);
 
+questionRouter.post('/courses/:courseID/questions/:questionID/bookmark', authMiddleware.isAuthenticated, QuestionAndAnswerController.bookmark);
+
 module.exports = questionRouter;
