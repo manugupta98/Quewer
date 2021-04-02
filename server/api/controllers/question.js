@@ -6,9 +6,10 @@ const {QuestionSerializer, QuestionDeserializer} = require('../../serializers/qu
 
 module.exports = {
     question: (req, res) => {
-        filter = {};
+        filter = {course: req.params.courseID};
         if ('questionID' in req.params){
-            filter = {_id: req.params.questionID};
+            filter = {...filter,
+                _id: req.params.questionID};
         }
         console.log('filter', filter);
         Question.find(filter).then((question) => {

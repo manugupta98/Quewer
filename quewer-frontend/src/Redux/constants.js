@@ -7,3 +7,5 @@ export const COURSE_SELECT = "sidebar/select";
 export const SIDEBAR_TOGGLE = "sidebar/toggle";
 export const ADD_QUESTION = "course/addQuestion";
 export const USER_INFO = "user/info";
+export const START = "api/start";
+export const END = "api/end";

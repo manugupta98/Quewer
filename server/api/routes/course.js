@@ -9,4 +9,6 @@ courseRouter.get('/courses/:course', authMiddleware.isAuthenticated, courseContr
 
 courseRouter.post('/courses/:course/enroll', authMiddleware.isAuthenticated,courseController.enroll);
 
+courseRouter.post('/courses/:course/unenroll', authMiddleware.isAuthenticated,courseController.unenroll);
+
 module.exports = courseRouter;

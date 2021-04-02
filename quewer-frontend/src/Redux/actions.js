@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END } from './constants';
 import axios from 'axios';
 const {QuestionSerializer, QuestionDeserializer} = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
@@ -6,15 +6,21 @@ const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 
 export function enrollCourse(courseID, courseName) {
     return dispatch => {
+        dispatch({
+            type: START,
+        })
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/enroll`).then(res => {
             console.log(`Course ${courseID} added!`);
             dispatch({
                 type: COURSE_ENROLL,
                 payload: {
-                    courseID: courseID,
-                    courseName: courseName
+                    id: courseID,
+                    title: courseName
                 }
             });
+            dispatch({
+                type: END
+            })
         }).catch(err => {
             console.log(err);
         });
@@ -23,11 +29,17 @@ export function enrollCourse(courseID, courseName) {
 
 export function fetchCourses() {
     return dispatch => {
+        dispatch({
+            type: START
+        })
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses").then(res => {
             dispatch({
                 type: FETCH_COURSE_LIST,
                 payload: res.data.data
             });
+            dispatch({
+                type: END
+            })
         }).catch(err => {
             console.log(err);
         })
@@ -36,15 +48,21 @@ export function fetchCourses() {
 
 export const unenrollCourse = (courseID, courseName) => {
     return dispatch => {
+        dispatch({
+            type: START
+        })
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/unenroll`).then(res => {
             console.log(`Course ${courseID} removed!`);
             dispatch({
                 type: COURSE_UNENROLL,
                 payload: {
-                    courseID: courseID,
-                    courseName: courseName
+                    id: courseID,
+                    title: courseName
                 }
             });
+            dispatch({
+                type: END
+            })
         }).catch(err => {
             console.log(err);
         });
@@ -70,13 +88,27 @@ export const deleteCourse = course => {
     }
 }
 
-export const selectCourse = (courseID, courseName) => {
-    return {
-        type: COURSE_SELECT,
-        payload: {
-            id: courseID,
-            name: courseName
-        }
+export function selectCourse(courseID, courseName) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses/" + courseID + "/questions").then(res => {
+            console.log(res.data.data);
+            dispatch({
+                type: COURSE_SELECT,
+                payload: {
+                    id: courseID,
+                    name: courseName,
+                    questions: res.data.data
+                }
+            });
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        })
     }
 }
 
@@ -88,15 +120,13 @@ export const toggleSideBar = () => {
 
 export function addQuestion(question, courseID) {
     return dispatch => {
+        dispatch({
+            type: START
+        })
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
-            QuestionDeserializer.deserialize(res.data).then((newQuestion) => {
-                console.log(newQuestion);
-                console.log(`Question ${question} posted!`);
-                dispatch({
-                    type: ADD_QUESTION,
-                    payload: newQuestion,
-                });
-            }); 
+            dispatch({
+                type: END
+            })
         }).catch(err => {
             console.log(err);
         });
@@ -105,6 +135,9 @@ export function addQuestion(question, courseID) {
 
 export function userInfo() {
     return dispatch => {
+        dispatch({
+            type: START
+        })
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
             new JSONAPIDeserializer({
                 keyForAttribute: 'camelCase',
@@ -120,6 +153,9 @@ export function userInfo() {
                   type: USER_INFO,
                   payload: newUser
               });
+              dispatch({
+                  type: END
+              })
             })
         }).catch((err) => {
             console.error(err);

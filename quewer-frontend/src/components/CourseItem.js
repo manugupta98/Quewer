@@ -1,20 +1,24 @@
 import '../style/CourseItem.css';
-import jQuery from 'jquery';
 import store from '../Redux/store';
 import { selectCourse } from '../Redux/actions';
-
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function CourseItem(props) {
-    jQuery(document).ready(function(){
-        jQuery('h4').click(function(event){
-            //remove all pre-existing active classes
-            jQuery('.Selected').removeClass('Selected');
-            
-            //add the active class to the link we clicked
-            jQuery(this).addClass('Selected');
-        });
-    });
-    
+
+    const location = useLocation();
+
+    useEffect(() => {
+        const path = location.pathname;
+        // if(path.startsWith('/course/')) {
+        //     const courseName = path.split('/')[2];
+        //     if(props.name === courseName) {
+        //         handleClick();
+        //         console.log(store.getState().course.currentCourse.name);
+        //     }
+        // }
+    })
+
     function handleClick() {
         if(props.name !== 'Enroll Courses') {
             store.dispatch(selectCourse(props.id, props.name));

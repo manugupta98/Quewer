@@ -6,6 +6,7 @@ import PostAnswer from './pages/PostAnswer';
 import PostQuestion from './pages/PostQuestion';
 import Page from './pages/Page';
 import Loading from './Loading';
+import { connect } from 'react-redux';
 
 function App({loading}) {
   return (
@@ -27,4 +28,8 @@ function App({loading}) {
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  loading: state.appState.loading
+});
+
+export default connect(mapStateToProps)(App);

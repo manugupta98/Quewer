@@ -1,4 +1,4 @@
-import { COURSE_ADD, COURSE_ENROLL, COURSE_SELECT, COURSE_UNENROLL, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST } from '../constants';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST } from '../constants';
 
 const appState = {
     enrolledCourses: [],
@@ -13,23 +13,6 @@ const appState = {
 export default function courseReducer(state = appState, action) {
     let list = [];
     switch(action.type) {
-        case COURSE_ENROLL: {
-            list = [...state.enrolledCourses];
-            list.push(action.payload.courseName);
-            list.sort();
-            return {
-                ...state,
-                enrolledCourses: list
-            }
-        }
-        case COURSE_UNENROLL: {
-            list = [...state.enrolledCourses];
-            list = list.filter(word => word !== action.payload.name);
-            return {
-                ...state,
-                enrolledCourses: list
-            }
-        }
         case COURSE_ADD: {
             list = [...state.courseList];
             list.push(action.payload);
@@ -52,8 +35,8 @@ export default function courseReducer(state = appState, action) {
                 currentCourse: {
                     ...state.currentCourse,
                     id: action.payload.id,
-                    name: action.payload.name
-                    // questions: action.payload
+                    name: action.payload.name,
+                    questions: action.payload.questions
                 }
             }
         }

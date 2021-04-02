@@ -20,7 +20,16 @@ module.exports = {
         let user = req.user;
         let courseId = req.params.course;
         CourseServices.enroll(user, courseId).then(() => {
-            res.json("Successfully registered");
+            res.json("Successfully enrolled");
+        }).catch((err) => {
+            res.status(err.status).send(err.message);
+        })
+    },
+    unenroll: (req, res) => {
+        let user = req.user;
+        let courseId = req.params.course;
+        CourseServices.unenroll(user, courseId).then(() => {
+            res.json("Successfully unenrolled");
         }).catch((err) => {
             res.status(err.status).send(err.message);
         })

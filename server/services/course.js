@@ -10,11 +10,27 @@ class CourseServices{
         await Course.findOne({_id: courseId}).catch((err) => {
             throw createError.NotFound("Course not found", {expose: true});
         }).then((course) => {
+            console.log(course.title);
             if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id)){
                 throw createError.Conflict("Already Registered", {expose: true});
             }
             user.registeredCourses.push(course.id,);
             course.registeredUsers.push(user.id,);
+            user.save();
+            course.save();
+        });
+    }
+
+    static async unenroll(user, courseId){
+        await Course.findOne({_id: courseId}).catch((err) => {
+            throw createError.NotFound("Course not found", {expose: true});
+        }).then((course) => {
+            console.log(course.title);
+            if (!(user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id))){
+                throw createError.Conflict("Not Registered", {expose: true});
+            }
+            user.registeredCourses.splice(user.registeredCourses.indexOf(course.id,), 1);
+            course.registeredUsers.splice(course.registeredUsers.indexOf(user.id,), 1);
             user.save();
             course.save();
         });
