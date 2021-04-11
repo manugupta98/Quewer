@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
             ref: 'Answers', 
         },
     ],  
-    questionBookmarks:  [
+    questionBookmarks: [
         {
             type: Schema.Types.ObjectID,
             ref: 'Question', 

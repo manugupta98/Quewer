@@ -13,6 +13,7 @@ module.exports = {
         }
         console.log('filter', filter);
         Question.find(filter).then((question) => {
+            console.log(question);
             res.send(QuestionSerializer.serialize(question));
         }).catch((err) => {
             res.status(500).send();

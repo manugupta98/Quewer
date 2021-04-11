@@ -11,11 +11,11 @@ class CourseServices{
             throw createError.NotFound("Course not found", {expose: true});
         }).then((course) => {
             console.log(course.title);
-            if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id)){
+            if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item.id == user.id)){
                 throw createError.Conflict("Already Registered", {expose: true});
             }
             user.registeredCourses.push(course.id,);
-            course.registeredUsers.push(user.id,);
+            course.registeredUsers.push({id: user.id, name: user.displayName, photos: user.photos,},);
             user.save();
             course.save();
         });
@@ -30,7 +30,7 @@ class CourseServices{
                 throw createError.Conflict("Not Registered", {expose: true});
             }
             user.registeredCourses.splice(user.registeredCourses.indexOf(course.id,), 1);
-            course.registeredUsers.splice(course.registeredUsers.indexOf(user.id,), 1);
+            course.registeredUsers.splice(course.registeredUsers.findIndex(item => item.id === user.id), 1);
             user.save();
             course.save();
         });

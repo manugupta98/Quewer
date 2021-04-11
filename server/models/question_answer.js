@@ -8,9 +8,25 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         required: true
     },
     postedBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        name:{
+            type: String,
+            required: true
+        },
+        photos: [{
+            value: {
+                type: String,
+                required: true,
+            },
+        }],
+    },
+    anonymous: {
+        type: Boolean,
+        default: false,
     },
     title: {
         type: String,
@@ -59,6 +75,11 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
     }],
 })
 
+questinAndAnswerBaseSchema.pre("save", (next, done) => {
+    this.upvotes = this.usersUpvoted.length - this.usersDownvoted;
+    next();
+})
+
 const questionSchema = new mongoose.Schema({
     answers: [{
         type: Schema.Types.ObjectID,
@@ -75,9 +96,21 @@ const answerSchema = new mongoose.Schema({
     },
     comments: [{
         postedBy: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+            id: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            name:{
+                type: String,
+                required: true
+            },
+            photos: [{
+                value: {
+                    type: String,
+                    required: true,
+                },
+            }],
         },
         date: {
             type: Date,
