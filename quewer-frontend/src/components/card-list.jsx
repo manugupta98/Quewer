@@ -11,7 +11,7 @@ class CardList extends React.Component {
         if(this.props.component === CourseEnrollCard) {
             this.componentList = this.props.list.map(card => <CourseEnrollCard key={card.id} id={card.id} {...card.attributes} />)
         } else if(this.props.component === QuestionCard) {
-            this.componentList = this.props.list.map(card => <QuestionCard key={card.id} id={card.id} {...card.attributes} postedBy={card.relationships.postedBy.data.id} />)
+            this.componentList = this.props.list.map(card => <QuestionCard key={card.id} id={card.id} {...card.attributes} postedBy={card.relationships.postedBy.data.id} linked />)
         } 
     }
 

@@ -4,6 +4,7 @@ import Description from './description';
 import Tag from './tag';
 import QFooter from './q-footer';
 import UpvoteBookmark from './upvote-bookmark';
+import { Link } from 'react-router-dom';
 
 class QuestionCard extends React.Component {
     render() {
@@ -11,11 +12,21 @@ class QuestionCard extends React.Component {
             <div className='q-card-main'>
                 <div className='q-question-upvote'>
                     <UpvoteBookmark />
-                    <div className='q-question'>
-                        {this.props.title}  
-                        <hr />
-                        <Description length={300}>{this.props.description}</Description>
-                    </div>
+                    {
+                        (this.props.linked) ? 
+                        <Link to={`/question/${this.props.id}`} className='q-question' style={{textDecoration: 'none', color: 'black'}} >
+                            <div>
+                                {this.props.title}  
+                                <hr />
+                                <Description>{this.props.description}</Description>
+                            </div>
+                        </Link> : 
+                        <div className='q-question'>
+                            {this.props.title}  
+                            <hr />
+                            <Description>{this.props.description}</Description>
+                        </div>
+                    }
                 </div>
                 <QFooter username={this.props.postedBy} time={this.props.date}>
                     {this.props.tags.map((tag, index) => <Tag key={index} tag={tag} />)}

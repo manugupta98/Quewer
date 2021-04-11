@@ -22,6 +22,7 @@ function App({loading}) {
           <Route path='/postanswer' component={PostAnswer} />
           <Route path='/postquestion' component={PostQuestion} />
           <Route path='/course/:courseID' component={MainPage} />
+          <Route path='/question/:questionID' component={EnrollPage} />
         </Page>
     </Switch>
   </div>

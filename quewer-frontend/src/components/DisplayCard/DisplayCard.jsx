@@ -22,10 +22,14 @@ function DisplayCard({name, numQuestions, numAnswers}) {
             </div>
             <div className="ButtonsRow">
                 <Link to="/postquestion"><Button color="#618CFB" textColor="white" text="Ask a question" /></Link>
-                <Button color="#618CFB" textColor="white" text="Mail instructor" />
+                <Button color="#618CFB" onClick={sendMail} textColor="white" text="Mail instructor" />
             </div>
         </div>
   );
+}
+
+function sendMail() {
+    window.open("mailto:example@gmail.com")
 }
 
 function sumOfAnswers(state) {
