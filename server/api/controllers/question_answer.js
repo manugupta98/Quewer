@@ -2,7 +2,7 @@ const express = require('express');
 const QuestionAndAnswer = require('../../models/question_answer').QuestinAndAnswer;
 const createError = require('http-errors');
 const {QuestionSerializer, QuestionDeserializer} = require('../../serializers/question');
-const {UserSerializer} = require('../../serializers/user');
+const UserSerializer = require('../../serializers/user');
 const {QuestionAndAnswerServices, VOTE, BOOKMARK} = require('../../services/question_answer')
 
 

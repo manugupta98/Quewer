@@ -7,8 +7,8 @@ const CourseServices = require('../../services/course')
 module.exports = {
     course: (req, res) => {
         filter = {};
-        if ('course' in req.params){
-            filter = {_id: req.params.course};
+        if ('courseID' in req.params){
+            filter = {_id: req.params.courseID};
         }
         Course.find(filter).then((courses) => {
             res.send(CourseSerializer.serialize(courses));
@@ -18,7 +18,7 @@ module.exports = {
     },
     enroll: (req, res) => {
         let user = req.user;
-        let courseId = req.params.course;
+        let courseId = req.params.courseID;
         CourseServices.enroll(user, courseId).then(() => {
             res.json("Successfully enrolled");
         }).catch((err) => {
@@ -27,9 +27,27 @@ module.exports = {
     },
     unenroll: (req, res) => {
         let user = req.user;
-        let courseId = req.params.course;
+        let courseId = req.params.courseID;
         CourseServices.unenroll(user, courseId).then(() => {
             res.json("Successfully unenrolled");
+        }).catch((err) => {
+            res.status(err.status).send(err.message);
+        })
+    },
+    add: (req, res) => {
+        let user = req.user;
+        let course = req.body;
+        CourseServices.addCourse(user, course).then(() => {
+            res.json("Successfully Added");
+        }).catch((err) => {
+            res.status(err.status).send(err.message);
+        })
+    },
+    delete: (req, res) => {
+        let user = req.user;
+        let courseId = req.params.courseID;
+        CourseServices.deleteCourse(user, courseId).then(() => {
+            res.json("Successfully deleted");
         }).catch((err) => {
             res.status(err.status).send(err.message);
         })

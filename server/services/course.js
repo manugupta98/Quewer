@@ -35,6 +35,22 @@ class CourseServices{
             course.save();
         });
     }
+    static async addCourse(user, course){
+        await Course.create(course).then((course) => {
+            console.log('Course added successfully :) ');
+        }).catch((err) => {
+            console.log('Course adding unsuccessfully :) ');
+            throw createError.InternalServerError("Course cannot be added successfully", {expose: true});
+        });
+    }
+    static async deleteCourse(user, courseId){
+        await Course.deleteOne({_id: courseId}).then((course) => {
+            console.log("Course successfully deleted from the database :) ");
+        }).catch((err) => {
+            console.log("Course not found");
+            throw createError.NotFound("Course not found", {expose: true});
+        });
+    }
 }
 
 module.exports = CourseServices;

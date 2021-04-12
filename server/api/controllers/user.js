@@ -38,4 +38,31 @@ module.exports = {
         res.send(usr.registeredCourses);
       });
   },
+  bookmarks: async (req, res) => {
+    let user = req.user;
+    User.findOne({ _id : user.id })
+      .populate("questionBookmarks") // only works if we pushed refs to person.eventsAttended
+      .exec(function (err, usr) {
+        if (err) return handleError(err);
+        res.send(usr.questionBookmarks);
+      });
+  },
+  upvotes: async (req, res) => {
+    let user = req.user;
+    User.findOne({ _id : user.id })
+      .populate("questionUpvoted") // only works if we pushed refs to person.eventsAttended
+      .exec(function (err, usr) {
+        if (err) return handleError(err);
+        res.send(usr.questionUpvoted);
+      });
+  },
+  downvotes: async (req, res) => {
+    let user = req.user;
+    User.findOne({ _id : user.id })
+      .populate("questionDownvoted") // only works if we pushed refs to person.eventsAttended
+      .exec(function (err, usr) {
+        if (err) return handleError(err);
+        res.send(usr.questionDownvoted);
+      });
+  },
 };

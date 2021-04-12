@@ -12,6 +12,18 @@ const UserSerializer = new JSONAPISerializer('users', {
             included: false,
         },
     },
+    questionUpvoted: {
+        ref: 'id',
+        included: true,
+    },
+    questionDownvoted: {
+        ref: 'id',
+        included: true,
+    },
+    questionBookmarks: {
+        ref: 'id',
+        included: true,
+    },
     typeForAttribute: (attribute, data) => {
         if (attribute === 'registeredCourses') return 'courses';
     },

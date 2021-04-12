@@ -4,7 +4,7 @@ const createError = require('http-errors')
 
 const Enum = require('enum');
 
-const VOTE = new Enum(['upvoe', 'downvote', 'cancel']);
+const VOTE = new Enum(['upvote', 'downvote', 'cancel']);
 
 const BOOKMARK = new Enum(['bookmark', 'cancel']);
 
@@ -18,7 +18,7 @@ class QuestionAndAnswerServices{
                 if (action === VOTE.upvote){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id) == false){
                         questionAndAnswer.usersUpvoted.push(user.id,);
-                        questionAndAnswer.upvotes++;
+                        questionAndAnswer.upvotes++; 
                     }
                     if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
                         questionAndAnswer.usersDownvoted.remove(user.id,);
@@ -60,21 +60,17 @@ class QuestionAndAnswerServices{
 
                 if (action === BOOKMARK.bookmark){
                     if (user.questionBookmarks.some(item => item == questionId) == false){
-                        user.questionBookmarks.push(questionId);
-                    }
-                    if (user.questionBookmarks.some(item => item == questionId)){
-                        user.questionBookmarks.remove(questionId);
+                        user.questionBookmarks.push(questionId,);
                     }
                 }
                 else if (action === BOOKMARK.cancel){
                     if (user.questionBookmarks.some(item => item == questionId)){
-                        user.questionBookmarks.remove(questionId);
+                        user.questionBookmarks.remove(questionId,);
                     }
                 }
 
-                user.save();
                 console.log(user);
-                console.log(questionAndAnswer);
+                user.save();
                 resolve(user);
             })
         })

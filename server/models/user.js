@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
             required: true,
         },
     }],
+    type: {
+        type: String,
+        // required: true,
+    },
     registeredCourses: [
         {
             type: Schema.Types.ObjectID,
@@ -49,7 +53,19 @@ const userSchema = new mongoose.Schema({
             type: Schema.Types.ObjectID,
             ref: 'Answers', 
         },
-    ],  
+    ],
+    questionUpvoted: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Question', 
+        }
+    ], 
+    questionDownvoted: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Question', 
+        }
+    ],
     questionBookmarks: [
         {
             type: Schema.Types.ObjectID,

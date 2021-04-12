@@ -11,16 +11,13 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         id: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            required: true
         },
         name:{
             type: String,
-            required: true
         },
         photos: [{
             value: {
                 type: String,
-                required: true,
             },
         }],
     },
@@ -75,8 +72,8 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
     }],
 })
 
-questinAndAnswerBaseSchema.pre("save", (next, done) => {
-    this.upvotes = this.usersUpvoted.length - this.usersDownvoted;
+questinAndAnswerBaseSchema.pre("save", function(next, done) {
+    this.upvotes = this.usersUpvoted.length - this.usersDownvoted.length;
     next();
 })
 

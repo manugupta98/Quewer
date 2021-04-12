@@ -11,7 +11,7 @@ const QuestionSerializer = new JSONAPISerializer('questions', {
     postedBy: {
         ref: 'id',
         included: true,
-        attributes: ['id', 'name', 'photos'],
+        attributes: ['photos', 'id', 'name'],
     },
     typeForAttribute: (attribute, data) =>{
         return data.customType;
