@@ -9,7 +9,7 @@ function MainPage({match}) {
     return (
         <div>
             <DisplayCard name={match.params.courseID} />
-            <CardList component={QuestionCard} list={list} />
+            <CardList component={QuestionCard} list={list} linked />
         </div>
     );
 }
