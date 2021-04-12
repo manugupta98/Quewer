@@ -5,16 +5,17 @@ import Tag from './tag';
 import QFooter from './q-footer';
 import UpvoteBookmark from './upvote-bookmark';
 import { Link } from 'react-router-dom';
+import store from '../Redux/store';
 
 class QuestionCard extends React.Component {
     render() {
         return (
-            <div className='q-card-main'>
+            <div className='q-card-main' style={this.props.style}>
                 <div className='q-question-upvote'>
                     <UpvoteBookmark />
                     {
                         (this.props.linked) ? 
-                        <Link to={`/question/${this.props.id}`} className='q-question' style={{textDecoration: 'none', color: 'black'}} >
+                        <Link to={{pathname: `/question/${this.props.id}`, state: {question: store.getState().course.currentCourse.questions.filter(question => question.id === this.props.id)}}} className='q-question' style={{textDecoration: 'none', color: 'black'}} >
                             <div>
                                 {this.props.title}  
                                 <hr />
