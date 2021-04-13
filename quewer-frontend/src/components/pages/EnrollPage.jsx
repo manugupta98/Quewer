@@ -16,9 +16,11 @@ class EnrollPage extends React.Component {
         }
     }
     
-    componentDidMount() {
-        store.dispatch(fetchCourses());
-        console.log(this.props.courseList);
+    async componentDidMount() {
+        await store.dispatch(fetchCourses());
+        this.setState({
+            list: this.props.courseList
+        });
     }
 
     handleChange = (value) => {
