@@ -25,8 +25,8 @@
     margin: 0 10px;
 }
 
-.status div {
-    margin: 0;
+#unenroll-text {
+    margin: 0 5px;
 }
 
 .status {
@@ -42,7 +42,7 @@
     background-color: crimson;
     fill: white;
     font-size: 30px;
-    margin: 10px;
+    margin: 2px 10px;
     padding: 5px;
     border-radius: 10px;
 }
