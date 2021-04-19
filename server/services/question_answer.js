@@ -18,34 +18,41 @@ class QuestionAndAnswerServices{
                 if (action === VOTE.upvote){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id) == false){
                         questionAndAnswer.usersUpvoted.push(user.id,);
+                        user.questionUpvoted.push(questionId,);
                         questionAndAnswer.upvotes++; 
                     }
                     if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
                         questionAndAnswer.usersDownvoted.remove(user.id,);
-                        questionAndAnswer.upvots--;
+                        user.questionDownvoted.remove(questionId,);
+                        questionAndAnswer.upvotes--;
                     }
                 }
                 else if (action === VOTE.downvote){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id)){
                         questionAndAnswer.usersUpvoted.remove(user.id,);
+                        user.questionUpvoted.remove(questionId,);
                         questionAndAnswer.upvotes--;
                     }
                     if (questionAndAnswer.usersDownvoted.some(item => item == user.id) == false){
                         questionAndAnswer.usersDownvoted.push(user.id,);
+                        user.questionDownvoted.push(questionId,);
                         questionAndAnswer.upvotes--;
                     }
                 }
                 else if (action === VOTE.cancel){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id)){
                         questionAndAnswer.usersUpvoted.remove(user.id,);
+                        user.questionUpvoted.remove(questionId,);
                         questionAndAnswer.upvotes--;
                     }else if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
                         questionAndAnswer.usersDownvoted.remove(user.id,);
+                        user.questionDownvoted.remove(questionId,);
                         questionAndAnswer.upvotes++;
                     }
                 }
 
                 questionAndAnswer.save();
+                user.save();
                 console.log(questionAndAnswer);
                 resolve(questionAndAnswer);
             })

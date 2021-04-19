@@ -65,10 +65,17 @@ admin.initializeApp(firebaseConfig);
     callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    let type = 'student';
+    let regExp = new RegExp('(([f]{1}\d{8})+([h]{1}\d{11})[a-zA-Z0-9@.]*');
+    if (!profile.email[0].value.match(regExp)){
+      type = 'teacher';
+    }
     User.findOrCreate({
       googleId: profile.id,
       displayName: profile.displayName,
       name: profile.name,
+      type: type,
       photos: profile.photos,
     }).then((user) => {
       return done(null, user);
