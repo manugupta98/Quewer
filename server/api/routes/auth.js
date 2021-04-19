@@ -5,7 +5,7 @@ const authRouter = express.Router();
 authRouter.get('/auth/google',(req, res, next) => {
   res.cookie('google-login-redirect-url', req.query.uri);
   next();
-}, passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+}, passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email'] }));
 
 authRouter.get('/auth/google/callback', 
   passport.authenticate('google'), (req, res) => {

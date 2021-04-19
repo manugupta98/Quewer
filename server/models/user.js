@@ -26,6 +26,16 @@ const userSchema = new mongoose.Schema({
             required: true,
         },
     }],
+    emails: [{
+        value: {
+            type: String,
+            required: true,
+        },
+        verified: {
+            type: Boolean,
+            required: true,
+        }
+    }],
     type: {
         type: String,
         // required: true,
