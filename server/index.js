@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const MongoStore = require('connect-mongo');
+const admin = require('firebase-admin');
 
 const User = require('./models/user');
 const userRouter = require('./api/routes/user');
@@ -45,6 +46,16 @@ if (!isDev && cluster.isMaster) {
   var mongooseConnection = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true}).catch((err) => {
     console.error(err);
   })
+
+  let firebaseConfig = {
+    credential: admin.credential.cert({
+        projectId: process.env.PROJECT_ID,
+        privateKey: process.env.PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        clientEmail: process.env.CLIENT_EMAIL,
+    }),
+    databaseURL: process.env.DATABASE_URL,
+};
+admin.initializeApp(firebaseConfig);
 
 
 

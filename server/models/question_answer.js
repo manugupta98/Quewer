@@ -51,7 +51,7 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         ref: 'User',
     }],
     attachments: [{
-        url:{
+        id:{
             type: String,
             required: true
         },
@@ -59,7 +59,7 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
             type: String,
             required: true,
             validate (value) {
-                if (!['pdf', 'png', 'jpg'].includes(value)){
+                if (!['pdf', 'png', 'jpeg'].includes(value)){
                     throw new Error('Attachment type not supported');
                 }
             }

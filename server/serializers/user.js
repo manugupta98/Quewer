@@ -2,7 +2,7 @@ const JSONAPISerializer = require('jsonapi-serializer').Serializer;
 const Course = require('../models/course')
 
 const UserSerializer = new JSONAPISerializer('users', {
-    attributes:['displayName', 'name', 'photos', 'registeredCourses'],
+    attributes:['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks'],
     registeredCourses: {
         ref: 'id',
         included: true,
@@ -13,16 +13,16 @@ const UserSerializer = new JSONAPISerializer('users', {
         },
     },
     questionUpvoted: {
-        ref: 'id',
-        included: true,
+        ref: '_id',
+        included: false,
     },
     questionDownvoted: {
-        ref: 'id',
-        included: true,
+        ref: '_id',
+        included: false,
     },
     questionBookmarks: {
-        ref: 'id',
-        included: true,
+        ref: '_id',
+        included: false,
     },
     typeForAttribute: (attribute, data) => {
         if (attribute === 'registeredCourses') return 'courses';

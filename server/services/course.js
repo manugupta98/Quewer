@@ -36,14 +36,21 @@ class CourseServices{
         });
     }
     static async addCourse(user, course){
+        if (user.type !== "admin"){
+            throw createError.Unauthorized("", {expose: true});
+        }
         await Course.create(course).then((course) => {
             console.log('Course added successfully :) ');
+            return course;
         }).catch((err) => {
             console.log('Course adding unsuccessfully :) ');
             throw createError.InternalServerError("Course cannot be added successfully", {expose: true});
         });
     }
     static async deleteCourse(user, courseId){
+        if (user.type !== "admin"){
+            throw createError.Unauthorized("", {expose: true});
+        }
         await Course.deleteOne({_id: courseId}).then((course) => {
             console.log("Course successfully deleted from the database :) ");
         }).catch((err) => {

@@ -35,7 +35,7 @@ const AnswerDeserializer = new JSONAPIDeserializer({
             return relationship.id;
         }
     },
-    courses: {
+    question: {
         valueForRelationship: (relationship) => {
             console.log(relationship);
             return relationship.id;

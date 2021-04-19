@@ -4,10 +4,14 @@ const answerController = require('../controllers/answer');
 const QuestionAndAnswerController = require('../controllers/question_answer');
 const authMiddleware = require('../middleware/auth');
 
-answerRouter.get('/courses/:course/questions/:question/answers/:answer', authMiddleware.isAuthenticated, answerController.answer)
+answerRouter.get('/courses/:course/questions/:question/answers', authMiddleware.isAuthenticated, answerController.newAnswer);
 
-answerRouter.post('/courses/:courseID/questions/:questionID/answers/:answerID/vote', authMiddleware.isAuthenticated, QuestionAndAnswerController.vote)
+answerRouter.get('/courses/:course/questions/:question/answers/:answer', authMiddleware.isAuthenticated, answerController.answer);
 
-answerRouter.post('/courses/:course/questions/:question/answers/:answer/bookmark', authMiddleware.isAuthenticated, answerController.bookmark)
+answerRouter.post('/courses/:course/questions/:question/answers/:answer/comment', authMiddleware.isAuthenticated, answerController.comment);
 
-module.exports = courseRouter;
+answerRouter.post('/courses/:courseID/questions/:questionID/answers/:answerID/vote', authMiddleware.isAuthenticated, QuestionAndAnswerController.vote);
+
+answerRouter.post('/courses/:course/questions/:question/answers/:answer/bookmark', authMiddleware.isAuthenticated, QuestionAndAnswerController.bookmark);
+
+module.exports = answerRouter;
