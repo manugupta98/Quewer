@@ -4,7 +4,7 @@ const answerController = require('../controllers/answer');
 const QuestionAndAnswerController = require('../controllers/question_answer');
 const authMiddleware = require('../middleware/auth');
 
-answerRouter.get('/courses/:course/questions/:question/answers', authMiddleware.isAuthenticated, answerController.newAnswer);
+answerRouter.post('/courses/:course/questions/:question/answers', authMiddleware.isAuthenticated, answerController.newAnswer);
 
 answerRouter.get('/courses/:course/questions/:question/answers/:answer', authMiddleware.isAuthenticated, answerController.answer);
 

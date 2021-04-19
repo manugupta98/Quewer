@@ -15,7 +15,7 @@ class CourseServices{
                 throw createError.Conflict("Already Registered", {expose: true});
             }
             user.registeredCourses.push(course.id,);
-            course.registeredUsers.push({id: user.id, name: user.displayName, photos: user.photos,},);
+            course.registeredUsers.push({id: user.id, name: user.displayName, photos: user.photos, type: user.type},);
             user.save();
             course.save();
         });

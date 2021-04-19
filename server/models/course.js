@@ -24,6 +24,10 @@ const courseSchema = new mongoose.Schema({
                 required: true,
             },
         }],
+        type: {
+            type: String,
+            required: true
+        }
     },
     registeredUsers:[{
         id: {
@@ -41,6 +45,10 @@ const courseSchema = new mongoose.Schema({
                 required: true,
             },
         }],
+        type: {
+            type: String,
+            required: true
+        }
     }],
 })
 

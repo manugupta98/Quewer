@@ -14,6 +14,8 @@ const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
 const questionRouter = require('./api/routes/question')
+const answerRouter = require('./api/routes/answer')
+const announcmentRouter = require('./api/routes/announcment')
 const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -127,6 +129,8 @@ admin.initializeApp(firebaseConfig);
   app.use("/api", authRouter);
   app.use("/api", courseRouter);
   app.use("/api", questionRouter);
+  app.use("/api", answerRouter);
+  app.use("/api", announcmentRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {

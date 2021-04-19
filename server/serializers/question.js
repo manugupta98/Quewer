@@ -31,13 +31,11 @@ const QuestionDeserializer = new JSONAPIDeserializer({
     keyForAttribute: 'camelCase',
     postedBies: {
         valueForRelationship: (relationship) => {
-            console.log(relationship);
             return relationship.id;
         }
     },
     courses: {
         valueForRelationship: (relationship) => {
-            console.log(relationship);
             return relationship.id;
         }
     }
