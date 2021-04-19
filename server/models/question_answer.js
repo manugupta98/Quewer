@@ -8,9 +8,22 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         required: true
     },
     postedBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+        name:{
+            type: String,
+        },
+        photos: [{
+            value: {
+                type: String,
+            },
+        }],
+    },
+    anonymous: {
+        type: Boolean,
+        default: false,
     },
     title: {
         type: String,
@@ -38,7 +51,7 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         ref: 'User',
     }],
     attachments: [{
-        url:{
+        id:{
             type: String,
             required: true
         },
@@ -46,7 +59,7 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
             type: String,
             required: true,
             validate (value) {
-                if (!['pdf', 'png', 'jpg'].includes(value)){
+                if (!['pdf', 'png', 'jpeg'].includes(value)){
                     throw new Error('Attachment type not supported');
                 }
             }
@@ -57,6 +70,11 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         ref: 'Tags',
         required: true
     }],
+})
+
+questinAndAnswerBaseSchema.pre("save", function(next, done) {
+    this.upvotes = this.usersUpvoted.length - this.usersDownvoted.length;
+    next();
 })
 
 const questionSchema = new mongoose.Schema({
@@ -75,9 +93,21 @@ const answerSchema = new mongoose.Schema({
     },
     comments: [{
         postedBy: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
+            id: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            name:{
+                type: String,
+                required: true
+            },
+            photos: [{
+                value: {
+                    type: String,
+                    required: true,
+                },
+            }],
         },
         date: {
             type: Date,

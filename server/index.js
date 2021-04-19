@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const MongoStore = require('connect-mongo');
+const admin = require('firebase-admin');
 
 const User = require('./models/user');
 const userRouter = require('./api/routes/user');
@@ -46,6 +47,16 @@ if (!isDev && cluster.isMaster) {
     console.error(err);
   })
 
+  let firebaseConfig = {
+    credential: admin.credential.cert({
+        projectId: process.env.PROJECT_ID,
+        privateKey: process.env.PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        clientEmail: process.env.CLIENT_EMAIL,
+    }),
+    databaseURL: process.env.DATABASE_URL,
+};
+admin.initializeApp(firebaseConfig);
+
 
 
   passport.use(new GoogleStrategy({
@@ -54,10 +65,17 @@ if (!isDev && cluster.isMaster) {
     callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    let type = 'student';
+    let regExp = new RegExp('(([f]{1}\d{8})+([h]{1}\d{11})[a-zA-Z0-9@.]*');
+    if (!profile.email[0].value.match(regExp)){
+      type = 'teacher';
+    }
     User.findOrCreate({
       googleId: profile.id,
       displayName: profile.displayName,
       name: profile.name,
+      type: type,
       photos: profile.photos,
     }).then((user) => {
       return done(null, user);
