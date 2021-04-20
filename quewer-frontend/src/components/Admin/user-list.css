@@ -1,0 +1,26 @@
+.list {
+    margin: 5px 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.user-item {
+    margin: 5px;
+    padding: 10px;
+    background-color: aliceblue;
+    border-radius: 10px;
+}
+
+#user-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.name-photo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

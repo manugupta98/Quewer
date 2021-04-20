@@ -1,0 +1,39 @@
+.list {
+    margin: 5px 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.course-item {
+    margin: 10px;
+    padding: 10px;
+    background-color: aliceblue;
+    border-radius: 10px;
+}
+
+.details, .questions, .participants {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.participants * {
+    border-radius: 10px;
+    background-color: aqua;
+    /* color: white; */
+}
+.participants *:hover {
+    transform: scale(1.05);
+}
+
+
+.midRow {
+    margin: 10px 0;
+    color: green;
+}
+
+.firstEle {
+    flex: 1;
+    margin-right: 60px;
+}
