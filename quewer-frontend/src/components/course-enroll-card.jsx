@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCheckCircle } from "react-icons/fa";
+import { AiFillCloseCircle } from "react-icons/ai";
 import Button from './button';
 import Description from './description';
 import '../style/course-enroll-card.css';
@@ -17,17 +17,17 @@ class CourseEnrollCard extends React.Component {
 
     componentDidMount() {
         store.getState().user.user.registeredCourses.filter((course) => {
-            if(this.props.id === course.id) {
+            if (this.props.id === course.id) {
                 this.setState({
                     enroll: true
                 })
-            } 
+            }
         })
     }
 
     handleClick = async () => {
         const enroll = this.state.enroll;
-        if(!enroll) {
+        if (!enroll) {
             await store.dispatch(enrollCourse(this.props.id, this.props.title));
         } else {
             await store.dispatch(unenrollCourse(this.props.id, this.props.title));
@@ -41,13 +41,15 @@ class CourseEnrollCard extends React.Component {
         return (
             <div className='course-enroll-card'>
                 <div className='course'>
-                    <p className='course-name'>{ this.props.title }</p>
-                    { (this.props.description) ? <hr /> : null }
-                    { (this.props.description) ? <Description enroll>{ this.props.description }</Description> : null }
+                    <p className='course-name'>{this.props.title}</p>
+                    {(this.props.description) ? <hr /> : null}
+                    {(this.props.description) ? <Description enroll>{this.props.description}</Description> : null}
                 </div>
                 <div className='status'>
-                    { 
-                        (this.state.enroll) ? <div><FaCheckCircle style={{color: 'rgb(30, 144, 255)', fontSize: '30px'}} /> Enrolled <Button onClick={ this.handleClick } color='rgb(220, 20, 60)' textColor='black' text='Uneroll' /></div> : <Button onClick={ this.handleClick } color='rgb(30, 144, 255)' textColor='white' text='Enroll' />
+                    {
+                        (this.state.enroll)
+                        ? <><AiFillCloseCircle id="unenroll-icon" onClick={this.handleClick} /><div id="unenroll-text">Unenroll</div></>
+                        : <Button onClick={this.handleClick} color='rgb(30, 144, 255)' textColor='white' text='Enroll' />
                     }
                 </div>
             </div>

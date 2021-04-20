@@ -7,15 +7,10 @@ import { FaFolderPlus, FaBook } from "react-icons/fa";
 import sidebar from '../assets/sidebar.png';
 
 export default function SideBar() {
-    const visibleStyle = {
-        visibility: "visible",
-        width: "200px"
-    };
     const invisibleStyle = {
-        visibility: "collapse",
-        width: 0
+        display: "none"
     };
-    const style = useSelector(state => state.user.sideBar) ? visibleStyle : invisibleStyle;
+    const style = useSelector(state => state.user.sideBar) ? {} : invisibleStyle;
 
     return (
         <div className="SideBar FlexCard ColumnCard" style={style}>

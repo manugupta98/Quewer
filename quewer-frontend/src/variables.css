@@ -13,7 +13,7 @@
 
 
     --inactiveShadow:
-        4px 4px 8px 0 rgba(0, 0, 0, 0.5),
+        2px 2px 4px 0 rgba(0, 0, 0, 0.5),
         -2px -2px 6px 0 rgba(255, 255, 255, 0.5);
     --activeShadow:
         inset 6px 6px 8px rgba(0, 0, 0, 0.5),

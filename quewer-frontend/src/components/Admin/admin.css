@@ -1,0 +1,52 @@
+.admin-content, .init-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-content {
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+}
+
+.section {
+    width: 80%;
+    margin: 20px 0;
+    padding: 5px 10px;
+    background-color: lightgreen;
+    border-radius: 10px;
+}
+
+.init-row {
+    flex-direction: row;
+    margin: 20px;
+}
+.init-row > h1 {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.drop-down {
+    background-color: black;
+    fill: white;
+    margin: 0 5px 0 20px;
+    font-size: 20px;
+    border-radius: 15px;
+    animation: 1s linear infinite alternate jump;
+}
+@keyframes jump {
+    from {
+        transform: translateY(-20%);
+    }
+    to {
+        transform: translateY(20%);
+    }
+}
+.drop-down:hover {
+    transform: scale(1.2);
+}
+
+.toggle {
+    display: none;
+}
