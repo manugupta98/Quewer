@@ -2,6 +2,8 @@ const JSONAPISerializer = require('jsonapi-serializer').Serializer;
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 const _ = require('lodash');
 
+const Serializer = require('./serializer');
+
 const QuestionSerializer = new JSONAPISerializer('questions', {
     attributes: ['course', 'postedBy', 'title', 'anonymous', 'description', 'date', 'upvotes', 'attachments', 'tags', 'answers'],
     course: {
@@ -41,6 +43,20 @@ const QuestionDeserializer = new JSONAPIDeserializer({
     }
 });
 
-
+Serializer.register('question', {
+    id: "_id",
+    whitelist: ['course', 'postedBy', 'title', 'anonymous', 'description', 'date', 'upvotes', 'attachments', 'tags', 'answers'],
+    relationships: {
+        course: {
+            type: "course",
+        },
+        postedBy: {
+            type: "user",
+        },
+        answers: {
+            type: "answer",
+        },
+    },
+});
 
 module.exports = {QuestionSerializer, QuestionDeserializer};

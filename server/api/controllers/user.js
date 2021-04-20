@@ -1,9 +1,10 @@
 const express = require("express");
 const User = require("../../models/user");
 const createError = require("http-errors");
-const UserSerializer = require('../../serializers/user');
 const Course = require("../../models/course");
 const { ReactWrapper } = require("enzyme");
+
+const Serializer = require('../../serializers/serializer');
 
 module.exports = {
   userInfo: async (req, res) => {
@@ -25,7 +26,7 @@ module.exports = {
         if (typeof courses !== 'undefined'){
           req.user.registeredCourses = courses;
         }
-        res.json(UserSerializer.serialize(req.user));
+        res.json(Serializer.serialize("user", req.user));
       });
     }
   },
