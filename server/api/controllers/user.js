@@ -33,6 +33,8 @@ module.exports = {
   teacher: async (req, res) => {
     User.find({type: 'teacher'}).then((teachers) => {
       res.json(Serializer.serialize("user", teachers));
+    }).catch((err)=> {
+      res.status(500).json();
     })
   },
   courses: async (req, res) => {

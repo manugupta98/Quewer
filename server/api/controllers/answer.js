@@ -3,8 +3,7 @@ const Answer = require("../../models/question_answer");
 const Course = require("../../models/question_answer");
 const createError = require("http-errors");
 const question = require("./question");
-const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
-const { filter } = require("lodash");
+const _ = require("lodash");
 
 const Serializer = require('../../serializers/serializer');
 
@@ -22,7 +21,9 @@ module.exports = {
         })
     },
     newAnswer: (req, res) => {
+        let user = req.user;
         Serializer.deserializeAsync(req.body).then((answerJSON)=>{
+            answerJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
             Answer.create(answerJSON).then((answer) => {
                 question.findOne({_id: answer.question}).then((question) => {
                     question.answers.push(answer._id);
@@ -35,10 +36,12 @@ module.exports = {
         })
     },
     comment: (req, res) => {
+        let user = req.user;
         if('answer' in req.params) {
             filter = {_id: req.params.answer};
         }   
         Serializer.deserializeAsync("comment", res.body).then((commentJSON)=>{
+            commentJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
             Answer.findOne(filter).then((answer) => {
                 answer.comments.push(comment);
             })
