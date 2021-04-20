@@ -7,7 +7,7 @@ const { ReactWrapper } = require("enzyme");
 const Serializer = require('../../serializers/serializer');
 
 module.exports = {
-  userInfo: async (req, res) => {
+  user: async (req, res) => {
     if (req.user) {
       var promises = [];
       if ('include' in req.query){
@@ -29,6 +29,11 @@ module.exports = {
         res.json(Serializer.serialize("user", req.user));
       });
     }
+  },
+  teacher: async (req, res) => {
+    User.find({type: 'teacher'}).then((teachers) => {
+      res.json(Serializer.serialize("user", teachers));
+    })
   },
   courses: async (req, res) => {
     let user = req.user;
