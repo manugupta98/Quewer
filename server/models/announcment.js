@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
 
-const questinAndAnswerBaseSchema = new mongoose.Schema({
+const announcementSchema = new mongoose.Schema({
     course:{
         type: Schema.Types.ObjectId,
         ref: 'Course',
@@ -14,20 +14,18 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
         },
         name:{
             type: String,
+            required: true
         },
         photos: [{
             value: {
                 type: String,
+                required: true
             },
         }],
         type: {
             type: String,
             required: true
         }
-    },
-    anonymous: {
-        type: Boolean,
-        default: false,
     },
     title: {
         type: String,
@@ -39,22 +37,8 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true,
-        default: Date.now()
+        required: true
     },
-    upvotes : {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    usersUpvoted: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    }],
-    usersDownvoted: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    }],
     attachments: [{
         id:{
             type: String,
@@ -70,32 +54,6 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
             }
         }
     }],
-    tags: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Tags',
-        required: true
-    }],
-})
-
-questinAndAnswerBaseSchema.pre("save", function(next, done) {
-    this.upvotes = this.usersUpvoted.length - this.usersDownvoted.length;
-    next();
-})
-
-const questionSchema = new mongoose.Schema({
-    answers: [{
-        type: Schema.Types.ObjectID,
-        ref: 'Answer',
-        required: true
-    }]
-})
-
-const answerSchema = new mongoose.Schema({
-    question: {
-        type: Schema.Types.ObjectID,
-        ref: 'Question',
-        required: true
-    },
     comments: [{
         postedBy: {
             id: {
@@ -129,7 +87,5 @@ const answerSchema = new mongoose.Schema({
     }],
 })
 
-const QuestinAndAnswer = mongoose.model('questionAndAnswer', questinAndAnswerBaseSchema);
-const Question = QuestinAndAnswer.discriminator('Question', questionSchema);
-const Answer = QuestinAndAnswer.discriminator('Answer', answerSchema);
-module.exports = {Question, Answer, QuestinAndAnswer};
+const Announcement = mongoose.model('Announcement', announcementSchema);
+module.exports = Announcement;

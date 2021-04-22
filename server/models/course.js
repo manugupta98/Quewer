@@ -11,15 +11,45 @@ const courseSchema = new mongoose.Schema({
         required: true,
     },
     teacher: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    },
-    registeredUsers:[
-        {
+        id: {
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
-    ],
+        name:{
+            type: String,
+        },
+        photos: [{
+            value: {
+                type: String,
+                required: true,
+            },
+        }],
+        type: {
+            type: String,
+            required: true
+        }
+    },
+    registeredUsers:[{
+        id: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        name:{
+            type: String,
+            required: true
+        },
+        photos: [{
+            value: {
+                type: String,
+                required: true,
+            },
+        }],
+        type: {
+            type: String,
+            required: true
+        }
+    }],
 })
 
 const Course = mongoose.model('Course', courseSchema);

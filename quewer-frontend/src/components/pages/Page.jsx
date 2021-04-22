@@ -1,5 +1,6 @@
 import React from 'react';
 import SideBar from '../SideBar';
+import AdminSideBar from '../Admin/AdminSideBar';
 import Navbar from '../Navbar/Navbar';
 import '../../style/page.css';
 
@@ -9,11 +10,13 @@ if (process.env.NODE_ENV === 'development'){
   axios.defaults.withCredentials = true;
 }
 
+const admin = false;
+
 class Page extends React.Component{
     render(){
         return (
             <div className='page'>
-                <SideBar />
+                {(admin) ? <AdminSideBar /> : <SideBar />}
                 <div className='page-content'>
                     <Navbar />
                     <div>

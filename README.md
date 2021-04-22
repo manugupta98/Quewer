@@ -1,5 +1,7 @@
 # Quewer
-
+npm i
+npm run start:dev
+npm run frontend
 
 # ENV Sample
 NODE_ENV = 'devlopment'

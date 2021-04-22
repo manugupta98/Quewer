@@ -11,11 +11,11 @@ class CourseServices{
             throw createError.NotFound("Course not found", {expose: true});
         }).then((course) => {
             console.log(course.title);
-            if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id)){
+            if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item.id == user.id)){
                 throw createError.Conflict("Already Registered", {expose: true});
             }
             user.registeredCourses.push(course.id,);
-            course.registeredUsers.push(user.id,);
+            course.registeredUsers.push({id: user.id, name: user.displayName, photos: user.photos, type: user.type},);
             user.save();
             course.save();
         });
@@ -30,9 +30,32 @@ class CourseServices{
                 throw createError.Conflict("Not Registered", {expose: true});
             }
             user.registeredCourses.splice(user.registeredCourses.indexOf(course.id,), 1);
-            course.registeredUsers.splice(course.registeredUsers.indexOf(user.id,), 1);
+            course.registeredUsers.splice(course.registeredUsers.findIndex(item => item.id === user.id), 1);
             user.save();
             course.save();
+        });
+    }
+    static async addCourse(user, course){
+        if (user.type !== "admin"){
+            throw createError.Unauthorized("", {expose: true});
+        }
+        await Course.create(course).then((course) => {
+            console.log('Course added successfully :) ');
+            return course;
+        }).catch((err) => {
+            console.log('Course adding unsuccessfully :) ');
+            throw createError.InternalServerError("Course cannot be added successfully", {expose: true});
+        });
+    }
+    static async deleteCourse(user, courseId){
+        if (user.type !== "admin"){
+            throw createError.Unauthorized("", {expose: true});
+        }
+        await Course.deleteOne({_id: courseId}).then((course) => {
+            console.log("Course successfully deleted from the database :) ");
+        }).catch((err) => {
+            console.log("Course not found");
+            throw createError.NotFound("Course not found", {expose: true});
         });
     }
 }

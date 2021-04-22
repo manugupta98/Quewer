@@ -7,12 +7,15 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const MongoStore = require('connect-mongo');
+const admin = require('firebase-admin');
 
 const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
 const questionRouter = require('./api/routes/question')
+const answerRouter = require('./api/routes/answer')
+const announcmentRouter = require('./api/routes/announcment')
 const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -46,6 +49,16 @@ if (!isDev && cluster.isMaster) {
     console.error(err);
   })
 
+  let firebaseConfig = {
+    credential: admin.credential.cert({
+        projectId: process.env.PROJECT_ID,
+        privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+        clientEmail: process.env.CLIENT_EMAIL,
+    }),
+    databaseURL: process.env.DATABASE_URL,
+};
+admin.initializeApp(firebaseConfig);
+
 
 
   passport.use(new GoogleStrategy({
@@ -54,10 +67,17 @@ if (!isDev && cluster.isMaster) {
     callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
   },
   function(accessToken, refreshToken, profile, done) {
+    let type = 'teacher';
+    let regExp = new RegExp('(([f]{1}\d{8})|([h]{1}\d{11}))[@][a-zA-Z0-9\.-]*');
+    if (!profile.emails[0].value.match(regExp)){
+      type = 'student';
+    }
     User.findOrCreate({
       googleId: profile.id,
       displayName: profile.displayName,
       name: profile.name,
+      type: type,
+      emails: profile.emails,
       photos: profile.photos,
     }).then((user) => {
       return done(null, user);
@@ -109,6 +129,8 @@ if (!isDev && cluster.isMaster) {
   app.use("/api", authRouter);
   app.use("/api", courseRouter);
   app.use("/api", questionRouter);
+  app.use("/api", answerRouter);
+  app.use("/api", announcmentRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {

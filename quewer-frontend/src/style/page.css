@@ -1,7 +1,6 @@
 .page {
     height: 100vh;
     display: flex;
-    flex-direction: row;
 }
 
 .page-content {

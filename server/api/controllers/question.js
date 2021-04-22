@@ -13,13 +13,17 @@ module.exports = {
         }
         console.log('filter', filter);
         Question.find(filter).then((question) => {
+            console.log(question);
             res.send(QuestionSerializer.serialize(question));
         }).catch((err) => {
             res.status(500).send();
         })
     },
     newQuestion: (req, res) => {
+        let user = req.user;
         QuestionDeserializer.deserialize(req.body).then((questionJSON)=>{
+            questionJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type}
+            console.log("uyvefj", questionJSON);
             Question.create(questionJSON).then((question) => {
                 res.status(201).json(QuestionSerializer.serialize(question));
             });

@@ -10,14 +10,18 @@ export default function CourseItem(props) {
 
     useEffect(() => {
         const path = location.pathname;
-        // if(path.startsWith('/course/')) {
-        //     const courseName = path.split('/')[2];
-        //     if(props.name === courseName) {
-        //         handleClick();
-        //         console.log(store.getState().course.currentCourse.name);
-        //     }
-        // }
+        if(store.getState().course.currentCourse.name === null) {
+            if(path.startsWith('/course/')) {
+                const courseName = path.split('/')[2];
+                if(props.name === courseName) {
+                    handleClick();
+                    console.log(store.getState().course.currentCourse.name);
+                }
+            }
+        }
     })
+
+    console.log(store.getState().course);
 
     function handleClick() {
         if(props.name !== 'Enroll Courses') {
