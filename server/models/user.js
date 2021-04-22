@@ -82,6 +82,24 @@ const userSchema = new mongoose.Schema({
             ref: 'Question', 
         }
     ],
+    answerUpvoted: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Answer', 
+        }
+    ], 
+    answerDownvoted: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Answer', 
+        }
+    ],
+    answerBookmarks: [
+        {
+            type: Schema.Types.ObjectID,
+            ref: 'Answer', 
+        }
+    ],
 })
 
 
