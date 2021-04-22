@@ -9,6 +9,7 @@ import Loading from './Loading';
 import { connect } from 'react-redux';
 import AnswerPage from './pages/AnswerPage';
 import Admin from './Admin/Admin';
+import AddCourse from './Admin/AddCourse';
 
 function App({loading}) {
   return (
@@ -26,6 +27,7 @@ function App({loading}) {
           <Route path='/course/:courseID' component={MainPage} />
           <Route path='/question/:questionID' component={AnswerPage} />
           <Route path='/admin' component={Admin} />
+          <Route path='/addcourse' component={AddCourse} />
         </Page>
     </Switch>
   </div>

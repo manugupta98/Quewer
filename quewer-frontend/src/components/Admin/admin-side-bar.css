@@ -14,14 +14,14 @@
 .SideBar > * {
     margin: var(--midGap) var(--smallestGap);
     color: var(--onPrimaryColor);
-    width: 90%;
+    width: 85%;
 }
 
-#icon {
+.icon {
     font-size: 30px;
 }
 
-.add-course {
+.side-btns {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -30,10 +30,15 @@
     color: black;
     padding: 5px 0;
 }
-.add-course:hover {
+.side-btns:hover {
     transition: all 0.5s;
     transform: scale(1.05);
 }
-.add-course:active {
+.side-btns:active:active {
     background-color: cornflowerblue;
+}
+
+.active-btn {
+    box-shadow: 2px 2px 2px 0 black;
+    transform: scale(1.05);
 }

@@ -2,7 +2,7 @@ import './user-list.css';
 
 export default function UserList({list, id}) {
     return (
-        <div className="list" id={(id) ? id : null}>
+        <div className="user-list" id={(id) ? id : null}>
             {list.map(user => {
                 return <User user={user} />;
             })}
