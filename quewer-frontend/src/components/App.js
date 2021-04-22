@@ -11,7 +11,7 @@ import AnswerPage from './pages/AnswerPage';
 import Admin from './Admin/Admin';
 import AddCourse from './Admin/AddCourse';
 
-function App({loading}) {
+function App({loading, userType}) {
   return (
   <div>
     {
@@ -35,7 +35,8 @@ function App({loading}) {
 }
 
 const mapStateToProps = state => ({
-  loading: state.appState.loading
+  loading: state.appState.loading,
+  userType: state.user.user.type
 });
 
 export default connect(mapStateToProps)(App);

@@ -9,3 +9,7 @@ export const ADD_QUESTION = "course/addQuestion";
 export const USER_INFO = "user/info";
 export const START = "api/start";
 export const END = "api/end";
+export const UPVOTE_QUESTION = "question/upvote";
+export const DOWNVOTE_QUESTION = "question/downvote";
+export const BOOKMARK_QUESTION = "question/bookmark";
+export const ADD_ANSWER = "question/addAnswer";

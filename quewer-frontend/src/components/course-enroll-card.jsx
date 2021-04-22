@@ -38,6 +38,7 @@ class CourseEnrollCard extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className='course-enroll-card'>
                 <div className='course'>

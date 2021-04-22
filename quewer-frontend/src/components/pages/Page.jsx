@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development'){
   axios.defaults.withCredentials = true;
 }
 
-const admin = true;
+const admin = false;
 
 class Page extends React.Component{
     render(){

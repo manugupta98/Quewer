@@ -20,14 +20,14 @@ class EnrollPage extends React.Component {
         await store.dispatch(fetchCourses());
         this.setState({
             list: this.props.courseList
-        });
+        })
     }
 
     handleChange = (value) => {
         const list = this.props.courseList.filter((course) => {
-            const title = course.attributes.title;
-            const description = course.attributes.description;
-            return title.includes(value) || description.includes(value)
+            const title = course.title.toLowerCase();
+            const description = course.description.toLowerCase();
+            return title.includes(value.toLowerCase()) || description.includes(value.toLowerCase())
         })
         this.setState({
             value: value,

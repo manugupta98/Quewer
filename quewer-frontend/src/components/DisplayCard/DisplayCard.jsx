@@ -34,7 +34,7 @@ function sendMail() {
 
 function sumOfAnswers(state) {
     const questions = state.course.currentCourse.questions;
-    const answers = questions.map((question) => question.attributes.answers.length);
+    const answers = questions.map((question) => question.answers.length);
     const sum = answers.reduce((a, b) => a + b, 0);
     console.log(sum);
     return sum;

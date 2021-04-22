@@ -1,4 +1,4 @@
-import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL, START, END } from '../constants';
+import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL, START, END, UPVOTE_QUESTION, DOWNVOTE_QUESTION, BOOKMARK_QUESTION } from '../constants';
 
 const appState = {
     sideBar: true,
@@ -43,6 +43,44 @@ export default function userReducer(state = appState, action) {
                 user: {
                     ...state.user,
                     registeredCourses: list
+                }
+            }
+        }
+        case UPVOTE_QUESTION: {
+            if(action.payload.type === "upvote") {
+                list = [...state.user.questionUpvoted];
+                list = list.push(action.payload.id);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        questionUpvoted: list
+                    }
+                }
+            }
+            else if(action.payload.type === "downvote") {
+                list = [...state.user.questionDownvoted]
+                list = list.push(action.payload.id);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        questionDownvoted: list
+                    }
+                }
+            }
+        }
+        case BOOKMARK_QUESTION: {
+            if(action.payload.type === "bookmark") {
+                list = [...state.user.questionBookmarks]
+                list = list.push(action.payload.id);
+                console.log(list);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        questionBookmarks: list
+                    }
                 }
             }
         }
