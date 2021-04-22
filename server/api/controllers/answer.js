@@ -1,5 +1,5 @@
 const express = require("express");
-const Answer = require("../../models/question_answer");
+const Answer = require("../../models/question_answer").Answer;
 const Course = require("../../models/question_answer");
 const createError = require("http-errors");
 const question = require("./question");
@@ -22,7 +22,7 @@ module.exports = {
     },
     newAnswer: (req, res) => {
         let user = req.user;
-        Serializer.deserializeAsync(req.body).then((answerJSON)=>{
+        Serializer.deserializeAsync("answer", req.body).then((answerJSON)=>{
             answerJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
             Answer.create(answerJSON).then((answer) => {
                 question.findOne({_id: answer.question}).then((question) => {

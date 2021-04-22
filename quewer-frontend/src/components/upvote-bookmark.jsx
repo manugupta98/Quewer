@@ -17,6 +17,32 @@ class UpvoteBookmark extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const user = store.getState().user.user;
+        const qid = this.props.questionID;
+        const upvoted = user.questionUpvoted;
+        const downvoted = user.questionDownvoted;
+        const bookmarked = user.questionBookmarks;
+        this.setState({
+            upvoteCount: this.props.upvotes
+        })
+        if(upvoted.includes(qid)) 
+            this.setState({
+                voted: 'upvote',
+                upvoteColor: 'rgb(14, 143, 206)'
+            })
+        if(downvoted.includes(qid))
+            this.setState({
+                voted: 'downvote',
+                downvoteColor: 'rgb(14, 143, 206)'
+            })
+        if(bookmarked.includes(qid))
+            this.setState({
+                bookmarked: true,
+                bookmarkColor: 'rgb(218, 165, 32)',
+            })
+    }
+
     handleUpvoteClick = () => {
         if(this.state.voted === 'neutral') {
             const count = this.state.upvoteCount;
