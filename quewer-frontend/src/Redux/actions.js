@@ -3,6 +3,7 @@ import axios from 'axios';
 import store from './store';
 const {QuestionSerializer, QuestionDeserializer} = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
+const Serializer = require('./serializer/serializer');
 
 
 export function enrollCourse(courseID, courseName) {
@@ -134,10 +135,12 @@ export function addQuestion(question, courseID) {
         dispatch({
             type: START
         })
+        console.log("question befor serialization", question);
+        question = Serializer.serialize("question", question);
+        console.log("question", question);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
-            new JSONAPIDeserializer({
-                keyForAttribute: 'camelCase',
-            }).deserialize(res.data).then((question) => {
+            console.log("status", res)
+            Serializer.deserializeAsync("question", res.data).then((question) => {
                 console.log(question);
                 dispatch({
                     type: ADD_QUESTION,
@@ -159,9 +162,7 @@ export function userInfo() {
             type: START
         })
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
-            new JSONAPIDeserializer({
-                keyForAttribute: 'camelCase',
-            }).deserialize(res.data).then((user) => {  
+            Serializer.deserializeAsync("user", res.data).then((user) => {  
               const newUser = {
                   id: user.id,
                   name: user.displayName,

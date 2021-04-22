@@ -48,11 +48,7 @@ export default class PostQuestion extends React.Component {
                 id: store.getState().user.user.id
             }
         };
-        console.log(question);
-        const JSONBody = QuestionSerializer.serialize(question);
-        console.log(JSONBody);
-
-        store.dispatch(addQuestion(JSONBody, store.getState().course.currentCourse.id));
+        store.dispatch(addQuestion(question, store.getState().course.currentCourse.id));
         this.setState({
             submit: true
         })

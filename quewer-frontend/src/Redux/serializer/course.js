@@ -3,7 +3,7 @@ const JSONAPISerializer = require('jsonapi-serializer').Serializer;
 const Serializer = require('./serializer');
 
 Serializer.register("course", {
-    id: "_id",
+    id: "id",
     whitelist: ['title', 'description', 'teachers', 'registeredUsers'],
     relationships: {
         teacher: {
