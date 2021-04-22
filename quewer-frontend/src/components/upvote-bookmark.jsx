@@ -5,6 +5,7 @@ import { bookmarkQuestion, upvoteQuestion } from '../Redux/actions';
 import store from '../Redux/store';
 
 class UpvoteBookmark extends React.Component {
+    
     constructor() {
         super();
         this.state = {
