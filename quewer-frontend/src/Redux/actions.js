@@ -135,9 +135,7 @@ export function addQuestion(question, courseID) {
         dispatch({
             type: START
         })
-        console.log("question befor serialization", question);
         question = Serializer.serialize("question", question);
-        console.log("question", question);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
             console.log("status", res)
             Serializer.deserializeAsync("question", res.data).then((question) => {
@@ -188,7 +186,6 @@ export function userInfo() {
 }
 
 export function upvoteQuestion(courseID, questionID, upvote) {
-    console.log("hello");
     return dispatch => {
         dispatch({
             type: START
@@ -234,23 +231,17 @@ export function bookmarkQuestion(courseID, questionID, bookmark) {
 
 export function addAnswer(answer, questionID, courseID) {
     return dispatch => {
-        // dispatch({
-        //     type: START
-        // })
+        dispatch({
+            type: START
+        })
+        console.log(answer);
+        answer = Serializer.serialize("answer", answer);
+        console.log("after", answer);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`, answer).then(res => {
-            console.log(res);
-            // new JSONAPIDeserializer({
-            //     keyForAttribute: 'camelCase',
-            // }).deserialize(res.data).then((question) => {
-            //     console.log(question);
-            //     dispatch({
-            //         type: ADD_QUESTION,
-            //         payload: question
-            //     })
-            // })
-            // dispatch({
-            //     type: END
-            // })
+            console.log("status", res)
+            dispatch({
+                type: END
+            })
         }).catch(err => {
             console.log(err);
         });
