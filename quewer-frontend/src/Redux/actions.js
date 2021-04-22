@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS } from './constants';
 import axios from 'axios';
 import store from './store';
 const {QuestionSerializer, QuestionDeserializer} = require('./serializer/question');
@@ -101,9 +101,7 @@ export function selectCourse(courseID, courseName) {
             type: START
         })
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses/" + courseID + "/questions").then(res => {
-            new JSONAPIDeserializer({
-                keyForAttribute: 'camelCase',
-            }).deserialize(res.data).then((questions) => {
+            Serializer.deserializeAsync("question", res.data).then((questions) => {
                 console.log(questions);
                 dispatch({
                     type: COURSE_SELECT,
@@ -239,6 +237,32 @@ export function addAnswer(answer, questionID, courseID) {
         console.log("after", answer);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`, answer).then(res => {
             console.log("status", res)
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function fetchAnswers(courseID, questionID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`).then(res => {
+            Serializer.deserializeAsync("answer", res.data).then((answers) => {
+                console.log(answers);
+                dispatch({
+                    type: GET_ANSWERS,
+                    payload: {
+                        id: courseID,
+                        answers: answers
+                    }
+                });
+            })
+
             dispatch({
                 type: END
             })
