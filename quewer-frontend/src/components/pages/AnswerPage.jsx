@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import CardList from '../card-list';
 import QuestionCard from '../question-card';
 import Button from '../button';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 class AnswerPage extends React.Component {
@@ -12,9 +13,15 @@ class AnswerPage extends React.Component {
         console.log(props);
         this.state = {
             card: this.props.location.state.question[0],
-            answerList: this.props.location.state.question[0].answers,
+            answerList: [],
             courseID: this.props.location.state.courseID
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            answerList: this.props.answerList
+        })
     }
 
     render() {
@@ -32,4 +39,8 @@ class AnswerPage extends React.Component {
     }
 }
 
-export default AnswerPage;
+const mapStateToProps = state => ({
+    answerList: state.course.currentAnswers
+});
+
+export default connect(mapStateToProps)(AnswerPage);

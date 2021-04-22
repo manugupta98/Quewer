@@ -13,3 +13,4 @@ export const UPVOTE_QUESTION = "question/upvote";
 export const DOWNVOTE_QUESTION = "question/downvote";
 export const BOOKMARK_QUESTION = "question/bookmark";
 export const ADD_ANSWER = "question/addAnswer";
+export const GET_ANSWERS = "question/getAnswers";
