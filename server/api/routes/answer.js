@@ -6,6 +6,8 @@ const authMiddleware = require('../middleware/auth');
 
 answerRouter.post('/courses/:courseId/questions/:questionId/answers', authMiddleware.isAuthenticated, answerController.newAnswer);
 
+answerRouter.get('/courses/:courseId/questions/:questionId/answers', authMiddleware.isAuthenticated, answerController.answer);
+
 answerRouter.get('/courses/:courseId/questions/:questionId/answers/:answerId', authMiddleware.isAuthenticated, answerController.answer);
 
 answerRouter.post('/courses/:courseId/questions/:questionId/answers/:answerId/comment', authMiddleware.isAuthenticated, answerController.comment);

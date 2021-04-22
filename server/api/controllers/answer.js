@@ -9,9 +9,12 @@ const Serializer = require('../../serializers/serializer');
 
 module.exports = {
     answer: (req, res) => {
-        filter = {};
+        filter = {question: req.params.questionId};
         if('answerId' in req.params) {
-            filter = {_id: req.params.answerId};
+            filter = {
+                ...filter,
+                _id: req.params.answerId,
+            };
         }        
         Answer.find(filter).then((answer) => {
             res.send(Serializer.serialize("answer", answer));
