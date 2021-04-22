@@ -7,9 +7,9 @@ const Serializer = require('../../serializers/serializer');
 module.exports = {
     question: (req, res) => {
         filter = {course: req.params.courseID};
-        if ('questionID' in req.params){
+        if ('questionId' in req.params){
             filter = {...filter,
-                _id: req.params.questionID};
+                _id: req.params.questionId};
         }
         console.log('filter', filter);
         Question.find(filter).then((question) => {

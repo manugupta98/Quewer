@@ -8,8 +8,8 @@ const Serializer = require('../../serializers/serializer');
 module.exports = {
     course: (req, res) => {
         filter = {};
-        if ('courseID' in req.params){
-            filter = {_id: req.params.courseID};
+        if ('courseId' in req.params){
+            filter = {_id: req.params.courseId};
         }
         Course.find(filter).then((courses) => {
             res.send(Serializer.serialize("course", courses));
@@ -19,7 +19,7 @@ module.exports = {
     },
     enroll: (req, res) => {
         let user = req.user;
-        let courseId = req.params.courseID;
+        let courseId = req.params.courseId;
         CourseServices.enroll(user, courseId).then(() => {
             res.json();
         }).catch((err) => {
@@ -29,7 +29,7 @@ module.exports = {
     },
     unenroll: (req, res) => {
         let user = req.user;
-        let courseId = req.params.courseID;
+        let courseId = req.params.courseId;
         CourseServices.unenroll(user, courseId).then(() => {
             res.json();
         }).catch((err) => {

@@ -10,8 +10,8 @@ const Serializer = require('../../serializers/serializer');
 module.exports = {
     answer: (req, res) => {
         filter = {};
-        if('answer' in req.params) {
-            filter = {_id: req.params.answer};
+        if('answerId' in req.params) {
+            filter = {_id: req.params.answerId};
         }        
         Answer.find(filter).then((answer) => {
             res.send(Serializer.serialize("answer", answer));
@@ -22,8 +22,8 @@ module.exports = {
     newAnswer: (req, res) => {
         let user = req.user;
         let questionId;
-        if('question' in req.params) {
-            questionId = req.params.question;
+        if('questionId' in req.params) {
+            questionId = req.params.questionId;
         }    
         Serializer.deserializeAsync("answer", req.body).then((answerJSON)=>{
             answerJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
@@ -42,8 +42,8 @@ module.exports = {
     },
     comment: (req, res) => {
         let user = req.user;
-        if('answer' in req.params) {
-            filter = {_id: req.params.answer};
+        if('answerId' in req.params) {
+            filter = {_id: req.params.answerId};
         }   
         Serializer.deserializeAsync("comments", res.body).then((commentJSON)=>{
             commentJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};

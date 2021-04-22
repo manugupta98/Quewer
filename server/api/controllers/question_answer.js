@@ -14,14 +14,14 @@ const Serializer = require('../../serializers/serializer');
 module.exports = {
     vote: async (req, res) => {
         var questionAndAnswerId;
-        if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send("questionId absent");
         }
 
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
 
         var action;
@@ -42,14 +42,14 @@ module.exports = {
     },
     bookmark: async (req, res) => {
         var questionAndAnswerId;
-        if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send("questionId absent");
         }
 
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
 
         var action;
@@ -71,11 +71,11 @@ module.exports = {
     attachment: (req, res) => {
         let questionAndAnswerId;
         let attachmentId;
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
-        else if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        else if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send();
         }
@@ -113,11 +113,11 @@ module.exports = {
     },
     newAttachment: (req, res) => {
         let questionAndAnswerId;
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
-        else if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        else if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send();
         }
@@ -149,7 +149,7 @@ module.exports = {
 
             Promise.all(promises).then(() => {
                 questionAndAnswer.save();
-                if ('answerID' in req.params) {
+                if ('answerId' in req.params) {
                     res.status(201).json(Serializer.serialize("answer", questionAndAnswer));
                 }
                 else {

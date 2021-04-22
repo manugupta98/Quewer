@@ -7,12 +7,12 @@ userRouter.get('/users', authMiddleware.isAuthenticated, userController.user);
 
 userRouter.get('/teachers', authMiddleware.isAuthenticated, userController.teacher);
 
-userRouter.get('/users/:user/courses', authMiddleware.isAuthenticated, userController.courses);
+userRouter.get('/users/:userId/courses', authMiddleware.isAuthenticated, userController.courses);
 
-userRouter.get('/users/:user/bookmarks', authMiddleware.isAuthenticated, userController.bookmarks);
+userRouter.get('/users/:userId/bookmarks', authMiddleware.isAuthenticated, userController.bookmarks);
 
-userRouter.get('/users/:user/downvotes', authMiddleware.isAuthenticated, userController.downvotes);
+userRouter.get('/users/:userId/downvotes', authMiddleware.isAuthenticated, userController.downvotes);
 
-userRouter.get('/users/:user/upvotes', authMiddleware.isAuthenticated, userController.upvotes);
+userRouter.get('/users/:userId/upvotes', authMiddleware.isAuthenticated, userController.upvotes);
 
 module.exports = userRouter;
