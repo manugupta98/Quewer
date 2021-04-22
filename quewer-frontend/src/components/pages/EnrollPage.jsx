@@ -39,7 +39,7 @@ class EnrollPage extends React.Component {
         return (
             <div>
                 <Searchbar onChange={this.handleChange} />
-                <CardList component={CourseEnrollCard} list={this.state.list} />
+                { (this.state.value === '') ? <CardList component={CourseEnrollCard} list={this.props.courseList} /> : <CardList component={CourseEnrollCard} list={this.state.list} /> }
             </div>
         );
     }
