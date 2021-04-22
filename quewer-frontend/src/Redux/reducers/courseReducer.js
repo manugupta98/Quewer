@@ -49,6 +49,7 @@ export default function courseReducer(state = appState, action) {
         case ADD_QUESTION: {
             var questions = [...state.currentCourse.questions];
             questions.push(action.payload);
+            console.log(questions);
             return {
                 ...state,
                 currentCourse: {

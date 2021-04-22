@@ -4,12 +4,14 @@ import { FaBars } from "react-icons/fa";
 import { toggleSideBar, userInfo } from '../../Redux/actions';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import store from "../../Redux/store";
 
 export default function NavBar() {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.user.user);
   if (user.name === null) dispatch(userInfo());
+  console.log(store.getState());
 
   const handleClick = () => dispatch(toggleSideBar());
 

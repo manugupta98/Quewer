@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import AnswerPage from './pages/AnswerPage';
 import Admin from './Admin/Admin';
 
-function App({loading}) {
+function App({loading, userType}) {
   return (
   <div>
     {
@@ -18,22 +18,28 @@ function App({loading}) {
     }
     <Switch>
         <Route exact path='/' component={HomePage} />
-        <Page>
-          <Route exact path='/main' component={MainPage} />
-          <Route path='/enroll' component={EnrollPage} />
-          <Route path='/postanswer' component={PostAnswer} />
-          <Route path='/postquestion' component={PostQuestion} />
-          <Route path='/course/:courseID' component={MainPage} />
-          <Route path='/question/:questionID' component={AnswerPage} />
-          <Route path='/admin' component={Admin} />
-        </Page>
+        {
+          (userType === "admin") ? 
+          <Page>
+            <Route path='/main' component={Admin} />
+          </Page> : 
+          <Page>
+            <Route exact path='/main' component={MainPage} />
+            <Route path='/enroll' component={EnrollPage} />
+            <Route path='/postanswer' component={PostAnswer} />
+            <Route path='/postquestion' component={PostQuestion} />
+            <Route path='/course/:courseID' component={MainPage} />
+            <Route path='/question/:questionID' component={AnswerPage} />
+          </Page>
+        }
     </Switch>
   </div>
   );
 }
 
 const mapStateToProps = state => ({
-  loading: state.appState.loading
+  loading: state.appState.loading,
+  userType: state.user.user.type
 });
 
 export default connect(mapStateToProps)(App);

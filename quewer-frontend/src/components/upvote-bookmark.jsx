@@ -1,6 +1,8 @@
 import React from 'react';
 import '../style/upvote-bookmark.css';
 import { FaCaretSquareUp, FaBookmark, FaCaretSquareDown } from 'react-icons/fa';
+import { bookmarkQuestion, upvoteQuestion } from '../Redux/actions';
+import store from '../Redux/store';
 
 class UpvoteBookmark extends React.Component {
     constructor() {
@@ -18,6 +20,7 @@ class UpvoteBookmark extends React.Component {
     handleUpvoteClick = () => {
         if(this.state.voted === 'neutral') {
             const count = this.state.upvoteCount;
+            store.dispatch(upvoteQuestion(this.props.courseID, this.props.questionID, "upvote"));
             this.setState({
                 voted: 'upvote',
                 upvoteColor: 'rgb(14, 143, 206)',
@@ -25,6 +28,7 @@ class UpvoteBookmark extends React.Component {
             })
         } else if(this.state.voted === 'downvote') {
             const count = this.state.upvoteCount;
+            store.dispatch(upvoteQuestion(this.props.courseID, this.props.questionID, "upvote"));
             this.setState({
                 voted: 'upvote',
                 upvoteColor: 'rgb(14, 143, 206)',
@@ -33,6 +37,7 @@ class UpvoteBookmark extends React.Component {
             })
         } else {
             const count = this.state.upvoteCount;
+            store.dispatch(upvoteQuestion(this.props.courseID, this.props.questionID, "cancel"));
             this.setState({
                 voted: 'neutral',
                 upvoteColor: 'rgb(128, 128, 128)',
@@ -44,6 +49,7 @@ class UpvoteBookmark extends React.Component {
     handleDownvoteClick = () => {
         if(this.state.voted === 'neutral') {
             const count = this.state.upvoteCount;
+            store.dispatch(upvoteQuestion(this.props.courseID, this.props.questionID, "downvote"));
             this.setState({
                 voted: 'downvote',
                 downvoteColor: 'rgb(14, 143, 206)',
@@ -51,6 +57,7 @@ class UpvoteBookmark extends React.Component {
             })
         } else if(this.state.voted === 'upvote') {
             const count = this.state.upvoteCount;
+            store.dispatch(upvoteQuestion(this.props.courseID, this.props.questionID, "downvote"));
             this.setState({
                 voted: 'downvote',
                 downvoteColor: 'rgb(14, 143, 206)',
@@ -59,6 +66,7 @@ class UpvoteBookmark extends React.Component {
             })
         } else {
             const count = this.state.upvoteCount;
+            store.dispatch(upvoteQuestion(this.props.courseID, this.props.questionID, "cancel"));
             this.setState({
                 voted: 'neutral',
                 downvoteColor: 'rgb(128, 128, 128)',
@@ -69,11 +77,13 @@ class UpvoteBookmark extends React.Component {
 
     handleBookmarkClick = () => {
         if(!this.state.bookmarked) {
+            store.dispatch(bookmarkQuestion(this.props.courseID, this.props.questionID, "bookmark"));
             this.setState({
                 bookmarked: true,
                 bookmarkColor: 'rgb(218, 165, 32)',
             })
         } else {
+            store.dispatch(bookmarkQuestion(this.props.courseID, this.props.questionID, "cancel"));
             this.setState({
                 bookmarked: false,
                 bookmarkColor: 'rgb(128, 128, 128)',
