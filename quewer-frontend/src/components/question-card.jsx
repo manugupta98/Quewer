@@ -12,7 +12,7 @@ class QuestionCard extends React.Component {
         return (
             <div className='q-card-main' style={this.props.style}>
                 <div className='q-question-upvote'>
-                    <UpvoteBookmark questionID={this.props.id} courseID={store.getState().course.currentCourse.id} />
+                    <UpvoteBookmark questionID={this.props.id} courseID={store.getState().course.currentCourse.id} upvotes={this.props.upvotes} />
                     {
                         (this.props.linked) ? 
                         <Link to={{pathname: `/question/${this.props.id}`, state: {courseID: store.getState().course.currentCourse.id, question: store.getState().course.currentCourse.questions.filter(question => question.id === this.props.id)}}} className='q-question' style={{textDecoration: 'none', color: 'black'}} >
