@@ -1,5 +1,4 @@
 const JSONAPISerializer = require('jsonapi-serializer').Serializer;
-const Course = require('../models/course')
 
 const Serializer = require('./serializer');
 

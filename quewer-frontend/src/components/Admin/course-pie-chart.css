@@ -1,0 +1,57 @@
+.courses-list {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.content {
+    margin: 5px 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.stats {
+    height: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.participants {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.participants * {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+.participants *:hover {
+    transform: scale(1.05);
+}
+
+.details {
+    margin-right: 5vw;
+}
+.details > *, .content > * {
+    margin: 30px;
+}
+
+
+/* For custom dropdown */
+.rdn {
+    width: 80%;
+}

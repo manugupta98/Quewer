@@ -1,9 +1,6 @@
 const express = require('express');
 const QuestionAndAnswer = require('../../models/question_answer').QuestinAndAnswer;
 const createError = require('http-errors');
-const { QuestionSerializer, QuestionDeserializer } = require('../../serializers/question');
-const { AnswerSerializer, AnswerDeserializer } = require('../../serializers/answer');
-const UserSerializer = require('../../serializers/user');
 const { QuestionAndAnswerServices, VOTE, BOOKMARK } = require('../../services/question_answer');
 const admin = require('firebase-admin');
 const mongoose = require('mongoose');
@@ -12,7 +9,7 @@ const mime = require('mime-types');
 global['XMLHttpRequest'] = require('xmlhttprequest').XMLHttpRequest;
 var fs = require('fs');
 
-
+const Serializer = require('../../serializers/serializer');
 
 module.exports = {
     vote: async (req, res) => {
@@ -37,7 +34,7 @@ module.exports = {
         }
 
         await QuestionAndAnswerServices.vote(req.user, questionAndAnswerId, action).then((question) => {
-            res.status(200).json(QuestionSerializer.serialize(question));
+            res.status(200).json(Serializer.serialize("question", question));
         }).catch((err) => {
             console.log(err);
             res.status(500).json();
@@ -153,10 +150,10 @@ module.exports = {
             Promise.all(promises).then(() => {
                 questionAndAnswer.save();
                 if ('answerID' in req.params) {
-                    res.status(201).json(AnswerSerializer.serialize(questionAndAnswer));
+                    res.status(201).json(Serializer.serialize("answer", questionAndAnswer));
                 }
                 else {
-                    res.status(201).json(QuestionSerializer.serialize(questionAndAnswer));
+                    res.status(201).json(Serializer.serialize("question", questionAndAnswer));
                 }
             })
 

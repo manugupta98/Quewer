@@ -49,7 +49,7 @@ class CourseEnrollCard extends React.Component {
                 <div className='status'>
                     {
                         (this.state.enroll)
-                        ? <><AiFillCloseCircle id="unenroll-icon" onClick={this.handleClick} /><div id="unenroll-text">Unenroll</div></>
+                        ? <Button onClick={this.handleClick} color='rgb(255, 0, 0)' textColor='white' text='Unenroll' />
                         : <Button onClick={this.handleClick} color='rgb(30, 144, 255)' textColor='white' text='Enroll' />
                     }
                 </div>

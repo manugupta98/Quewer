@@ -1,8 +1,10 @@
 import './admin-side-bar.css';
 import { useSelector } from 'react-redux';
+import {Link} from 'react-router-dom';
 import sidebar from '../../assets/sidebar.png';
 import {TiFolderAdd} from 'react-icons/ti';
-import AddCoursePopUp from './AddCoursePopUp';
+import {VscDashboard} from 'react-icons/vsc';
+import {useEffect} from 'react';
 
 export default function SideBar() {
     const invisibleStyle = {
@@ -10,18 +12,30 @@ export default function SideBar() {
     };
     const style = useSelector(state => state.user.sideBar) ? {} : invisibleStyle;
 
-    const openPopUp = () => {
-        document.getElementById('addcoursepopup').style.visibility = 'visible';
+    const clickDash = () => {
+        document.getElementById('dash-btn').classList.add('active-btn');
+        document.getElementById('add-btn').classList.remove('active-btn');
     };
+    const clickAddCourse = () => {
+        document.getElementById('dash-btn').classList.remove('active-btn');
+        document.getElementById('add-btn').classList.add('active-btn');
+    };
+
+    useEffect(() => {
+        clickDash();
+    }, []);
 
     return (
         <div className="SideBar FlexCard ColumnCard" style={style}>
-            <AddCoursePopUp />
             <img src={sidebar} />
-            <div className="add-course" onClick={openPopUp}>
-                <TiFolderAdd id="icon"/>
+            <Link to="/admin" onClick={clickDash} id="dash-btn" className="side-btns">
+                <VscDashboard className="icon"/>
+                <h3>Dashboard</h3>
+            </Link>
+            <Link to="/addcourse" onClick={clickAddCourse} id="add-btn" className="side-btns">
+                <TiFolderAdd className="icon"/>
                 <h3>New Course</h3>
-            </div>
+            </Link>
         </div>
     );
 }

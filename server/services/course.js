@@ -3,6 +3,7 @@ const User = require("../models/user.js");
 const createError = require('http-errors')
 const lodash = require('lodash');
 const UserSerializer = require("../serializers/user.js");
+const { HttpError } = require("http-errors");
 
 
 class CourseServices{
@@ -10,6 +11,9 @@ class CourseServices{
         await Course.findOne({_id: courseId}).catch((err) => {
             throw createError.NotFound("Course not found", {expose: true});
         }).then((course) => {
+            if (course === null){
+                throw createError.NotFound("Course not found", {expose: true});
+            }
             console.log(course.title);
             if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item.id == user.id)){
                 throw createError.Conflict("Already Registered", {expose: true});
