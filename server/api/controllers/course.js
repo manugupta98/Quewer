@@ -38,7 +38,7 @@ module.exports = {
     },
     add: (req, res) => {
         let user = req.user;
-        let course = req.body;
+        let course = Serializer.deserialize("course", req.body);
         CourseServices.addCourse(user, course).then(() => {
             res.json(Serializer.serialize("course", course));
         }).catch((err) => {

@@ -41,7 +41,7 @@ class CourseServices{
     }
     static async addCourse(user, course){
         if (user.type !== "admin"){
-            throw createError.Unauthorized("", {expose: true});
+            throw createError.Forbidden("", {expose: true});
         }
         await Course.create(course).then((course) => {
             console.log('Course added successfully :) ');
@@ -53,7 +53,7 @@ class CourseServices{
     }
     static async deleteCourse(user, courseId){
         if (user.type !== "admin"){
-            throw createError.Unauthorized("", {expose: true});
+            throw createError.Forbidden("", {expose: true});
         }
         await Course.deleteOne({_id: courseId}).then((course) => {
             console.log("Course successfully deleted from the database :) ");
