@@ -57,10 +57,19 @@ export default function userReducer(state = appState, action) {
                         questionUpvoted: list
                     }
                 }
-            }
-            else if(action.payload.type === "downvote") {
+            } else if(action.payload.type === "downvote") {
                 list = [...state.user.questionDownvoted]
                 list = list.push(action.payload.id);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        questionDownvoted: list
+                    }
+                }
+            } else {
+                list = [...state.user.questionDownvoted]
+                list = list.filter(id => id !== action.payload.id)
                 return {
                     ...state,
                     user: {
@@ -74,7 +83,16 @@ export default function userReducer(state = appState, action) {
             if(action.payload.type === "bookmark") {
                 list = [...state.user.questionBookmarks]
                 list = list.push(action.payload.id);
-                console.log(list);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        questionBookmarks: list
+                    }
+                }
+            } else {
+                list = [...state.user.questionBookmarks]
+                list = list.filter(id => id !== action.payload.id)
                 return {
                     ...state,
                     user: {

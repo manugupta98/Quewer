@@ -44,7 +44,7 @@ const QuestionDeserializer = new JSONAPIDeserializer({
 });
 
 Serializer.register('question', {
-    id: "_id",
+    id: "id",
     whitelist: ['course', 'postedBy', 'title', 'anonymous', 'description', 'date', 'upvotes', 'attachments', 'tags', 'answers'],
     relationships: {
         course: {
