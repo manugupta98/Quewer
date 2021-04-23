@@ -57,6 +57,12 @@ Serializer.register('question', {
             type: "answer",
         },
     },
+    beforeSerialize: (data) => {
+        if (data.anonymous){
+            data.postedBy = undefined;
+        }
+        return data;
+    }
 });
 
 module.exports = {QuestionSerializer, QuestionDeserializer};

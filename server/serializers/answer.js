@@ -24,6 +24,12 @@ Serializer.register("answer", {
             type: "attachment"
         },
     },
+    beforeSerialize: (data) => {
+        if (data.anonymous){
+            data.postedBy = undefined;
+        }
+        return data;
+    }
 })
 
 Serializer.register("attachment", {
