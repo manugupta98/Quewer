@@ -4,26 +4,19 @@ import CoursePieChart from './CoursePieChart';
 import {useState} from 'react';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { useEffect } from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchTeachers, fetchStudents, fetchCourses} from '../../Redux/actions';
 
-export default function Admin(props) {
+export default function Admin() {
     const [courseOpen, setCourseOpen] = useState(true);
     const [teacherOpen, setTeacherOpen] = useState(false);
     const [studentOpen, setStudentOpen] = useState(false);
-    const students = [];
-    const teachers = [];
-    const courses = [];
+    const [students, setStudents] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+    const courseList = useSelector(state => state.course.courseList);
     const IDList = ['courses-list', 'teachers-list', 'students-list'];
     const classList = ['courses-list', 'user-list', 'user-list'];
-
-    // For test purpose
-    for (let i = 0; i < 20; i++) {
-        students.push({ img: 'https://lh3.googleusercontent.com/a-/AOh14Gi6fl2Hi6HqxDEA0HxeQeRH03TaMvVLChw0ld_H=s96-c', name: "Parveen Jakhar", email: 'f20180623@hyderabad.bits-pilani.ac.in' });
-        teachers.push({ img: 'link', name: i, email: 'email' });
-    }
-    courses.push({id:`CS F324`, name:"Compilers Construction", stud: students, tech: teachers, que: 12, sol: 20});
-    courses.push({id:`CS F221`, name:"OOPS", stud: students, tech: teachers, que: 15, sol: 20});
-    courses.push({id:`IS F194`, name:"Software Engineering", stud: students, tech: teachers, que: 10, sol: 2});
-    // till here
+    const dispatch = useDispatch();
 
     const toggleList = id => {
         document.getElementById(IDList[id]).classList.toggle('toggle');
@@ -40,17 +33,28 @@ export default function Admin(props) {
             document.getElementById(IDList[id]).classList.toggle(classList[id]);
             document.getElementById(IDList[id]).classList.toggle('toggle');
         });
+        dispatch(fetchCourses());
     }, []);
+
+    useEffect(() => {
+        let studs = new Set(), techs = new Set();
+        courseList.forEach(x => {
+            x.registeredUsers.forEach(user => studs.add(JSON.stringify(user)));
+            // x.registeredTeachers.forEach(user => techs.add(JSON.stringify(user))));
+        });
+        setStudents([...studs].sort().map(x => JSON.parse(x)));
+        // setTeachers([...techs].sort().map(x => JSON.parse(x)));
+    }, [courseList]);
 
     return (
         <div className="admin-content">
             <div className="section">
                 <div className="init-row">
-                    <h1>All Courses: {courses.length}</h1>
+                    <h1>All Courses: {courseList.length}</h1>
                     {(courseOpen) ? <BsArrowUp className="drop-down" onClick={() => toggleList(0)} />
                      : <BsArrowDown className="drop-down" onClick={() => toggleList(0)} /> }
                 </div>
-                <CoursePieChart id={IDList[0]} list={courses} />
+                <CoursePieChart id={IDList[0]} list={courseList}/>
             </div>
             <div className="section">
                 <div className="init-row">

@@ -8,10 +8,10 @@ import store from "../../Redux/store";
 
 export default function NavBar() {
   const dispatch = useDispatch();
-
   const user = useSelector(state => state.user.user);
-  if (user.name === null) dispatch(userInfo());
-  console.log(store.getState());
+  React.useEffect(() => {
+    dispatch(userInfo());
+  }, []);
 
   const handleClick = () => dispatch(toggleSideBar());
 
