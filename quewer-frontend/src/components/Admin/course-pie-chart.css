@@ -16,7 +16,7 @@
     margin-top: 40px;
 }
 
-.stats {
+.chart {
     height: 20%;
     display: flex;
     justify-content: space-around;
@@ -49,6 +49,7 @@
 .details > *, .content > * {
     margin: 30px;
 }
+
 
 
 /* For custom dropdown */
