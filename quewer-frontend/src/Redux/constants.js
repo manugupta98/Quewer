@@ -14,3 +14,5 @@ export const DOWNVOTE_QUESTION = "question/downvote";
 export const BOOKMARK_QUESTION = "question/bookmark";
 export const ADD_ANSWER = "question/addAnswer";
 export const GET_ANSWERS = "question/getAnswers";
+export const FETCH_STUDENTS = "dashboards/students";
+export const FETCH_TEACHERS = "dashboards/teachers";
