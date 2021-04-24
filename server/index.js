@@ -15,7 +15,7 @@ const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
 const questionRouter = require('./api/routes/question');
 const answerRouter = require('./api/routes/answer');
-const announcmentRouter = require('./api/routes/announcment');
+const announcementRouter = require('./api/routes/announcement');
 const dashboardRouter = require('./api/routes/dashboard');
 const feedbackRouter = require('./api/routes/feedback');
 const { session } = require('passport');
@@ -132,7 +132,7 @@ admin.initializeApp(firebaseConfig);
   app.use("/api", courseRouter);
   app.use("/api", questionRouter);
   app.use("/api", answerRouter);
-  app.use("/api", announcmentRouter);
+  app.use("/api", announcementRouter);
   app.use("/api", dashboardRouter);
   app.use("/api", feedbackRouter);
 
