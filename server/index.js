@@ -18,6 +18,8 @@ const answerRouter = require('./api/routes/answer');
 const announcementRouter = require('./api/routes/announcement');
 const dashboardRouter = require('./api/routes/dashboard');
 const feedbackRouter = require('./api/routes/feedback');
+const authMiddleware = require('./api/middleware/auth');
+const userMiddleware = require('./api/middleware/user');
 const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -127,6 +129,7 @@ admin.initializeApp(firebaseConfig);
 
   // Answer API requests.
 
+  app.use("/api", authMiddleware.isAuthenticated, userMiddleware.loginStats);
   app.use("/api", userRouter);
   app.use("/api", authRouter);
   app.use("/api", courseRouter);

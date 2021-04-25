@@ -1,13 +1,12 @@
 const express = require('express');
 const announcementRouter = express.Router();
 const announcementController = require('../controllers/announcement');
-const authMiddleware = require('../middleware/auth');
 
-announcementRouter.post('/courses/:courseId/announcements', authMiddleware.isAuthenticated, announcementController.newAnnouncement);
+announcementRouter.post('/courses/:courseId/announcements', announcementController.newAnnouncement);
 
-announcementRouter.get('/courses/:courseId/announcements', authMiddleware.isAuthenticated, announcementController.announcement);
+announcementRouter.get('/courses/:courseId/announcements', announcementController.announcement);
 
-announcementRouter.get('/courses/:courseId/announcements/:announcementId', authMiddleware.isAuthenticated, announcementController.announcement);
+announcementRouter.get('/courses/:courseId/announcements/:announcementId', announcementController.announcement);
 
 // announcementRouter.delete('/courses/:courseId/announcments/:announcmentId', authMiddleware.isAuthenticated, announcementController.deleteAnnouncment);
 
