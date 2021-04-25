@@ -1,7 +1,7 @@
 import './admin-side-bar.css';
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
-import sidebar from '../../assets/sidebar.png';
+import adminLogo from '../../assets/adminLogo.jpg';
 import {TiFolderAdd} from 'react-icons/ti';
 import {VscDashboard} from 'react-icons/vsc';
 import {useEffect} from 'react';
@@ -27,7 +27,7 @@ export default function SideBar() {
 
     return (
         <div className="SideBar FlexCard ColumnCard" style={style}>
-            <img src={sidebar} />
+            <img src={adminLogo} />
             <Link to="/admin" onClick={clickDash} id="dash-btn" className="side-btns">
                 <VscDashboard className="icon"/>
                 <h3>Dashboard</h3>
