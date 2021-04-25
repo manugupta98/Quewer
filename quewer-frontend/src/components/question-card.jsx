@@ -31,8 +31,8 @@ class QuestionCard extends React.Component {
                             </div>
                         </Link> : 
                         <div className='q-question'>
-                            { (this.props.answer) ? this.props.title : null }  
-                            { (this.props.answer) ? <hr /> : null }
+                            { (!this.props.answer) ? this.props.title : null }  
+                            { (!this.props.answer) ? <hr /> : null }
                             <Description>{this.props.description}</Description>
                         </div>
                     }

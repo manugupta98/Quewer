@@ -1,0 +1,16 @@
+.rating {
+    float: left;
+    border-style: solid;
+    border-radius: 100%;
+    color: #29348EEE;
+    margin-right: 5px;
+    width: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.rating-s {
+    border-color: #29348EEE;
+    color: white;
+    background-color: #29348EEE;
+}

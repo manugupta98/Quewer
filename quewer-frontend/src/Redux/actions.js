@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from './constants';
 import axios from 'axios';
 import store from './store';
 const { QuestionSerializer, QuestionDeserializer } = require('./serializer/question');
@@ -167,8 +167,12 @@ export function userInfo() {
                     questionBookmarks: user.questionBookmarks,
                     questionDownvoted: user.questionDownvoted,
                     questionUpvoted: user.questionUpvoted,
-                    type: user.type
+                    type: user.type,
+                    answerBookmarks: user.answerBookmarks,
+                    answerUpvoted: user.answerUpvoted,
+                    answerDownvoted: user.answerDownvoted
                 };
+                console.log(newUser)
                 dispatch({
                     type: USER_INFO,
                     payload: newUser
@@ -205,6 +209,28 @@ export function upvoteQuestion(courseID, questionID, upvote) {
     }
 }
 
+export function upvoteAnswer(courseID, questionID, answerID, upvote) {
+    return dispatch => {
+        dispatch({
+            type: START
+        });
+        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}vote?action=${upvote}`).then(res => {
+            dispatch({
+                type: UPVOTE_ANSWER,
+                payload: {
+                    type: upvote,
+                    id: answerID
+                }
+            });
+            dispatch({
+                type: END
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
 export function bookmarkQuestion(courseID, questionID, bookmark) {
     return dispatch => {
         dispatch({
@@ -216,6 +242,28 @@ export function bookmarkQuestion(courseID, questionID, bookmark) {
                 payload: {
                     type: bookmark,
                     id: questionID
+                }
+            });
+            dispatch({
+                type: END
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
+    return dispatch => {
+        dispatch({
+            type: START
+        });
+        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}/bookmark?action=${bookmark}`).then(res => {
+            dispatch({
+                type: BOOKMARK_QUESTION,
+                payload: {
+                    type: bookmark,
+                    id: answerID
                 }
             });
             dispatch({
@@ -309,6 +357,87 @@ export function fetchTeachers() {
                     teachers: res.data
                 }
             });
+
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function addFeedback(feedback, courseID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        feedback = Serializer.serialize("feedback", feedback);
+        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/feedbacks`, feedback).then(res => {
+            console.log("status", res)
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function getFeedback(courseID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/feedbacks`).then(res => {
+            Serializer.deserializeAsync("feedback", res.data).then((feedback) => {
+                console.log(feedback);
+                dispatch({
+                    type: GET_FEEDBACKS,
+                    payload: feedback
+                });
+            })
+
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function addAnnouncement(announcement, courseID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        announcement = Serializer.serialize("announcement", announcement);
+        console.log(announcement);
+        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/announcements`, announcement).then(res => {
+            console.log("status", res)
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function getAnnouncement(courseID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/announcements`).then(res => {
+            Serializer.deserializeAsync("announcement", res.data).then((announcement) => {
+                console.log(announcement);
+                dispatch({
+                    type: GET_ANNOUNCEMENTS,
+                    payload: announcement
+                });
+            })
 
             dispatch({
                 type: END

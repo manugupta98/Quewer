@@ -1,4 +1,4 @@
-import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL, START, END, UPVOTE_QUESTION, DOWNVOTE_QUESTION, BOOKMARK_QUESTION } from '../constants';
+import { SIDEBAR_TOGGLE, COURSE_ENROLL, USER_INFO, COURSE_UNENROLL, START, END, UPVOTE_QUESTION, DOWNVOTE_QUESTION, BOOKMARK_QUESTION, UPVOTE_ANSWER, BOOKMARK_ANSWER } from '../constants';
 
 const appState = {
     sideBar: true,
@@ -79,6 +79,39 @@ export default function userReducer(state = appState, action) {
                 }
             }
         }
+        case UPVOTE_ANSWER: {
+            if(action.payload.type === "upvote") {
+                list = [...state.user.answerUpvoted];
+                list = list.push(action.payload.id);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        answerUpvoted: list
+                    }
+                }
+            } else if(action.payload.type === "downvote") {
+                list = [...state.user.answerDownvoted]
+                list = list.push(action.payload.id);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        answerDownvoted: list
+                    }
+                }
+            } else {
+                list = [...state.user.answerDownvoted]
+                list = list.filter(id => id !== action.payload.id)
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        answerDownvoted: list
+                    }
+                }
+            }
+        }
         case BOOKMARK_QUESTION: {
             if(action.payload.type === "bookmark") {
                 list = [...state.user.questionBookmarks]
@@ -98,6 +131,29 @@ export default function userReducer(state = appState, action) {
                     user: {
                         ...state.user,
                         questionBookmarks: list
+                    }
+                }
+            }
+        }
+        case BOOKMARK_ANSWER: {
+            if(action.payload.type === "bookmark") {
+                list = [...state.user.answerBookmarks]
+                list = list.push(action.payload.id);
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        answerBookmarks: list
+                    }
+                }
+            } else {
+                list = [...state.user.answerBookmarks]
+                list = list.filter(id => id !== action.payload.id)
+                return {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        answerBookmarks: list
                     }
                 }
             }
