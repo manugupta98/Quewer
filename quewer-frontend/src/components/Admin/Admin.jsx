@@ -42,17 +42,18 @@ export default function Admin() {
         console.log(process.env.REACT_APP_SERVER_URL + '/api/dashboards/students?' + start + end);
         axios.get(process.env.REACT_APP_SERVER_URL + '/api/dashboards/students?' + start + end).then(res => {
             const data = res.data.data;
+
             const tempArr = new Array(DAYS).fill(0);
             let i = 0;
+            date.setHours(0, 0, 0, 0);
             data.forEach(x => {
                 const attr = x.attributes;
                 const d = new Date(attr.date.year, attr.date.month - 1, attr.date.day, 0, 0, 0, 0);
-                date.setHours(0, 0, 0, 0);
                 while (date.getTime() < d.getTime()) {
                     date.setDate(date.getDate() + 1);
                     i++;
                 }
-                tempArr[i++] = attr.count;
+                tempArr[i] = attr.count;
             });
             setActivity(tempArr);
         }).catch(err => console.log(err));

@@ -35,22 +35,23 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
             axios.get(process.env.REACT_APP_SERVER_URL + '/api/courses/' + x.id + '/dashboards?' + start + end).then(res => {
                 const data = res.data.data.attributes;
                 const tempQue = new Array(DAYS).fill(0), tempSol = new Array(DAYS).fill(0);
+                date.setHours(0, 0, 0, 0);
                 let i = 0;
                 data.questionsGraph.forEach(x => {
-                    const d = new Date(x.date.year, x.date.month - 1, x.day, 0, 0, 0, 0);
+                    const d = new Date(x.date.year, x.date.month - 1, x.date.day, 0, 0, 0, 0);
                     while (date.getTime() < d.getTime()) {
                         date.setDate(date.getDate() + 1);
                         i++;
                     }
-                    tempQue[i++] = x.count;
+                    tempQue[i] = x.count;
                 }); i = 0;
                 data.answersGraph.forEach(x => {
-                    const d = new Date(x.date.year, x.date.month - 1, x.day, 0, 0, 0, 0);
+                    const d = new Date(x.date.year, x.date.month - 1, x.date.day, 0, 0, 0, 0);
                     while (date.getTime() < d.getTime()) {
                         date.setDate(date.getDate() + 1);
                         i++;
                     }
-                    tempSol[i++] = x.count;
+                    tempSol[i] = x.count;
                 });
                 
                 const newCourse = {
