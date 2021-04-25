@@ -8,27 +8,33 @@ const DashboardServices = require('../../services/dashboard');
 
 const Serializer = require('../../serializers/serializer');
 
+function validateReq(req, res) {
+    if (req.user.type !== "admin"){
+        res.status(403).json();
+    }
+
+    let courseId;
+
+    if ('courseId' in req.params){
+        courseId = req.params.courseId;
+    }
+
+    let startDate = new Date(0);
+    let endDate = new Date();
+    if ('start' in req.query){
+        startDate = new Date(req.query.start + ' 00:00:00 +0000');
+    }
+    if ('end' in req.query){
+        endDate = new Date(req.query.end + ' 00:00:00 +0000');
+        endDate.setDate(endDate.getDate() + 1);
+    }
+    return {courseId, startDate, endDate};
+}
+
 module.exports = {
     dashboard: (req, res) => {
-        if (req.user.type !== "admin"){
-            res.status(403).json();
-        }
-
-        let courseId;
-
-        if ('courseId' in req.params){
-            courseId = req.params.courseId;
-        }
-
-        let startDate = new Date(0);
-        let endDate = new Date();
-        if ('start' in req.query){
-            startDate = new Date(req.query.start + ' 00:00:00 +0000');
-        }
-        if ('end' in req.query){
-            endDate = new Date(req.query.end + ' 00:00:00 +0000');
-            endDate.setDate(endDate.getDate() + 1);
-        }
+        let courseId, startDate, endDate;
+        courseId, startDate, endDate = validateReq(req, res);
 
         let promises = [
             DashboardServices.getQuestionsGraph(courseId, startDate, endDate),
@@ -53,25 +59,8 @@ module.exports = {
 
     },
     students: (req, res) => {
-        if (req.user.type !== "admin"){
-            res.status(403).json();
-        }
-
-        let courseId;
-
-        if ('courseId' in req.params){
-            courseId = req.params.courseId;
-        }
-
-        let startDate = new Date(0);
-        let endDate = new Date();
-        if ('start' in req.query){
-            startDate = new Date(req.query.start + ' 00:00:00 +0000');
-        }
-        if ('end' in req.query){
-            endDate = new Date(req.query.end + ' 00:00:00 +0000');
-            endDate.setDate(endDate.getDate() + 1);
-        }
+        let courseId, startDate, endDate;
+        courseId, startDate, endDate = validateReq(req, res);
         DashboardServices.getStudentsGraph(startDate, endDate).then((studentCount) => {
             res.json(Serializer.serialize('graph', studentCount));
         }).catch((err) => {
@@ -80,25 +69,9 @@ module.exports = {
         })
     },
     questions: (req, res) => {
-        if (req.user.type !== "admin"){
-            res.status(403).json();
-        }
+        let courseId, startDate, endDate;
+        courseId, startDate, endDate = validateReq(req, res);
 
-        let courseId;
-
-        if ('courseId' in req.params){
-            courseId = req.params.courseId;
-        }
-
-        let startDate = new Date(0);
-        let endDate = new Date();
-        if ('start' in req.query){
-            startDate = new Date(req.query.start + ' 00:00:00 +0000');
-        }
-        if ('end' in req.query){
-            endDate = new Date(req.query.end + ' 00:00:00 +0000');
-            endDate.setDate(endDate.getDate() + 1);
-        }
         DashboardServices.getQuestionsGraph(courseId, startDate, endDate).then((questionsCount) => {
             console.log(questionsCount);
             res.json(Serializer.serialize('graph', questionsCount));
@@ -108,25 +81,9 @@ module.exports = {
         })
     },
     answers: (req, res) => {
-        if (req.user.type !== "admin"){
-            res.status(403).json();
-        }
-
-        let courseId;
-
-        if ('courseId' in req.params){
-            courseId = req.params.courseId;
-        }
-
-        let startDate = new Date(0);
-        let endDate = new Date();
-        if ('start' in req.query){
-            startDate = new Date(req.query.start + ' 00:00:00 +0000');
-        }
-        if ('end' in req.query){
-            endDate = new Date(req.query.end + ' 00:00:00 +0000');
-            endDate.setDate(endDate.getDate() + 1);
-        }
+        let courseId, startDate, endDate;
+        courseId, startDate, endDate = validateReq(req, res);
+        
         DashboardServices.getAnswersGraph(courseId, startDate, endDate).then((answersCount) => {
             res.json(Serializer.serialize('graph', answersCount));
         }).catch((err) => {

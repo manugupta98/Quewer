@@ -56,6 +56,14 @@ const announcementSchema = new mongoose.Schema({
         }
     }],
     comments: [{
+        date: {
+            type: Date,
+            required: true
+        },
+        comment: {
+            type: String,
+            required: true,
+        },
         postedBy: {
             id: {
                 type: Schema.Types.ObjectId,
@@ -76,14 +84,6 @@ const announcementSchema = new mongoose.Schema({
                 type: String,
                 required: true
             }
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        comment: {
-            type: String,
-            required: true,
         },
     }],
 })
