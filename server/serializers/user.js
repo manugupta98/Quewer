@@ -30,8 +30,35 @@ Serializer.register("user", {
     },
 })
 
+Serializer.register("user", 'admin', {
+    whitelist: ['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks', 'answerUpvoted', 'answerDownvoted', 'answerBookmarks', 'type', 'emails'],
+    relationships: {
+        questionUpvoted: {
+            type: "question",
+        },
+        questionDownvoted: {
+            type: "question",
+        },
+        questionBookmarks: {
+            type: "question",
+        },
+        answerUpvoted: {
+            type: "answer",
+        },
+        answerDownvoted: {
+            type: "answer",
+        },
+        answerBookmarks: {
+            type: "answer",
+        },
+        registeredCourses: {
+            type: "course",
+        },
+    },
+})
+
 const UserSerializer = new JSONAPISerializer('users', {
-    attributes: ['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks', 'type', 'emails'],
+    attributes: ['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks', 'type'],
     registeredCourses: {
         ref: 'id',
         included: true,

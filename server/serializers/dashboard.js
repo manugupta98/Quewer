@@ -1,7 +1,7 @@
 const Serializer = require('./serializer');
 
 Serializer.register("dashboard", {
-    whitelist: ['questionsGraph', 'answersGraph'],
+    whitelist: ['questionsCount', 'answersCount', 'feedbacksCount', 'questionsGraph', 'answersGraph'],
 })
 
 Serializer.register("graph", {

@@ -26,13 +26,20 @@ module.exports = {
         if (typeof courses !== 'undefined'){
           req.user.registeredCourses = courses;
         }
-        res.json(Serializer.serialize("user", req.user));
+        res.json(Serializer.serialize("user", req.user, (req.user.type==='admin')?'admin':'default'));
       });
     }
   },
   teacher: async (req, res) => {
     User.find({type: 'teacher'}).then((teachers) => {
-      res.json(Serializer.serialize("user", teachers));
+      res.json(Serializer.serialize("user", teachers, (req.user.type==='admin')?'admin':'default'));
+    }).catch((err)=> {
+      res.status(500).json();
+    })
+  },
+  student: async (req, res) => {
+    User.find({type: 'student'}).then((students) => {
+      res.json(Serializer.serialize("user", students, (req.user.type==='admin')?'admin':'default'));
     }).catch((err)=> {
       res.status(500).json();
     })

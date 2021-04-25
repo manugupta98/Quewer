@@ -7,6 +7,8 @@ userRouter.get('/users', authMiddleware.isAuthenticated, userController.user);
 
 userRouter.get('/teachers', authMiddleware.isAuthenticated, userController.teacher);
 
+userRouter.get('/students', authMiddleware.isAuthenticated, userController.student);
+
 userRouter.get('/users/:userId/courses', authMiddleware.isAuthenticated, userController.courses);
 
 userRouter.get('/users/:userId/bookmarks', authMiddleware.isAuthenticated, userController.bookmarks);
