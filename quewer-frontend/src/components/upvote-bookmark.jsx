@@ -19,11 +19,22 @@ class UpvoteBookmark extends React.Component {
     }
 
     componentDidMount() {
-        const user = store.getState().user.user;
-        const qid = this.props.questionID;
-        const upvoted = user.questionUpvoted;
-        const downvoted = user.questionDownvoted;
-        const bookmarked = user.questionBookmarks;
+        var user = store.getState().user.user;
+        var qid = '';
+        var upvoted = [];
+        var downvoted = [];
+        var bookmarked = [];
+        if(this.props.answer) {
+            qid = this.props.questionID;
+            upvoted = user.answerUpvoted;
+            downvoted = user.answerDownvoted;
+            bookmarked = user.answerBookmarks;
+        } else {
+            qid = this.props.questionID;
+            upvoted = user.questionUpvoted;
+            downvoted = user.questionDownvoted;
+            bookmarked = user.questionBookmarks;
+        }
         this.setState({
             upvoteCount: this.props.upvotes
         })

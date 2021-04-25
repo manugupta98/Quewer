@@ -10,6 +10,10 @@ import { connect } from 'react-redux';
 import AnswerPage from './pages/AnswerPage';
 import Admin from './Admin/Admin';
 import AddCourse from './Admin/AddCourse';
+import FeedbackPage from '../components/pages/FeedbackPage';
+import FeedbackDisplay from '../components/pages/FeedbackDisplay';
+import AnnouncementPage from './pages/AnnouncementPage';
+import AnnouncementDisplay from './pages/AnnouncementDisplay';
 
 function App({loading, userType}) {
   return (
@@ -28,6 +32,10 @@ function App({loading, userType}) {
           <Route path='/question/:questionID' component={AnswerPage} />
           <Route path='/admin' component={Admin} />
           <Route path='/addcourse' component={AddCourse} />
+          <Route path='/postfeedback' component={FeedbackPage} />
+          <Route path='/postannouncement' component={AnnouncementPage} />
+          <Route path='/getfeedback' component={FeedbackDisplay} />
+          <Route path='/getannouncement' component={AnnouncementDisplay} />
         </Page>
     </Switch>
   </div>
