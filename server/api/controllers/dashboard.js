@@ -2,6 +2,7 @@ const express = require('express');
 const User = require('../../models/user');
 const Question = require('../../models/question_answer').Question;
 const Answer = require('../../models/question_answer').Answer;
+const Feedback = require('../../models/feedback');
 const createError = require('http-errors');
 const DashboardServices = require('../../services/dashboard');
 
@@ -31,13 +32,19 @@ module.exports = {
 
         let promises = [
             DashboardServices.getQuestionsGraph(courseId, startDate, endDate),
-            DashboardServices.getAnswersGraph(courseId, startDate, endDate)
+            DashboardServices.getAnswersGraph(courseId, startDate, endDate),
+            Question.countDocuments({course: courseId}),
+            Answer.countDocuments({course: courseId}),
+            Feedback.countDocuments({course: courseId}),
         ]
 
-        Promise.all(promises).then((graphs) => {
+        Promise.all(promises).then((results) => {
             let dashboard = {
-                questionsGraph: graphs[0],
-                answersGraph: graphs[1],
+                questionsGraph: results[0],
+                answersGraph: results[1],
+                questionsCount: results[2],
+                answersCount: results[3],
+                feedbacksCount: results[4]
             }
             res.json(Serializer.serialize('dashboard', dashboard));
         }).catch((err) => {

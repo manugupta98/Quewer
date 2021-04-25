@@ -2,25 +2,23 @@ const express = require('express');
 const questionRouter = express.Router();
 const questionController = require('../controllers/question');
 const QuestionAndAnswerController = require('../controllers/question_answer');
-const authMiddleware = require('../middleware/auth');
 const multer  = require('multer');
-const { attachment } = require('../controllers/question_answer');
 const upload = multer({ dest: 'tmp/'})
 
-// questionRouter.get('/courses', authMiddleware.isAuthenticated, courseController.course);
+// questionRouter.get('/courses', courseController.course);
 
-questionRouter.get('/courses/:courseId/questions', authMiddleware.isAuthenticated, questionController.question);
+questionRouter.get('/courses/:courseId/questions', questionController.question);
 
-questionRouter.get('/courses/:courseId/questions/:questionId', authMiddleware.isAuthenticated, questionController.question);
+questionRouter.get('/courses/:courseId/questions/:questionId', questionController.question);
 
-questionRouter.post('/courses/:courseId/questions', authMiddleware.isAuthenticated, questionController.newQuestion);
+questionRouter.post('/courses/:courseId/questions', questionController.newQuestion);
 
-questionRouter.post('/courses/:courseId/questions/:questionId/vote', authMiddleware.isAuthenticated, QuestionAndAnswerController.vote);
+questionRouter.post('/courses/:courseId/questions/:questionId/vote', QuestionAndAnswerController.vote);
 
-questionRouter.post('/courses/:courseId/questions/:questionId/bookmark', authMiddleware.isAuthenticated, QuestionAndAnswerController.bookmark);
+questionRouter.post('/courses/:courseId/questions/:questionId/bookmark', QuestionAndAnswerController.bookmark);
 
-questionRouter.get('/courses/:courseId/questions/:questionId/attachments/:attachmentId', authMiddleware.isAuthenticated, QuestionAndAnswerController.attachment);
+questionRouter.get('/courses/:courseId/questions/:questionId/attachments/:attachmentId', QuestionAndAnswerController.attachment);
 
-questionRouter.post('/courses/:courseId/questions/:questionId/attachments', authMiddleware.isAuthenticated, upload.array('attachments'), QuestionAndAnswerController.newAttachment);
+questionRouter.post('/courses/:courseId/questions/:questionId/attachments', upload.array('attachments'), QuestionAndAnswerController.newAttachment);
 
 module.exports = questionRouter;

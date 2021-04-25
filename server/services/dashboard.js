@@ -1,30 +1,30 @@
 const Question = require("../models/question_answer").Question;
 const Answer = require("../models/question_answer").Answer;
-const User = require("../models/user.js");
+const Login = require("../models/login");
 const createError = require('http-errors')
 const ObjectId = require('mongoose').Types.ObjectId;
 
 class DashboardServices {
     static async getStudentsGraph(startDate, endDate) {
         return new Promise((resolve, reject) => {
-            User.aggregate([
+            Login.aggregate([
                 {
                     $match: {
                         type: 'student',
-                        date: { $lt: endDate, $gt: startDate },
+                        created: { $lt: endDate, $gt: startDate },
                     }
                 },
                 {
                     $group: {
                         _id: {
                             day: {
-                                $dayOfMonth: '$date',
+                                $dayOfMonth: '$created',
                             },
                             month: {
-                                $month: '$date',
+                                $month: '$created',
                             },
                             year: {
-                                $year: '$date',
+                                $year: '$created',
                             },
                         },
                         count: {
