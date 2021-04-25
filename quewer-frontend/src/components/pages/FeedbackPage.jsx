@@ -22,17 +22,18 @@ export default class FeedbackPage extends React.Component {
         this.refRate = React.createRef();
     }
 
+    handleAnon = () => {
+        this.setState({
+            anonymous: this.state.anonymous ? false : true
+        });
+    }
+    
     handleChange = (event) => {
         this.setState({
             value: event.target.value
         });
     }
 
-    handleAnon = () => {
-        this.setState({
-            anonymous: this.state.anonymous ? false : true
-        });
-    }
 
     onSubmit = () => {
         const question = {
