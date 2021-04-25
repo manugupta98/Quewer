@@ -7,15 +7,13 @@ export default function AddCourse({ list }) {
     const multiSelect = createRef();
     useEffect(() => {
         const names = []
-        names.push({ name: "Ram", id: 1 });
-        names.push({ name: "Shyam", id: 2 });
-        names.push({ name: "Udelu", id: 3 });
-        names.push({ name: "Gururaj", id: 4 });
-        names.push({ name: "Panda", id: 5 });
-        names.push({ name: "Aruna", id: 6 });
-        names.push({ name: "Bhanu", id: 7 });
-        names.push({ name: "TRay", id: 8 });
-        names.push({ name: "Anirudh Agrawal", id: 9 });
+        names.push({ name: "R. GURURAJ", id: 1 });
+        names.push({ name: "T. RAY", id: 2 });
+        names.push({ name: "Bhanu Murthy", id: 3 });
+        names.push({ name: "Narasimha Bolloju", id: 4 });
+        names.push({ name: "Chittaranjan Hota", id: 5 });
+        names.push({ name: "Nikumani Choudhary", id: 6 });
+        names.push({ name: "Aruna Malapati", id: 7 });
         names.sort((a, b) => a.name.localeCompare(b.name));
         setTeachers(names);
     }, []);
