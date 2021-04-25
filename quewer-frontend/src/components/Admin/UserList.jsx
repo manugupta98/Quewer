@@ -4,9 +4,9 @@ export default function UserList({list, id}) {
     let i = 0;
     return (
         <div className="user-list" id={(id) ? id : null}>
-            {list.map(user => {
+            {(list !== undefined) ? list.map(user => {
                 return <User key={user.name + i++} user={user} />;
-            })}
+            }) : ""}
         </div>
     );
 }

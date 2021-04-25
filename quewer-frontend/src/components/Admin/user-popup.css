@@ -11,6 +11,8 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
+  /* background-blend-mode: darken; */
+  z-index: 100;
 }
 
 #popup-close {

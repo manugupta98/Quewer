@@ -39,9 +39,9 @@ class DashboardServices {
                 },
                 {
                     $sort: {
-                        'date.year': -1,
-                        'date.month': -1,
-                        'date.day': -1,
+                        'date.year': 1,
+                        'date.month': 1,
+                        'date.day': 1,
                     },
                 },
             ]).then((studentGraph) => {
@@ -83,9 +83,9 @@ class DashboardServices {
                 },
                 {
                     $sort: {
-                        'date.year': -1,
-                        'date.month': -1,
-                        'date.day': -1,
+                        'date.year': 1,
+                        'date.month': 1,
+                        'date.day': 1,
                     },
                 },
             ]).then((questionsGraph) => {
@@ -128,9 +128,9 @@ class DashboardServices {
                 },
                 {
                     $sort: {
-                        'date.year': -1,
-                        'date.month': -1,
-                        'date.day': -1,
+                        'date.year': 1,
+                        'date.month': 1,
+                        'date.day': 1,
                     },
                 },
             ]).then((answerGraph) => {

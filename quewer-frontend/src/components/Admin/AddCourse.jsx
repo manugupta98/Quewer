@@ -49,7 +49,7 @@ export default function AddCourse({ list }) {
             </div>
         </form>
         <div className='add-buttons'>
-            <button onClick={addCourse}><h2>Add</h2></button>
+            <button className="firstEle" onClick={addCourse}><h2>Add</h2></button>
             <button onClick={reset}><h2>Cancel</h2></button>
         </div>
     </div>
