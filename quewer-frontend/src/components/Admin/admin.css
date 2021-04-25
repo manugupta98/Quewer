@@ -14,7 +14,7 @@
     width: 80%;
     margin: 20px 0;
     padding: 5px 10px;
-    background-color: lightgreen;
+    background-color: white;
     border-radius: 10px;
 }
 
@@ -49,4 +49,9 @@
 
 .toggle {
     display: none;
+}
+
+#users-graph {
+    margin: 20px 0 10px 0;
+    width: 80%;
 }

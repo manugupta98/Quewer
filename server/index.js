@@ -13,9 +13,13 @@ const User = require('./models/user');
 const userRouter = require('./api/routes/user');
 const authRouter = require('./api/routes/auth');
 const courseRouter = require('./api/routes/course');
-const questionRouter = require('./api/routes/question')
-const answerRouter = require('./api/routes/answer')
-const announcmentRouter = require('./api/routes/announcment')
+const questionRouter = require('./api/routes/question');
+const answerRouter = require('./api/routes/answer');
+const announcementRouter = require('./api/routes/announcement');
+const dashboardRouter = require('./api/routes/dashboard');
+const feedbackRouter = require('./api/routes/feedback');
+const authMiddleware = require('./api/middleware/auth');
+const userMiddleware = require('./api/middleware/user');
 const { session } = require('passport');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -125,12 +129,15 @@ admin.initializeApp(firebaseConfig);
 
   // Answer API requests.
 
-  app.use("/api", userRouter);
   app.use("/api", authRouter);
+  app.use("/api", authMiddleware.isAuthenticated, userMiddleware.loginStats);
+  app.use("/api", userRouter);
   app.use("/api", courseRouter);
   app.use("/api", questionRouter);
   app.use("/api", answerRouter);
-  app.use("/api", announcmentRouter);
+  app.use("/api", announcementRouter);
+  app.use("/api", dashboardRouter);
+  app.use("/api", feedbackRouter);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {

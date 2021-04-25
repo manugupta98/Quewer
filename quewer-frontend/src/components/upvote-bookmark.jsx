@@ -5,6 +5,7 @@ import { bookmarkQuestion, upvoteQuestion } from '../Redux/actions';
 import store from '../Redux/store';
 
 class UpvoteBookmark extends React.Component {
+    
     constructor() {
         super();
         this.state = {
@@ -15,6 +16,43 @@ class UpvoteBookmark extends React.Component {
             bookmarkColor: 'rgb(128, 128, 128)',
             downvoteColor: 'rgb(128, 128, 128)'
         }
+    }
+
+    componentDidMount() {
+        var user = store.getState().user.user;
+        var qid = '';
+        var upvoted = [];
+        var downvoted = [];
+        var bookmarked = [];
+        if(this.props.answer) {
+            qid = this.props.questionID;
+            upvoted = user.answerUpvoted;
+            downvoted = user.answerDownvoted;
+            bookmarked = user.answerBookmarks;
+        } else {
+            qid = this.props.questionID;
+            upvoted = user.questionUpvoted;
+            downvoted = user.questionDownvoted;
+            bookmarked = user.questionBookmarks;
+        }
+        this.setState({
+            upvoteCount: this.props.upvotes
+        })
+        if(upvoted.includes(qid)) 
+            this.setState({
+                voted: 'upvote',
+                upvoteColor: 'rgb(14, 143, 206)'
+            })
+        if(downvoted.includes(qid))
+            this.setState({
+                voted: 'downvote',
+                downvoteColor: 'rgb(14, 143, 206)'
+            })
+        if(bookmarked.includes(qid))
+            this.setState({
+                bookmarked: true,
+                bookmarkColor: 'rgb(218, 165, 32)',
+            })
     }
 
     handleUpvoteClick = () => {

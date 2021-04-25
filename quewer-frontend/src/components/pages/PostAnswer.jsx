@@ -34,23 +34,23 @@ export default class PostAnswer extends React.Component {
     }
 
     onSubmit = () => {
-        const question = {
+        const answer = {
+            title: 'nil',
             description: draftToHtml(this.ref.current.state.contentState),
             date: Date(),
             attachments: [],
             anonymous: this.state.anonymous,
             course: {
-                id: store.getState().course.currentCourse.id
+                id: this.props.location.state.courseID
             },
             postedBy: {
                 id: store.getState().user.user.id
+            },
+            question: {
+                id: this.props.location.state.questionID
             }
         };
-        console.log(question);
-        const JSONBody = QuestionSerializer.serialize(question);
-        console.log(JSONBody);
-
-        store.dispatch(addAnswer(JSONBody, this.props.location.state.questionID, this.props.location.state.courseID));
+        store.dispatch(addAnswer(answer, this.props.location.state.questionID, this.props.location.state.courseID));
         this.setState({
             submit: true
         })

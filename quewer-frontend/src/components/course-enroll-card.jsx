@@ -4,7 +4,8 @@ import Button from './button';
 import Description from './description';
 import '../style/course-enroll-card.css';
 import store from '../Redux/store';
-import { enrollCourse, unenrollCourse } from '../Redux/actions';
+import { enrollCourse, unenrollCourse, getFeedback } from '../Redux/actions';
+import { Link } from 'react-router-dom';
 
 class CourseEnrollCard extends React.Component {
     constructor(props) {
@@ -37,6 +38,10 @@ class CourseEnrollCard extends React.Component {
         })
     }
 
+    fetchFeedback = async () => {
+        await store.dispatch(getFeedback(this.props.id));
+    }
+
     render() {
         console.log(this.props);
         return (
@@ -47,9 +52,12 @@ class CourseEnrollCard extends React.Component {
                     {(this.props.description) ? <Description enroll>{this.props.description}</Description> : null}
                 </div>
                 <div className='status'>
+                    <Link to='/getfeedback' style={{textDecoration: 'none'}} >
+                        <Button color='#29348EEE' onClick={this.fetchFeedback} textColor='white' text='View Feedback' />
+                    </Link>
                     {
                         (this.state.enroll)
-                        ? <><AiFillCloseCircle id="unenroll-icon" onClick={this.handleClick} /><div id="unenroll-text">Unenroll</div></>
+                        ? <Button onClick={this.handleClick} color='rgb(255, 0, 0)' textColor='white' text='Unenroll' />
                         : <Button onClick={this.handleClick} color='rgb(30, 144, 255)' textColor='white' text='Enroll' />
                     }
                 </div>

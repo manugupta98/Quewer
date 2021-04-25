@@ -15,9 +15,6 @@ class QuewerEditor extends React.Component {
                 wrapperClassName="Wrapper"
                 editorClassName="Editor"
                 onContentStateChange={this.onChange}
-                toolbar={{
-                    options: ['inline', 'fontSize']
-                }}
                 toolbarClassName="Toolbar"
             />
         );

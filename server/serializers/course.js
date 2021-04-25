@@ -1,20 +1,14 @@
-const JSONAPISerializer = require('jsonapi-serializer').Serializer;
+const Serializer = require('./serializer');
 
-const CourseSerializer = new JSONAPISerializer('courses', {
-    attributes:['title', 'description', 'teachers', 'registeredUsers'],
-    teacher: {
-        ref: '_id',
-        included: false,
+Serializer.register("course", {
+    id: "_id",
+    whitelist: ['title', 'description', 'teachers', 'registeredUsers'],
+    relationships: {
+        teacher: {
+            type: "user",
+        },
+        registeredUsers: {
+            type: "user",
+        },
     },
-    registeredUsers: {
-        ref: '_id',
-        inluded: false,
-    },
-    typeForAttribute: (attribute, data) =>{
-        console.log(attribute, data);
-        return data.customType;
-    },
-    keyForAttribute: 'camelCase',
-});
-
-module.exports = CourseSerializer;
+})

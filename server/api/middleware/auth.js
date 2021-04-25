@@ -3,6 +3,7 @@ const passport = require('passport');
 
 module.exports = {
     isAuthenticated: async (req, res, next) => {
+        
         if (req.isAuthenticated()){
             next();
         }else {

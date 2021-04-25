@@ -1,38 +1,17 @@
-const JSONAPISerializer = require('jsonapi-serializer').Serializer;
-const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
+const Serializer = require('./serializer');
 
-const QuestionSerializer = new JSONAPISerializer('questions', {
-    attributes:['course', 'postedBy', 'title', 'description', 'date', 'upvotes', 'attachments', 'tags', 'answers'],
-    course: {
-        ref: 'id',
-        included: true,
+Serializer.register('question', {
+    id: "id",
+    whitelist: ['course', 'postedBy', 'title', 'anonymous', 'description', 'date', 'upvotes', 'attachments', 'tags', 'answers'],
+    relationships: {
+        course: {
+            type: "course",
+        },
+        postedBy: {
+            type: "user",
+        },
+        answers: {
+            type: "answer",
+        },
     },
-    postedBy: {
-        ref: 'id',
-        included: true,
-    },
-    typeForAttribute: (attribute, data) =>{
-        return data.customType;
-    },
-    keyForAttribute: 'camelCase',
 });
-
-const QuestionDeserializer = new JSONAPIDeserializer({
-    keyForAttribute: 'camelCase',
-    postedBies: {
-        valueForRelationship: (relationship) => {
-            console.log(relationship);
-            return relationship.id;
-        }
-    },
-    courses: {
-        valueForRelationship: (relationship) => {
-            console.log(relationship);
-            return relationship.id;
-        }
-    }
-});
-
-
-
-module.exports = {QuestionSerializer, QuestionDeserializer};

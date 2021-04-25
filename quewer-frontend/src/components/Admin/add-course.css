@@ -1,0 +1,51 @@
+.add-course, .teachers, .info, .add-buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.add-course, .info, .teachers {
+    flex-direction: column;
+}
+
+.course-details {
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    max-width: 80%;
+    min-width: auto;
+    padding: 50px;
+}
+
+.add-course {
+    margin: 20px 10px;
+}
+
+input {
+    margin: 20px 0 50px 0;
+    padding: 5px;
+    min-width: 200px;
+}
+
+.add-buttons {
+    margin-top: 50px;
+    border-radius: 10px;
+}
+.add-buttons * {
+    border-radius: 10px;
+    background-color: lightgreen;
+    transition: all 0.5s;
+}
+.add-buttons *:hover {
+    transform: scale(1.1);
+}
+
+#multiselectContainerReact {
+    width: 400px;
+}
+
+
+.firstEle {
+    margin-right: 100px;
+}

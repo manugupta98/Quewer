@@ -1,12 +1,13 @@
 const express = require("express");
 const User = require("../../models/user");
 const createError = require("http-errors");
-const UserSerializer = require('../../serializers/user');
 const Course = require("../../models/course");
 const { ReactWrapper } = require("enzyme");
 
+const Serializer = require('../../serializers/serializer');
+
 module.exports = {
-  userInfo: async (req, res) => {
+  user: async (req, res) => {
     if (req.user) {
       var promises = [];
       if ('include' in req.query){
@@ -25,9 +26,23 @@ module.exports = {
         if (typeof courses !== 'undefined'){
           req.user.registeredCourses = courses;
         }
-        res.json(UserSerializer.serialize(req.user));
+        res.json(Serializer.serialize("user", req.user, (req.user.type==='admin')?'admin':'default'));
       });
     }
+  },
+  teacher: async (req, res) => {
+    User.find({type: 'teacher'}).then((teachers) => {
+      res.json(Serializer.serialize("user", teachers, (req.user.type==='admin')?'admin':'default'));
+    }).catch((err)=> {
+      res.status(500).json();
+    })
+  },
+  student: async (req, res) => {
+    User.find({type: 'student'}).then((students) => {
+      res.json(Serializer.serialize("user", students, (req.user.type==='admin')?'admin':'default'));
+    }).catch((err)=> {
+      res.status(500).json();
+    })
   },
   courses: async (req, res) => {
     let user = req.user;

@@ -15,38 +15,50 @@ class QuestionAndAnswerServices{
 
                 // @todo change to mongoose operations for synchronous upvotes
 
+                let upvotesList;
+                let downvotesList
+
+                if (questionAndAnswer.__t === 'Question'){
+                    upvotesList = user.questionUpvoted;
+                    downvotesList = user.questionDownvoted;
+                }
+                else{
+                    upvotesList = user.answerUpvoted;
+                    downvotesList = user.answerDownvoted;
+                }
+
                 if (action === VOTE.upvote){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id) == false){
                         questionAndAnswer.usersUpvoted.push(user.id,);
-                        user.questionUpvoted.push(questionId,);
+                        upvotesList.push(questionId,);
                         questionAndAnswer.upvotes++; 
                     }
                     if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
                         questionAndAnswer.usersDownvoted.remove(user.id,);
-                        user.questionDownvoted.remove(questionId,);
+                        downvotesList.remove(questionId,);
                         questionAndAnswer.upvotes--;
                     }
                 }
                 else if (action === VOTE.downvote){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id)){
                         questionAndAnswer.usersUpvoted.remove(user.id,);
-                        user.questionUpvoted.remove(questionId,);
+                        upvotesList.remove(questionId,);
                         questionAndAnswer.upvotes--;
                     }
                     if (questionAndAnswer.usersDownvoted.some(item => item == user.id) == false){
                         questionAndAnswer.usersDownvoted.push(user.id,);
-                        user.questionDownvoted.push(questionId,);
+                        downvotesList.push(questionId,);
                         questionAndAnswer.upvotes--;
                     }
                 }
                 else if (action === VOTE.cancel){
                     if (questionAndAnswer.usersUpvoted.some(item => item == user.id)){
                         questionAndAnswer.usersUpvoted.remove(user.id,);
-                        user.questionUpvoted.remove(questionId,);
+                        upvotesList.remove(questionId,);
                         questionAndAnswer.upvotes--;
                     }else if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
                         questionAndAnswer.usersDownvoted.remove(user.id,);
-                        user.questionDownvoted.remove(questionId,);
+                        downvotesList.remove(questionId,);
                         questionAndAnswer.upvotes++;
                     }
                 }
@@ -65,14 +77,24 @@ class QuestionAndAnswerServices{
 
                 // @todo change to mongoose operations for synchronous upvotes
 
+                let bookmarksList;
+
+                if (questionAndAnswer.__t === 'Question'){
+                    bookmarksList = user.questionBookmarks;
+                }
+                else{
+                    bookmarksList = user.answerBookmarks;
+
+                }
+
                 if (action === BOOKMARK.bookmark){
-                    if (user.questionBookmarks.some(item => item == questionId) == false){
-                        user.questionBookmarks.push(questionId,);
+                    if (bookmarksList.some(item => item == questionId) == false){
+                        bookmarksList.push(questionId,);
                     }
                 }
                 else if (action === BOOKMARK.cancel){
-                    if (user.questionBookmarks.some(item => item == questionId)){
-                        user.questionBookmarks.remove(questionId,);
+                    if (bookmarksList.some(item => item == questionId)){
+                        bookmarksList.remove(questionId,);
                     }
                 }
 

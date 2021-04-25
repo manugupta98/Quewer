@@ -1,33 +1,58 @@
 const JSONAPISerializer = require('jsonapi-serializer').Serializer;
 const Course = require('../models/course')
 
-const UserSerializer = new JSONAPISerializer('users', {
-    attributes:['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks', 'type', 'emails'],
-    registeredCourses: {
-        ref: 'id',
-        included: true,
-        attributes: ['id', 'title', 'teacher',],
-        teacher: {
-            ref: '_id',
-            included: false,
+const Serializer = require('./serializer');
+
+Serializer.register("user", {
+    whitelist: ['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks', 'answerUpvoted', 'answerDownvoted', 'answerBookmarks', 'type'],
+    relationships: {
+        questionUpvoted: {
+            type: "question",
+        },
+        questionDownvoted: {
+            type: "question",
+        },
+        questionBookmarks: {
+            type: "question",
+        },
+        answerUpvoted: {
+            type: "answer",
+        },
+        answerDownvoted: {
+            type: "answer",
+        },
+        answerBookmarks: {
+            type: "answer",
+        },
+        registeredCourses: {
+            type: "course",
         },
     },
-    questionUpvoted: {
-        ref: '_id',
-        included: false,
-    },
-    questionDownvoted: {
-        ref: '_id',
-        included: false,
-    },
-    questionBookmarks: {
-        ref: '_id',
-        included: false,
-    },
-    typeForAttribute: (attribute, data) => {
-        if (attribute === 'registeredCourses') return 'courses';
-    },
-    keyForAttribute: 'camelCase',
-});
+})
 
-module.exports = UserSerializer;
+Serializer.register("user", 'admin', {
+    whitelist: ['displayName', 'name', 'photos', 'registeredCourses', 'questionUpvoted', 'questionDownvoted', 'questionBookmarks', 'answerUpvoted', 'answerDownvoted', 'answerBookmarks', 'type', 'emails'],
+    relationships: {
+        questionUpvoted: {
+            type: "question",
+        },
+        questionDownvoted: {
+            type: "question",
+        },
+        questionBookmarks: {
+            type: "question",
+        },
+        answerUpvoted: {
+            type: "answer",
+        },
+        answerDownvoted: {
+            type: "answer",
+        },
+        answerBookmarks: {
+            type: "answer",
+        },
+        registeredCourses: {
+            type: "course",
+        },
+    },
+})

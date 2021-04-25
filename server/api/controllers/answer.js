@@ -1,32 +1,42 @@
 const express = require("express");
-const Answer = require("../../models/question_answer");
-const Course = require("../../models/question_answer");
-const {AnswerSerializer, AnswerDeserializer} = require('../../serializers/answer');
+const Answer = require("../../models/question_answer").Answer;
+const Question = require("../../models/question_answer").Question;
 const createError = require("http-errors");
-const question = require("./question");
-const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
-const { filter } = require("lodash");
+const _ = require("lodash");
+
+const Serializer = require('../../serializers/serializer');
 
 
 module.exports = {
     answer: (req, res) => {
-        filter = {};
-        if('answer' in req.params) {
-            filter = {_id: req.params.answer};
+        filter = {question: req.params.questionId};
+        if('answerId' in req.params) {
+            filter = {
+                ...filter,
+                _id: req.params.answerId,
+            };
         }        
         Answer.find(filter).then((answer) => {
-            res.send(AnswerSerializer.serialize(answer));
+            res.send(Serializer.serialize("answer", answer));
         }).catch((error) => {
             res.status(500).send();
         })
     },
     newAnswer: (req, res) => {
-        AnswerDeserializer.deserialize(req.body).then((answerJSON)=>{
+        let user = req.user;
+        let questionId;
+        if('questionId' in req.params) {
+            questionId = req.params.questionId;
+        }    
+        Serializer.deserializeAsync("answer", req.body).then((answerJSON)=>{
+            answerJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
+            answerJSON.question = questionId;
             Answer.create(answerJSON).then((answer) => {
-                question.findOne({_id: answer.question}).then((question) => {
+                Question.findOne({_id: answer.question}).then((question) => {
                     question.answers.push(answer._id);
+                    question.save();
                 })
-                res.status(201).json(AnswerSerializer.serialize(answer));
+                res.status(201).json(Serializer.serialize("answer", answer));
             });
         }).catch((err) => {
             console.log(err);
@@ -34,12 +44,12 @@ module.exports = {
         })
     },
     comment: (req, res) => {
-        if('answer' in req.params) {
-            filter = {_id: req.params.answer};
+        let user = req.user;
+        if('answerId' in req.params) {
+            filter = {_id: req.params.answerId};
         }   
-        JSONAPIDeserializer({
-            keyForAttribute: 'camelCase',
-        }).deserialize(res.body).then((commentJSON)=>{
+        Serializer.deserializeAsync("comments", res.body).then((commentJSON)=>{
+            commentJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
             Answer.findOne(filter).then((answer) => {
                 answer.comments.push(comment);
             })

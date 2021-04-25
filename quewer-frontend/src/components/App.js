@@ -9,6 +9,11 @@ import Loading from './Loading';
 import { connect } from 'react-redux';
 import AnswerPage from './pages/AnswerPage';
 import Admin from './Admin/Admin';
+import AddCourse from './Admin/AddCourse';
+import FeedbackPage from '../components/pages/FeedbackPage';
+import FeedbackDisplay from '../components/pages/FeedbackDisplay';
+import AnnouncementPage from './pages/AnnouncementPage';
+import AnnouncementDisplay from './pages/AnnouncementDisplay';
 
 function App({loading, userType}) {
   return (
@@ -18,20 +23,20 @@ function App({loading, userType}) {
     }
     <Switch>
         <Route exact path='/' component={HomePage} />
-        {
-          (userType === "admin") ? 
-          <Page>
-            <Route path='/main' component={Admin} />
-          </Page> : 
-          <Page>
-            <Route exact path='/main' component={MainPage} />
-            <Route path='/enroll' component={EnrollPage} />
-            <Route path='/postanswer' component={PostAnswer} />
-            <Route path='/postquestion' component={PostQuestion} />
-            <Route path='/course/:courseID' component={MainPage} />
-            <Route path='/question/:questionID' component={AnswerPage} />
-          </Page>
-        }
+        <Page>
+          <Route exact path='/main' component={MainPage} />
+          <Route path='/enroll' component={EnrollPage} />
+          <Route path='/postanswer' component={PostAnswer} />
+          <Route path='/postquestion' component={PostQuestion} />
+          <Route path='/course/:courseID' component={MainPage} />
+          <Route path='/question/:questionID' component={AnswerPage} />
+          <Route path='/admin' component={Admin} />
+          <Route path='/addcourse' component={AddCourse} />
+          <Route path='/postfeedback' component={FeedbackPage} />
+          <Route path='/postannouncement' component={AnnouncementPage} />
+          <Route path='/getfeedback' component={FeedbackDisplay} />
+          <Route path='/getannouncement' component={AnnouncementDisplay} />
+        </Page>
     </Switch>
   </div>
   );

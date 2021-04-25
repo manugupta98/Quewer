@@ -1,4 +1,4 @@
-import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST } from '../constants';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_FEEDBACK, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
 
 const appState = {
     enrolledCourses: [],
@@ -6,8 +6,11 @@ const appState = {
     currentCourse: { 
         id: null,
         name: null,
-        questions: [] 
-    }
+        questions: [],
+        feedbacks: [],
+        announcements: []
+    },
+    currentAnswers: []
 };
 
 export default function courseReducer(state = appState, action) {
@@ -55,6 +58,34 @@ export default function courseReducer(state = appState, action) {
                 currentCourse: {
                     ...state.currentCourse,
                     questions: questions
+                }
+            }
+        }
+        case GET_ANSWERS: {
+            return {
+                ...state,
+                currentAnswers: action.payload.answers,
+                currentCourse: {
+                    ...state.currentCourse,
+                    id: action.payload.id
+                }
+            }
+        }
+        case GET_FEEDBACKS: {
+            return {
+                ...state,
+                currentCourse: {
+                    ...state.currentCourse,
+                    feedbacks: action.payload
+                }
+            }
+        }
+        case GET_ANNOUNCEMENTS: {
+            return {
+                ...state,
+                currentCourse: {
+                    ...state.currentCourse,
+                    announcements: action.payload
                 }
             }
         }

@@ -1,9 +1,6 @@
 const express = require('express');
 const QuestionAndAnswer = require('../../models/question_answer').QuestinAndAnswer;
 const createError = require('http-errors');
-const { QuestionSerializer, QuestionDeserializer } = require('../../serializers/question');
-const { AnswerSerializer, AnswerDeserializer } = require('../../serializers/answer');
-const UserSerializer = require('../../serializers/user');
 const { QuestionAndAnswerServices, VOTE, BOOKMARK } = require('../../services/question_answer');
 const admin = require('firebase-admin');
 const mongoose = require('mongoose');
@@ -12,19 +9,19 @@ const mime = require('mime-types');
 global['XMLHttpRequest'] = require('xmlhttprequest').XMLHttpRequest;
 var fs = require('fs');
 
-
+const Serializer = require('../../serializers/serializer');
 
 module.exports = {
     vote: async (req, res) => {
         var questionAndAnswerId;
-        if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send("questionId absent");
         }
 
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
 
         var action;
@@ -37,7 +34,7 @@ module.exports = {
         }
 
         await QuestionAndAnswerServices.vote(req.user, questionAndAnswerId, action).then((question) => {
-            res.status(200).json(QuestionSerializer.serialize(question));
+            res.status(200).json(Serializer.serialize("question", question));
         }).catch((err) => {
             console.log(err);
             res.status(500).json();
@@ -45,14 +42,14 @@ module.exports = {
     },
     bookmark: async (req, res) => {
         var questionAndAnswerId;
-        if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send("questionId absent");
         }
 
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
 
         var action;
@@ -74,11 +71,11 @@ module.exports = {
     attachment: (req, res) => {
         let questionAndAnswerId;
         let attachmentId;
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
-        else if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        else if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send();
         }
@@ -116,11 +113,11 @@ module.exports = {
     },
     newAttachment: (req, res) => {
         let questionAndAnswerId;
-        if ('answerID' in req.params) {
-            questionAndAnswerId = req.params.answerID
+        if ('answerId' in req.params) {
+            questionAndAnswerId = req.params.answerId;
         }
-        else if ('questionID' in req.params) {
-            questionAndAnswerId = req.params.questionID;
+        else if ('questionId' in req.params) {
+            questionAndAnswerId = req.params.questionId;
         } else {
             res.status(400).send();
         }
@@ -152,11 +149,11 @@ module.exports = {
 
             Promise.all(promises).then(() => {
                 questionAndAnswer.save();
-                if ('answerID' in req.params) {
-                    res.status(201).json(AnswerSerializer.serialize(questionAndAnswer));
+                if ('answerId' in req.params) {
+                    res.status(201).json(Serializer.serialize("answer", questionAndAnswer));
                 }
                 else {
-                    res.status(201).json(QuestionSerializer.serialize(questionAndAnswer));
+                    res.status(201).json(Serializer.serialize("question", questionAndAnswer));
                 }
             })
 
