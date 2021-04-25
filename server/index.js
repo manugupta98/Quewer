@@ -129,9 +129,9 @@ admin.initializeApp(firebaseConfig);
 
   // Answer API requests.
 
+  app.use("/api", authRouter);
   app.use("/api", authMiddleware.isAuthenticated, userMiddleware.loginStats);
   app.use("/api", userRouter);
-  app.use("/api", authRouter);
   app.use("/api", courseRouter);
   app.use("/api", questionRouter);
   app.use("/api", answerRouter);
