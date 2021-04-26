@@ -1,4 +1,5 @@
-import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_FEEDBACK, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
+import { Serializer } from 'jsonapi-serializer';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_COMMENT, ADD_FEEDBACK, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
 
 const appState = {
     enrolledCourses: [],
@@ -59,6 +60,22 @@ export default function courseReducer(state = appState, action) {
                     ...state.currentCourse,
                     questions: questions
                 }
+            }
+        }
+        case ADD_COMMENT: {
+            var answers = [...state.currentAnswers];
+            let answerId = action.answerId;
+            let comment = action.comment;
+            console.log(action);
+            let index = answers.indexOf(answers.find(answer => answer.id === answerId));
+            console.log(answerId);
+            console.log(answers.find(answer => answer.id === answerId));
+            let answer = answers[index]
+            console.log(answer);
+            answer.comments.push(comment);
+            return {
+                ...state,
+                currentAnswers: answers
             }
         }
         case GET_ANSWERS: {

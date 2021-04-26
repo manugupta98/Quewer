@@ -133,6 +133,7 @@ module.exports = {
                 return new Promise((resolve, reject) => {
                     let attachment = {
                         id: mongoose.Types.ObjectId(),
+                        name: file.originalname,
                         format: mime.extension(file.mimetype),
                     }
 

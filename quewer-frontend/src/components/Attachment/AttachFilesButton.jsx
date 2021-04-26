@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDropzone } from 'react-dropzone'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
+import { Button, Dialog, Grid } from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -42,6 +41,7 @@ const rejectStyle = {
 };
 
 function Dropzone({ onChange }) {
+    const [files, setNewFiles] = React.useState([]);
 
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
         getFilesFromEvent: event => myCustomFileGetter(event),
@@ -63,6 +63,7 @@ function Dropzone({ onChange }) {
         }
 
         onChange(files);
+        setNewFiles(files);
         return files;
     }
 
@@ -70,8 +71,17 @@ function Dropzone({ onChange }) {
         ...baseStyle,
     }));
 
-    const files = acceptedFiles.map(file => (
-        <Attachment file={file} />
+    const onDelete = (file) => {
+        acceptedFiles.splice(acceptedFiles.indexOf(file), 1);
+        setNewFiles(acceptedFiles);
+        onChange(acceptedFiles);
+        console.log(acceptedFiles.length);
+    }
+
+    const showFiles = files.map(file => (
+        <Grid item>
+            <Attachment file={file} canDelete={true} onDelete={onDelete} />
+        </Grid>
     ));
 
     return (
@@ -82,7 +92,9 @@ function Dropzone({ onChange }) {
             </div>
             <aside>
                 <h4>Files</h4>
-                <ul>{files}</ul>
+                <Grid container spacing={2}>
+                    {showFiles}
+                </Grid>
             </aside>
         </div>
     );
@@ -94,7 +106,7 @@ export default function AttachFilesButton({ onUpload }) {
     let files = [];
 
     const onChange = (newFiles) => {
-        files = newFiles
+        files = newFiles;
     }
 
     const handleClickOpen = () => {
@@ -111,7 +123,7 @@ export default function AttachFilesButton({ onUpload }) {
     }
 
     return (
-        <div>
+        <span style={{ float: 'right' }}>
             <Button variant="contained" color="primary" onClick={handleClickOpen}>Attach files</Button>
             <Dialog
                 open={open}
@@ -125,7 +137,7 @@ export default function AttachFilesButton({ onUpload }) {
                 <DialogTitle id="alert-dialog-slide-title">{"Attachments"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <Dropzone onChange={onChange}/>
+                        <Dropzone onChange={onChange} />
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -137,6 +149,6 @@ export default function AttachFilesButton({ onUpload }) {
             </Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </span>
     )
 }

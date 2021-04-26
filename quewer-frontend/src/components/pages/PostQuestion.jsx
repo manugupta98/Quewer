@@ -66,7 +66,7 @@ export default class PostQuestion extends React.Component {
                 <textarea className="input" value={this.state.value} onChange={this.handleChange} />
                 <h1>Question Description:</h1>
                 <QuewerEditor ref={this.ref} />
-                <div style={{ marginTop: '10px' }}>
+                <div style={{ marginTop: '10px'}}>
                     {
                         (this.state.submit) ? <Redirect to={`/course/${store.getState().course.currentCourse.name}`} /> : <Button onClick={this.onSubmit} color='#29348EEE' textColor='white' text='Submit' />
                     }

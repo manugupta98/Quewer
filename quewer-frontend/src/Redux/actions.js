@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, ADD_COMMENT,USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from './constants';
 import axios from 'axios';
 import store from './store';
 const { QuestionSerializer, QuestionDeserializer } = require('./serializer/question');
@@ -139,7 +139,7 @@ export function addQuestion(question, courseID, files) {
             console.log("status", res)
             Serializer.deserializeAsync("question", res.data).then((question) => {
                 let form = new FormData();
-                for (let i = 0; i < files.length; i++){
+                for (let i = 0; i < files.length; i++) {
                     form.append('attachments[]', files[i]);
                 }
                 // form.append('attachments', files);
@@ -152,6 +152,32 @@ export function addQuestion(question, courseID, files) {
                         })
                     })
                 })
+            })
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function addComment(comment, courseId, questionId ,answerId,) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        console.log(comment);
+        comment = Serializer.serialize("comments", comment);
+        console.log(comment);
+        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseId}/questions/${questionId}/answers/${answerId}/comments`, comment).then(res => {
+            console.log(res.data);
+            let answer = Serializer.deserialize("answer", res.data);
+            let newComment = answer.comments[answer.comments.length - 1];
+            dispatch({
+                type: ADD_COMMENT,
+                comment: newComment, 
+                answerId: answerId,
             })
             dispatch({
                 type: END

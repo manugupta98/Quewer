@@ -30,7 +30,7 @@ Serializer.register("answer", {
 
 Serializer.register("attachment", {
     id: "id",
-    whitelist: ['format'],
+    whitelist: ['format', 'name'],
 })
 
 Serializer.register("comments", {
