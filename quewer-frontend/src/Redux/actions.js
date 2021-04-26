@@ -4,6 +4,7 @@ import store from './store';
 const { QuestionSerializer, QuestionDeserializer } = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 const Serializer = require('./serializer/serializer');
+const FormData = require('form-data');
 
 
 export function enrollCourse(courseID, courseName) {
@@ -128,7 +129,7 @@ export const toggleSideBar = () => {
     }
 }
 
-export function addQuestion(question, courseID) {
+export function addQuestion(question, courseID, files) {
     return dispatch => {
         dispatch({
             type: START
@@ -137,10 +138,19 @@ export function addQuestion(question, courseID) {
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
             console.log("status", res)
             Serializer.deserializeAsync("question", res.data).then((question) => {
-                console.log(question);
-                dispatch({
-                    type: ADD_QUESTION,
-                    payload: question
+                let form = new FormData();
+                for (let i = 0; i < files.length; i++){
+                    form.append('attachments[]', files[i]);
+                }
+                // form.append('attachments', files);
+                axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${question.id}/attachments`, form).then(response => {
+                    Serializer.deserializeAsync("question", response.data).then((newQuestion) => {
+                        console.log(newQuestion);
+                        dispatch({
+                            type: ADD_QUESTION,
+                            payload: newQuestion
+                        })
+                    })
                 })
             })
             dispatch({

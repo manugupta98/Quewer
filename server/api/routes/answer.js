@@ -9,7 +9,7 @@ answerRouter.get('/courses/:courseId/questions/:questionId/answers',  answerCont
 
 answerRouter.get('/courses/:courseId/questions/:questionId/answers/:answerId', answerController.answer);
 
-answerRouter.post('/courses/:courseId/questions/:questionId/answers/:answerId/comment', answerController.comment);
+answerRouter.post('/courses/:courseId/questions/:questionId/answers/:answerId/comments', answerController.comment);
 
 answerRouter.post('/courses/:courseId/questions/:questionId/answers/:answerId/vote', QuestionAndAnswerController.vote);
 

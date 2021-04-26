@@ -9,7 +9,7 @@ var loginUrl = process.env.REACT_APP_SERVER_URL + "/api/auth/google";
 
 class HomePage extends React.Component {
   login(){
-    window.location.href= loginUrl;
+    window.location.href = loginUrl;
   }
   render() {
     console.log(loginUrl);

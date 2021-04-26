@@ -26,6 +26,7 @@ const courseSchema = new mongoose.Schema({
         }],
         type: {
             type: String,
+            required: false
         }
     },
     registeredUsers:[{

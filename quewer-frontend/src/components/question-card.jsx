@@ -7,6 +7,7 @@ import UpvoteBookmark from './upvote-bookmark';
 import { Link } from 'react-router-dom';
 import store from '../Redux/store';
 import { fetchAnswers } from '../Redux/actions';
+import CommentList from "./CommentsList";
 
 class QuestionCard extends React.Component {
 
@@ -40,6 +41,7 @@ class QuestionCard extends React.Component {
                 <QFooter username={this.props.postedBy} time={this.props.date}>
                     {this.props.tags.map((tag, index) => <Tag key={index} tag={tag} />)}
                 </QFooter>
+                {(this.props.answer) ? <CommentList comments={this.props.comments}/> : null }
             </div>
         );
     }
