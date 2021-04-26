@@ -3,11 +3,9 @@ import store from '../../Redux/store';
 import '../../style/post.css';
 import Button from '../button';
 import QuewerEditor from '../QuewerEditor/QuewerEditor';
-import { addQuestion } from '../../Redux/actions';
+import { addQuestion, showSelectedCourseOnSidebar } from '../../Redux/actions';
 import draftToHtml from 'draftjs-to-html';
 import { Redirect } from 'react-router';
-
-const {QuestionSerializer, QuestionDeserializer} = require('../../Redux/serializer/question');
 
 export default class PostQuestion extends React.Component {
     constructor() {
@@ -20,6 +18,7 @@ export default class PostQuestion extends React.Component {
         }
 
         this.ref = React.createRef();
+        showSelectedCourseOnSidebar();
     }
 
     handleChange = (event) => {

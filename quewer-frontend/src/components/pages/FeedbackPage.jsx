@@ -3,7 +3,7 @@ import store from '../../Redux/store';
 import '../../style/post.css';
 import Button from '../button';
 import QuewerEditor from '../QuewerEditor/QuewerEditor';
-import { addFeedback, addQuestion } from '../../Redux/actions';
+import { addFeedback, addQuestion, showSelectedCourseOnSidebar } from '../../Redux/actions';
 import draftToHtml from 'draftjs-to-html';
 import { Redirect } from 'react-router';
 import Rating from '../Rating';
@@ -20,6 +20,7 @@ export default class FeedbackPage extends React.Component {
 
         this.ref = React.createRef();
         this.refRate = React.createRef();
+        showSelectedCourseOnSidebar();
     }
 
     handleChange = (event) => {

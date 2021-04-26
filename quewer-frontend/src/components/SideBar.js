@@ -8,7 +8,8 @@ import sidebar from '../assets/sidebar.png';
 
 export default function SideBar() {
     const invisibleStyle = {
-        display: "none"
+        width: '0',
+        opacity: '0'
     };
     const style = useSelector(state => state.user.sideBar) ? {} : invisibleStyle;
 
