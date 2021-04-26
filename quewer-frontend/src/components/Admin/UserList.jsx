@@ -20,7 +20,7 @@ function User(props) {
                     <img id="user-img" src={user.photo} alt={user.name} />
                     <h3>{user.name}</h3>
                 </div>
-                <a href={`mailto:${user.email}`}>{user.email}</a>
+                <a href={`mailto:${user.email}`} target="_blank">{user.email}</a>
         </div>
     );
 }

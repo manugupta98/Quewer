@@ -14,11 +14,11 @@ export default function NavBar() {
   }, []);
 
   const handleClick = () => dispatch(toggleSideBar());
-
+  const url = (user.type === 'admin') ? "/admin" : "/main";
   return (
     <div className="navbar">
       <FaBars style={{ marginRight: '20px', fontSize: '20px', cursor: 'pointer' }} onClick={handleClick} />
-      <Link to="/main" className="appbarTitle">
+      <Link to={url} className="appbarTitle">
         <h2 className="appbarTitle" style={{ cursor: 'pointer' }}>
           Que<span className="colorText">wer</span>
         </h2>
