@@ -4,24 +4,12 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { addAdminCourse } from '../../Redux/actions';
+import Serializer from '../../Redux/serializer/serializer';
 
 export default function AddCourse() {
     const teachers = useSelector(state => state.admin.teachers);
     const multiSelect = createRef();
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        const names = []
-        names.push({ name: "R. GURURAJ", id: 1 });
-        names.push({ name: "T. RAY", id: 2 });
-        names.push({ name: "Bhanu Murthy", id: 3 });
-        names.push({ name: "Narasimha Bolloju", id: 4 });
-        names.push({ name: "Chittaranjan Hota", id: 5 });
-        names.push({ name: "Nikumani Choudhary", id: 6 });
-        names.push({ name: "Aruna Malapati", id: 7 });
-        names.sort((a, b) => a.name.localeCompare(b.name));
-        // setTeachers(names);
-    }, []);
 
     const reset = () => {
         document.getElementsByClassName('course-details')[0].reset();
@@ -29,14 +17,20 @@ export default function AddCourse() {
     };
 
     const addCourse = () => {
-        const idArray = multiSelect.current.getSelectedItems().map(i => {return {id: i.id}});
+        const idArray = multiSelect.current.getSelectedItems().map(i => i.id);
         const title = document.getElementById('admin-add-title').value;
         const name = document.getElementById('admin-add-name').value;
-        console.log(`${title}, ${name}, ${idArray.map(x => x.id)}`);
-        axios.post(process.env.REACT_APP_SERVER_URL + '/api/courses').then(res => {
-            console.log(res);
-            // const course = res.data
-            // dispatch(addAdminCourse(res));
+
+        const objToSend = Serializer.serialize('course', {title: title, description: name, teachers: idArray});
+
+        axios.post(process.env.REACT_APP_SERVER_URL + '/api/courses', objToSend).then(res => {
+            console.log("Added!");
+            const newCourse = Serializer.deserializeAsync('course', res.data).then (data => {
+                reset();
+                console.log(data);
+                dispatch(addAdminCourse(data));
+                alert("Course Added Successfully!");
+            })
         }).catch(err => console.log(err));
     };
 

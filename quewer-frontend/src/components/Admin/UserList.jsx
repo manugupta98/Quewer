@@ -17,10 +17,10 @@ function User(props) {
     return (
         <div className="user-item">
                 <div className="name-photo">
-                    <img id="user-img" src={user.photos[0].value} alt={user.name} />
+                    <img id="user-img" src={user.photo} alt={user.name} />
                     <h3>{user.name}</h3>
                 </div>
-                {/* <a href={`mailto:${user.email}`}>{user.emails[0].value}</a> */}
+                <a href={`mailto:${user.email}`}>{user.email}</a>
         </div>
     );
 }

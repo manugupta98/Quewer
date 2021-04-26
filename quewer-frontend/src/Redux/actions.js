@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, ADD_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, ADMIN_ADD_COURSE } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_TEACHERS, FETCH_STUDENTS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, ADMIN_ADD_COURSE } from './constants';
 import axios from 'axios';
 import store from './store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,7 +37,6 @@ export function fetchCourses() {
             new JSONAPIDeserializer({
                 keyForAttribute: 'camelCase',
             }).deserialize(res.data).then((courses) => {
-                console.log(courses);
                 dispatch({
                     type: FETCH_COURSE_LIST,
                     payload: courses
@@ -163,7 +162,6 @@ export function userInfo() {
                     answerUpvoted: user.answerUpvoted,
                     answerDownvoted: user.answerDownvoted
                 };
-                console.log(newUser)
                 dispatch({
                     type: USER_INFO,
                     payload: newUser
@@ -348,11 +346,30 @@ export function getAnnouncement(courseID) {
     }
 }
 
-export function addTeachers(teachers) {
-    return dispatch => dispatch({
-        type: ADD_TEACHERS,
-        payload: teachers
-    });
+export function fetchTeachers() {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_SERVER_URL + '/api/teachers').then(res => {
+            dispatch({
+                type: FETCH_TEACHERS,
+                payload: res.data.data
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function fetchStudents() {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_SERVER_URL + '/api/students').then(res => {
+            dispatch({
+                type: FETCH_STUDENTS,
+                payload: res.data.data
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 }
 
 export function addAdminCourse(course) {
