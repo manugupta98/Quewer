@@ -56,8 +56,7 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
                 
                 const newCourse = {
                     students: x.registeredUsers.sort((a, b) => a.name.localeCompare(b.name)),
-                    // teachers: x.teachers.sort((a, b) => a.name.localeCompare(b.name)),
-                    teachers: x.teachers,
+                    teachers: x.teachers.sort((a, b) => a.name.localeCompare(b.name)),
                     queCount: data.questionsCount,
                     solCount: data.answersCount,
                     queData: tempQue,

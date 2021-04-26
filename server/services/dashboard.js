@@ -100,7 +100,7 @@ class DashboardServices {
                 {
                     $match: {
                         date: { $lt: endDate, $gt: startDate },
-                        course: courseId,
+                        course: ObjectId(courseId),
                     }
                 },
                 {

@@ -37,12 +37,14 @@ module.exports = {
         })
     },
     add: (req, res) => {
+        console.log(req);
         let user = req.user;
         let course = Serializer.deserialize("course", req.body);
-        CourseServices.addCourse(user, course).then(() => {
+        CourseServices.addCourse(user, course).then((course) => {
             res.json(Serializer.serialize("course", course));
         }).catch((err) => {
-            res.status(err.status).send(err.message);
+            console.log("ERROR ", err)
+            res.status(500).send(err.message);
         })
     },
     delete: (req, res) => {

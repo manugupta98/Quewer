@@ -5,9 +5,10 @@ import {useState} from 'react';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {addTeachers, fetchCourses} from '../../Redux/actions';
+import {fetchCourses, fetchStudents, fetchTeachers} from '../../Redux/actions';
 import Chart from 'react-apexcharts';
 import axios from 'axios';
+import { FETCH_TEACHERS } from '../../Redux/constants';
 
 const DAYS = 30;
 
@@ -15,11 +16,11 @@ export default function Admin() {
     const [courseOpen, setCourseOpen] = useState(true);
     const [teacherOpen, setTeacherOpen] = useState(false);
     const [studentOpen, setStudentOpen] = useState(false);
-    const [students, setStudents] = useState([]);
-    const [teachers, setTeachers] = useState([]);
     const [options, setOptions] = useState({});
     const [loginActivity, setActivity] = useState([]);
     const courseList = useSelector(state => state.course.courseList);
+    const teachers = useSelector(state => state.admin.teachers);
+    const students = useSelector(state => state.admin.students);
     const IDList = ['courses-list', 'teachers-list', 'students-list'];
     const classList = ['courses-list', 'user-list', 'user-list'];
     const dispatch = useDispatch();
@@ -59,12 +60,13 @@ export default function Admin() {
         }).catch(err => console.log(err));
     };
 
-
     useEffect(() => {
         [1, 2].forEach(id => {
             document.getElementById(IDList[id]).classList.toggle(classList[id]);
             document.getElementById(IDList[id]).classList.toggle('toggle');
         });
+        dispatch(fetchTeachers());
+        dispatch(fetchStudents());
         dispatch(fetchCourses());
         fetchUsersActivity();
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -79,19 +81,6 @@ export default function Admin() {
         }
         setOptions(opts);
     }, []);
-
-    useEffect(() => {
-        console.log("COURSELIST", courseList);
-        let studs = new Set(), techs = new Set();
-        courseList.forEach(x => {
-            x.registeredUsers.forEach(user => studs.add(JSON.stringify(user)));
-            // x.teachers.forEach(user => techs.add(JSON.stringify(user))));
-        });
-        setStudents([...studs].sort().map(x => JSON.parse(x)));
-        // const tempArr = [...techs].sort().map(x => JSON.parse(x));
-        // setTeachers(tempArr);
-        // dispatch(addTeachers(tempArr));
-    }, [courseList]);
 
     return (
         <div className="admin-content">

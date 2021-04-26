@@ -43,25 +43,28 @@ class CourseServices {
         if (user.type !== "admin") {
             throw createError.Forbidden("", { expose: true });
         }
-        await Course.create(course).then((course) => {
-            return new Promise((resolve, reject) => {
-                let promises = course.teacher.map(teacherId => User.findOne({ _id: course.teacher, type: 'teacher' }))
-                Promise.all(promises).then((teachers) => {
-                    if (teachers.map(teacher => typeof teacher === 'undefined').include(true)) {
-                        throw createError.NotFound("Teacher not found");
-                    }
+        return new Promise((resolve, reject) => {
+            let promises = course.teachers.map(teacherId => User.findOne({ _id: teacherId, type: 'teacher' }))
+            Promise.all(promises).then((teachers) => {
+                if (teachers.map(teacher => typeof teacher === 'undefined').includes(true)) {
+                    throw createError.NotFound("Teacher not found");
+                }
+                course.teachers = [];
+                teachers.map(teacher => {
+                    course.teachers.push({ id: teacher.id, name: teacher.displayName, photos: teacher.photos, type: teacher.type, });
+                })
+                Course.create(course).then((course) => {
                     teachers.map(teacher => {
-                        course.push({ id: teacher.id, name: teacher.displayName, photos: teacher.photos, type: teacher.type, });
+                        teacher.registeredCourses.push(course.id,);
                     })
-                    course.save();
                     console.log('Course added successfully :) ');
                     resolve(course);
                 })
-            }).catch((err) => {
-                console.log('Course adding unsuccessfully :) ');
-                throw createError.InternalServerError("Course cannot be added successfully", { expose: true });
-            });
-        })
+            })
+        }).catch((err) => {
+            console.log('Course adding unsuccessfully :) ');
+            throw createError.InternalServerError("Course cannot be added successfully", { expose: true });
+        });
     }
     static async deleteCourse(user, courseId) {
         if (user.type !== "admin") {

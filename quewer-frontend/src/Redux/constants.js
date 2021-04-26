@@ -18,5 +18,6 @@ export const ADD_ANSWER = "question/addAnswer";
 export const GET_ANSWERS = "question/getAnswers";
 export const GET_FEEDBACKS = "course/getfeedbacks";
 export const GET_ANNOUNCEMENTS = "course/getannouncements";
-export const ADD_TEACHERS = "dashboards/teachers";
+export const FETCH_TEACHERS = "teachers";
+export const FETCH_STUDENTS = "students";
 export const ADMIN_ADD_COURSE = "courses";

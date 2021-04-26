@@ -1,8 +1,6 @@
 import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, ADD_COMMENT,USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, ADMIN_ADD_COURSE, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from './constants';
 import axios from 'axios';
 import store from './store';
-import { useDispatch, useSelector } from 'react-redux';
-const { QuestionSerializer, QuestionDeserializer } = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 const Serializer = require('./serializer/serializer');
 const FormData = require('form-data');
@@ -37,7 +35,6 @@ export function fetchCourses() {
             new JSONAPIDeserializer({
                 keyForAttribute: 'camelCase',
             }).deserialize(res.data).then((courses) => {
-                console.log(courses);
                 dispatch({
                     type: FETCH_COURSE_LIST,
                     payload: courses
@@ -189,7 +186,6 @@ export function userInfo() {
                     answerUpvoted: user.answerUpvoted,
                     answerDownvoted: user.answerDownvoted
                 };
-                console.log(newUser)
                 dispatch({
                     type: USER_INFO,
                     payload: newUser
@@ -368,6 +364,32 @@ export function getAnnouncement(courseID) {
                 });
             })
             endLoading(dispatch);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function fetchTeachers() {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_SERVER_URL + '/api/teachers').then(res => {
+            dispatch({
+                type: FETCH_TEACHERS,
+                payload: res.data.data
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+}
+
+export function fetchStudents() {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_SERVER_URL + '/api/students').then(res => {
+            dispatch({
+                type: FETCH_STUDENTS,
+                payload: res.data.data
+            });
         }).catch(err => {
             console.log(err);
         });
