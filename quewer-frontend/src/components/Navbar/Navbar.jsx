@@ -4,9 +4,6 @@ import { FaBars } from "react-icons/fa";
 import { toggleSideBar, userInfo } from '../../Redux/actions';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import store from "../../Redux/store";
-
-import { Popover } from '@material-ui/core';
 import ProfileAvatar from "./ProfileAvatar";
 
 export default function NavBar() {

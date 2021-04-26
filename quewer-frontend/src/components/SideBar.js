@@ -17,8 +17,8 @@ export default function SideBar() {
         <div className="SideBar FlexCard ColumnCard" style={style}>
             <img src={sidebar} />
             <h2>Menu</h2>
-            <Link to="/main" style={{textDecoration: 'none'}}><CourseItem name={'Home'} icon={<FaHome style={{marginRight: '5px'}}/>} /></Link>
-            <Link to="/enroll" style={{textDecoration: 'none'}}><CourseItem name={'Enroll Courses'} icon={<FaFolderPlus style={{marginRight: '5px'}}/>} /></Link>
+            <Link to="/main" style={{textDecoration: 'none', marginBottom: '0px'}}><CourseItem name={'Home'} icon={<FaHome style={{marginRight: '5px'}}/>} /></Link>
+            <Link to="/enroll" style={{textDecoration: 'none', marginTop: '0'}}><CourseItem name={'Enroll Courses'} icon={<FaFolderPlus style={{marginRight: '5px'}}/>} /></Link>
             <br />
             <h2 style={{marginTop: '0px'}}>Your Courses</h2>
             <CourseList icon={<FaBook style={{marginRight: '5px'}} />}></CourseList>

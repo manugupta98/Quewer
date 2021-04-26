@@ -1,7 +1,6 @@
 import React from "react";
 import { Popover } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
@@ -28,6 +27,7 @@ export default function ProfileAvatar({ profileImg }) {
     const onLogout = () => {
         axios.post(`http://localhost:5000/api/auth/logout`).then((res) => {
             if (res.status === 204){
+                localStorage.setItem('loggedIn', false);
                 window.location.href = process.env.REACT_APP_CLIENT_URL;
             }
         })

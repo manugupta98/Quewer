@@ -9,7 +9,6 @@ class CardList extends React.Component {
     componentList = null;
 
     initialize = () => {
-        console.log(this.props.list);
         if(this.props.component === CourseEnrollCard) {
             this.componentList = this.props.list.map(card => <CourseEnrollCard key={card.id} id={card.id} {...card} />)
         } else if(this.props.component === QuestionCard && this.props.main) {

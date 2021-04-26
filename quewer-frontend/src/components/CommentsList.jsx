@@ -43,17 +43,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     
   }
-  // .q-user {
-  //     float: left;
-  //     font-size: 10px;
-  //     margin: 10px 0px 10px 10px;
-  // }
-
-  // .q-time {
-  //     float: right;
-  //     font-size: 10px;
-  //     margin: 10px 10px 10px 0px;
-  // }
 }));
 
 function Comment({ comment }) {
@@ -117,7 +106,7 @@ export default function CommentList({ comments , addComment}) {
 
   return (
     <div style={{ backgroundColor: "#E8EBFF" }}>
-      <List className={classes.list} height={400} width={300} itemSize={46} itemCount={comments.length}>
+      <List className={classes.list} height={400} width={300}>
         {comments.map((comment, index) => (
           <Comment comment={comment} index={index} />
         ))}
@@ -130,7 +119,7 @@ export default function CommentList({ comments , addComment}) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        {/* <DialogTitle id="form-dialog-title">Add comment</DialogTitle> */}
+        <DialogTitle id="form-dialog-title">Add comment</DialogTitle>
         <DialogContent style={{width: '500px'}}>
           <TextField
             autoFocus

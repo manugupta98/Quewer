@@ -106,7 +106,6 @@ export function selectCourse(courseID, courseName) {
         startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses/" + courseID + "/questions").then(res => {
             Serializer.deserializeAsync("question", res.data).then((questions) => {
-                console.log(questions);
                 dispatch({
                     type: COURSE_SELECT,
                     payload: {

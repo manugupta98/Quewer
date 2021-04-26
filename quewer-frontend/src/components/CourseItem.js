@@ -15,7 +15,6 @@ export default function CourseItem(props) {
                 const courseName = path.split('/')[2];
                 if(props.name === courseName) {
                     handleClick();
-                    console.log(store.getState().course.currentCourse.name);
                 }
             }
         }
