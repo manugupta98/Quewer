@@ -1,5 +1,4 @@
-import { Serializer } from 'jsonapi-serializer';
-import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_COMMENT, ADD_FEEDBACK, ADMIN_ADD_COURSE, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_COMMENT, ADMIN_ADD_COURSE, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
 const appState = {
     enrolledCourses: [],
     courseList: [],
@@ -10,7 +9,8 @@ const appState = {
         feedbacks: [],
         announcements: []
     },
-    currentAnswers: []
+    currentAnswers: [],
+    choice: []
 };
 
 export default function courseReducer(state = appState, action) {
@@ -111,6 +111,12 @@ export default function courseReducer(state = appState, action) {
             return {
                 ...state,
                 courseList: list
+            }
+        }
+        case GET_CHOICE_QUESTION: {
+            return {
+                ...state,
+                choice: action.payload
             }
         }
         default:

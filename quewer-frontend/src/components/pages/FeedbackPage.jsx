@@ -58,6 +58,7 @@ export default class FeedbackPage extends React.Component {
     render() {
         return (
             <div className='post'>
+                <h1 style={{margin: '10px 5%'}}>Post a feedback</h1>
                 <h1>Rating:</h1>
                 <Rating ref={this.refRate} />
                 <br />

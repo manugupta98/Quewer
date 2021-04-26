@@ -5,7 +5,7 @@ import {loginPhrase} from '../../GlobalVariables';
 import logo from '../../views/logo.gif';
 import GoogleButton from 'react-google-button';
 
-var loginUrl = process.env.REACT_APP_SERVER_URL + "/api/auth/google";
+var loginUrl = process.env.REACT_APP_SERVER_URL + "/api/auth/google?uri=" + process.env.REACT_APP_CLIENT_URL + "/checklogin"
 
 class HomePage extends React.Component {
   login(){
