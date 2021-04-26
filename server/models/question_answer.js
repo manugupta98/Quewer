@@ -60,6 +60,10 @@ const questinAndAnswerBaseSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        name: {
+            type: String,
+            required: true,
+        },
         format:{
             type: String,
             required: true,
@@ -120,7 +124,8 @@ const answerSchema = new mongoose.Schema({
         },
         date: {
             type: Date,
-            required: true
+            required: true,
+            default: Date.now(),
         },
         comment: {
             type: String,

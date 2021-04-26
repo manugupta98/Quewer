@@ -9,7 +9,7 @@ class QFooter extends React.Component {
                 {this.props.children}
                 <br />
                 <div className='q-user'>Posted by: {this.props.username}</div>
-                <div className='q-time'>On: {this.props.time}</div>
+                <div className='q-time'>On: {Date(this.props.time).toLocaleString('hi-IN')}</div>
             </div>
         );
     }

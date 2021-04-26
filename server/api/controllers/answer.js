@@ -47,11 +47,13 @@ module.exports = {
         let user = req.user;
         if('answerId' in req.params) {
             filter = {_id: req.params.answerId};
-        }   
-        Serializer.deserializeAsync("comments", res.body).then((commentJSON)=>{
+        }
+        Serializer.deserializeAsync("comments", req.body).then((commentJSON)=>{
             commentJSON.postedBy = {id: user.id, name: user.displayName, photos: user.photos, type: user.type};
             Answer.findOne(filter).then((answer) => {
-                answer.comments.push(comment);
+                answer.comments.push(commentJSON);
+                answer.save();
+                res.status(201).json(Serializer.serialize('answer', answer));
             })
         }).catch((err) => {
             console.log(err);

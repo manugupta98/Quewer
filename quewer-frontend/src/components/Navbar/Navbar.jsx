@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import store from "../../Redux/store";
 
+import { Popover } from '@material-ui/core';
+import ProfileAvatar from "./ProfileAvatar";
+
 export default function NavBar() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
@@ -25,7 +28,9 @@ export default function NavBar() {
       </Link>
       <div className='user-nav'>
         <p className="userName">{user.name}</p>
-        <img src={user.profileImg} alt="Avatar" className="avatar"></img>
+        <div>
+          <ProfileAvatar profileImg={user.profileImg}/>
+        </div>
       </div>
     </div>
   );

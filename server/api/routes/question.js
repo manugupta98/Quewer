@@ -19,6 +19,6 @@ questionRouter.post('/courses/:courseId/questions/:questionId/bookmark', Questio
 
 questionRouter.get('/courses/:courseId/questions/:questionId/attachments/:attachmentId', QuestionAndAnswerController.attachment);
 
-questionRouter.post('/courses/:courseId/questions/:questionId/attachments', upload.array('attachments'), QuestionAndAnswerController.newAttachment);
+questionRouter.post('/courses/:courseId/questions/:questionId/attachments', upload.array('attachments[]'), QuestionAndAnswerController.newAttachment);
 
 module.exports = questionRouter;

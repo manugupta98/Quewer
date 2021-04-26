@@ -8,14 +8,14 @@ class Rating extends React.Component {
 
         this.state = {
             vals: [false, false, false, false, false, true],
-            rate: 0
+            rate: 5
         }
     }
 
     componentDidMount() {
         this.setState({
             vals: [false, false, false, false, false, true],
-            rate: 0
+            rate: 5
         })
     }
 

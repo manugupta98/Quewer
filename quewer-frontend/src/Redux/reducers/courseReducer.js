@@ -1,5 +1,4 @@
-import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_FEEDBACK, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
-
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_COMMENT, ADMIN_ADD_COURSE, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
 const appState = {
     enrolledCourses: [],
     courseList: [],
@@ -10,7 +9,8 @@ const appState = {
         feedbacks: [],
         announcements: []
     },
-    currentAnswers: []
+    currentAnswers: [],
+    choice: []
 };
 
 export default function courseReducer(state = appState, action) {
@@ -61,6 +61,22 @@ export default function courseReducer(state = appState, action) {
                 }
             }
         }
+        case ADD_COMMENT: {
+            var answers = [...state.currentAnswers];
+            let answerId = action.answerId;
+            let comment = action.comment;
+            console.log(action);
+            let index = answers.indexOf(answers.find(answer => answer.id === answerId));
+            console.log(answerId);
+            console.log(answers.find(answer => answer.id === answerId));
+            let answer = answers[index]
+            console.log(answer);
+            answer.comments.push(comment);
+            return {
+                ...state,
+                currentAnswers: answers
+            }
+        }
         case GET_ANSWERS: {
             return {
                 ...state,
@@ -87,6 +103,20 @@ export default function courseReducer(state = appState, action) {
                     ...state.currentCourse,
                     announcements: action.payload
                 }
+            }
+        }
+        case ADMIN_ADD_COURSE: {
+            const list = [...state.courseList];
+            list.push(action.payload);
+            return {
+                ...state,
+                courseList: list
+            }
+        }
+        case GET_CHOICE_QUESTION: {
+            return {
+                ...state,
+                choice: action.payload
             }
         }
         default:

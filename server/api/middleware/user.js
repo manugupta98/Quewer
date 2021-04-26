@@ -5,7 +5,6 @@ module.exports = {
     loginStats: (req, res, next) => {
         const start = moment().startOf('day').toDate()
         const end = moment().endOf('day').toDate()
-        console.log("loginstats", req.user.displayName);
         Login.findOneAndUpdate(
             {
                 'user': req.user.id,

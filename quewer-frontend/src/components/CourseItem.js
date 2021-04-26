@@ -21,14 +21,12 @@ export default function CourseItem(props) {
         }
     })
 
-    console.log(store.getState().course);
-
     function handleClick() {
-        if(props.name !== 'Enroll Courses') {
+        if(props.name !== 'Enroll Courses' && props.name !== 'Home') {
             store.dispatch(selectCourse(props.id, props.name));
         }
     }
     return (
-        <h4 className="menu-item" onClick={handleClick}>{props.icon}{props.name}</h4>
+        <h4 className="menu-item" id={props.id} onClick={handleClick}>{props.icon}{props.name}</h4>
     );
 }

@@ -27,9 +27,9 @@ authRouter.get('/auth/google/callback',
   });
 
 authRouter.post('/auth/logout', authMiddleware.isAuthenticated, function (req, res) {
+  console.log(req.user.displayName + ' wants to logout');
   req.logout();
-  let url = process.env.CLIENT_URL;
-  res.redirect(url + '/');
+  res.status(204).json();
 });
 
 module.exports = authRouter;

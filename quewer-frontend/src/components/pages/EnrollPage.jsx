@@ -38,6 +38,7 @@ class EnrollPage extends React.Component {
     render() {
         return (
             <div>
+                <h1 style={{margin: '10px 5%'}}>Enroll in courses that interest you</h1>
                 <Searchbar onChange={this.handleChange} />
                 { (this.state.value === '') ? <CardList component={CourseEnrollCard} list={this.props.courseList} /> : <CardList component={CourseEnrollCard} list={this.state.list} /> }
             </div>

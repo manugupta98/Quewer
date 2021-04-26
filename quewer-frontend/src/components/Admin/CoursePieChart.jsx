@@ -26,8 +26,24 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
         }
     }, [opts]);
 
-    const fetchGraphData = () => {
+
+    const fillTimeData = (data, array) => {
+        let i = 0;
         const date = new Date();
+        date.setDate(date.getDate() - DAYS + 1);
+        date.setHours(0, 0, 0, 0);
+        data.forEach(x => {
+            const d = new Date(x.date.year, x.date.month - 1, x.date.day, 0, 0, 0, 0);
+            while (date.getTime() < d.getTime()) {
+                date.setDate(date.getDate() + 1);
+                i++;
+            }
+            array[i] = x.count;
+        });
+}
+
+    const fetchGraphData = (tempNames) => {
+        let date = new Date();
         const end = `end=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
         date.setDate(date.getDate() - DAYS + 1);
         const start = `start=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&`;
@@ -35,46 +51,31 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
             axios.get(process.env.REACT_APP_SERVER_URL + '/api/courses/' + x.id + '/dashboards?' + start + end).then(res => {
                 const data = res.data.data.attributes;
                 const tempQue = new Array(DAYS).fill(0), tempSol = new Array(DAYS).fill(0);
-                date.setHours(0, 0, 0, 0);
-                let i = 0;
-                data.questionsGraph.forEach(x => {
-                    const d = new Date(x.date.year, x.date.month - 1, x.date.day, 0, 0, 0, 0);
-                    while (date.getTime() < d.getTime()) {
-                        date.setDate(date.getDate() + 1);
-                        i++;
-                    }
-                    tempQue[i] = x.count;
-                }); i = 0;
-                data.answersGraph.forEach(x => {
-                    const d = new Date(x.date.year, x.date.month - 1, x.date.day, 0, 0, 0, 0);
-                    while (date.getTime() < d.getTime()) {
-                        date.setDate(date.getDate() + 1);
-                        i++;
-                    }
-                    tempSol[i] = x.count;
-                });
+                fillTimeData(data.questionsGraph, tempQue);
+                fillTimeData(data.answersGraph, tempSol);
                 
                 const newCourse = {
-                    students: x.registeredUsers,
-                    teachers: x.teachers,
+                    students: x.registeredUsers.sort((a, b) => a.name.localeCompare(b.name)),
+                    teachers: x.teachers.sort((a, b) => a.name.localeCompare(b.name)),
                     queCount: data.questionsCount,
                     solCount: data.answersCount,
                     queData: tempQue,
                     solData: tempSol
                 };
                 cachedCourses.set(x.id, newCourse);
+                if (tempNames[0].value === x.id)
+                    setCourse(newCourse);
             }).catch(err => console.log(err));
         });
-        if (names.length > 0) setCourse(cachedCourses.get(names[0].value));
     };
 
     useEffect(() => {
         if (list.length > 0) {
-            fetchGraphData();
             const tempNames = [];
             list.forEach(x => tempNames.push({ label: `${x.title} ${x.description}`, value: x.id }));
             tempNames.sort((a, b) => a.label.localeCompare(b.label));
             setNames(tempNames);
+            fetchGraphData(tempNames);
         }
     }, [list]);
 
@@ -83,7 +84,7 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
         <div id={id} className="courses-list">
             <Dropdown options={names}
                 value={(names.length === 0) ? "Select a course" : names[0]}
-                onChange={data => { if (cachedCourses.has(data.value)) setCourse(cachedCourses.get(data.value)) }} />
+                onChange={data => { if (cachedCourses.has(data.value)) setCourse(cachedCourses.get(data.value));}} />
             <div className="content">
                 <div className='chart'>
                     <div className='details'>

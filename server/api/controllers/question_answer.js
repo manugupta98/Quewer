@@ -112,6 +112,7 @@ module.exports = {
         })
     },
     newAttachment: (req, res) => {
+        
         let questionAndAnswerId;
         if ('answerId' in req.params) {
             questionAndAnswerId = req.params.answerId;
@@ -125,13 +126,14 @@ module.exports = {
         QuestionAndAnswer.findOne({ _id: questionAndAnswerId }).then((questionAndAnswer) => {
             let storage = admin.storage().bucket(process.env.DATABASE_URL);
 
-            console.log(req.files);
+            console.log("Attachments", req.files);
 
 
             promises = req.files.map(async (file) => {
                 return new Promise((resolve, reject) => {
                     let attachment = {
                         id: mongoose.Types.ObjectId(),
+                        name: file.originalname,
                         format: mime.extension(file.mimetype),
                     }
 

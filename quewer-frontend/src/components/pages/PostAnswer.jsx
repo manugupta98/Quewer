@@ -5,7 +5,7 @@ import Button from '../button';
 import { Redirect } from 'react-router';
 import draftToHtml from 'draftjs-to-html';
 import store from '../../Redux/store';
-import { addAnswer } from '../../Redux/actions';
+import { addAnswer, showSelectedCourseOnSidebar } from '../../Redux/actions';
 
 const {QuestionSerializer, QuestionDeserializer} = require('../../Redux/serializer/question');
 
@@ -20,6 +20,7 @@ export default class PostAnswer extends React.Component {
         }
 
         this.ref = React.createRef();
+        showSelectedCourseOnSidebar();
     }
     
     handleAnon = () => {
