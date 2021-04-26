@@ -1,17 +1,19 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, ADD_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, ADMIN_ADD_COURSE } from './constants';
 import axios from 'axios';
 import store from './store';
+import { useDispatch, useSelector } from 'react-redux';
 const { QuestionSerializer, QuestionDeserializer } = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
 const Serializer = require('./serializer/serializer');
 const FormData = require('form-data');
 
+const startLoading = dispatch => dispatch({type: START});
+const endLoading = dispatch => dispatch({type: END});
+
 
 export function enrollCourse(courseID, courseName) {
     return dispatch => {
-        dispatch({
-            type: START,
-        })
+        startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/enroll`).then(res => {
             console.log(`Course ${courseID} added!`);
             dispatch({
@@ -21,9 +23,7 @@ export function enrollCourse(courseID, courseName) {
                     title: courseName
                 }
             });
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -32,9 +32,7 @@ export function enrollCourse(courseID, courseName) {
 
 export function fetchCourses() {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses").then(res => {
             new JSONAPIDeserializer({
                 keyForAttribute: 'camelCase',
@@ -44,9 +42,7 @@ export function fetchCourses() {
                     type: FETCH_COURSE_LIST,
                     payload: courses
                 });
-                dispatch({
-                    type: END
-                })
+                endLoading(dispatch);
             })
         }).catch(err => {
             console.log(err);
@@ -56,9 +52,7 @@ export function fetchCourses() {
 
 export const unenrollCourse = (courseID, courseName) => {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/unenroll`).then(res => {
             console.log(`Course ${courseID} removed!`);
             dispatch({
@@ -68,9 +62,7 @@ export const unenrollCourse = (courseID, courseName) => {
                     title: courseName
                 }
             });
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -98,9 +90,7 @@ export const deleteCourse = course => {
 
 export function selectCourse(courseID, courseName) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/courses/" + courseID + "/questions").then(res => {
             Serializer.deserializeAsync("question", res.data).then((questions) => {
                 console.log(questions);
@@ -113,10 +103,7 @@ export function selectCourse(courseID, courseName) {
                     }
                 });
             })
-
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         })
@@ -131,9 +118,7 @@ export const toggleSideBar = () => {
 
 export function addQuestion(question, courseID, files) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         question = Serializer.serialize("question", question);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
             console.log("status", res)
@@ -153,9 +138,7 @@ export function addQuestion(question, courseID, files) {
                     })
                 })
             })
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -164,9 +147,7 @@ export function addQuestion(question, courseID, files) {
 
 export function userInfo() {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
             Serializer.deserializeAsync("user", res.data).then((user) => {
                 const newUser = {
@@ -187,9 +168,7 @@ export function userInfo() {
                     type: USER_INFO,
                     payload: newUser
                 });
-                dispatch({
-                    type: END
-                })
+                endLoading(dispatch);
             })
         }).catch((err) => {
             console.error(err);
@@ -199,9 +178,7 @@ export function userInfo() {
 
 export function upvoteQuestion(courseID, questionID, upvote) {
     return dispatch => {
-        dispatch({
-            type: START
-        });
+        startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/vote?action=${upvote}`).then(res => {
             dispatch({
                 type: UPVOTE_QUESTION,
@@ -210,9 +187,7 @@ export function upvoteQuestion(courseID, questionID, upvote) {
                     id: questionID
                 }
             });
-            dispatch({
-                type: END
-            });
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -221,9 +196,7 @@ export function upvoteQuestion(courseID, questionID, upvote) {
 
 export function upvoteAnswer(courseID, questionID, answerID, upvote) {
     return dispatch => {
-        dispatch({
-            type: START
-        });
+        startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}vote?action=${upvote}`).then(res => {
             dispatch({
                 type: UPVOTE_ANSWER,
@@ -232,9 +205,7 @@ export function upvoteAnswer(courseID, questionID, answerID, upvote) {
                     id: answerID
                 }
             });
-            dispatch({
-                type: END
-            });
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -243,9 +214,7 @@ export function upvoteAnswer(courseID, questionID, answerID, upvote) {
 
 export function bookmarkQuestion(courseID, questionID, bookmark) {
     return dispatch => {
-        dispatch({
-            type: START
-        });
+        startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/bookmark?action=${bookmark}`).then(res => {
             dispatch({
                 type: BOOKMARK_QUESTION,
@@ -254,9 +223,7 @@ export function bookmarkQuestion(courseID, questionID, bookmark) {
                     id: questionID
                 }
             });
-            dispatch({
-                type: END
-            });
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -265,9 +232,7 @@ export function bookmarkQuestion(courseID, questionID, bookmark) {
 
 export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
     return dispatch => {
-        dispatch({
-            type: START
-        });
+        startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}/bookmark?action=${bookmark}`).then(res => {
             dispatch({
                 type: BOOKMARK_QUESTION,
@@ -276,9 +241,7 @@ export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
                     id: answerID
                 }
             });
-            dispatch({
-                type: END
-            });
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -287,17 +250,13 @@ export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
 
 export function addAnswer(answer, questionID, courseID) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         console.log(answer);
         answer = Serializer.serialize("answer", answer);
         console.log("after", answer);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`, answer).then(res => {
             console.log("status", res)
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -306,9 +265,7 @@ export function addAnswer(answer, questionID, courseID) {
 
 export function fetchAnswers(courseID, questionID) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`).then(res => {
             Serializer.deserializeAsync("answer", res.data).then((answers) => {
                 console.log(answers);
@@ -320,57 +277,7 @@ export function fetchAnswers(courseID, questionID) {
                     }
                 });
             })
-
-            dispatch({
-                type: END
-            })
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-}
-
-export function fetchStudents() {
-    console.log("hihihihihih")
-    return dispatch => {
-        dispatch({
-            type: START
-        })
-        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/dashboards/students`).then(res => {
-            console.log(res.data);
-            dispatch({
-                type: FETCH_STUDENTS,
-                payload: {
-                    students: res.data
-                }
-            });
-
-            dispatch({
-                type: END
-            })
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-}
-
-export function fetchTeachers() {
-    return dispatch => {
-        dispatch({
-            type: START
-        })
-        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/dashboards/teachers`).then(res => {
-            console.log(res.data);
-            dispatch({
-                type: FETCH_TEACHERS,
-                payload: {
-                    teachers: res.data
-                }
-            });
-
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -379,15 +286,11 @@ export function fetchTeachers() {
 
 export function addFeedback(feedback, courseID) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         feedback = Serializer.serialize("feedback", feedback);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/feedbacks`, feedback).then(res => {
             console.log("status", res)
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -396,9 +299,7 @@ export function addFeedback(feedback, courseID) {
 
 export function getFeedback(courseID) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/feedbacks`).then(res => {
             Serializer.deserializeAsync("feedback", res.data).then((feedback) => {
                 console.log(feedback);
@@ -407,10 +308,8 @@ export function getFeedback(courseID) {
                     payload: feedback
                 });
             })
-
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
+            showSelectedCourseOnSidebar(courseID, true);
         }).catch(err => {
             console.log(err);
         });
@@ -419,16 +318,12 @@ export function getFeedback(courseID) {
 
 export function addAnnouncement(announcement, courseID) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         announcement = Serializer.serialize("announcement", announcement);
         console.log(announcement);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/announcements`, announcement).then(res => {
             console.log("status", res)
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
@@ -437,9 +332,7 @@ export function addAnnouncement(announcement, courseID) {
 
 export function getAnnouncement(courseID) {
     return dispatch => {
-        dispatch({
-            type: START
-        })
+        startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/announcements`).then(res => {
             Serializer.deserializeAsync("announcement", res.data).then((announcement) => {
                 console.log(announcement);
@@ -448,12 +341,37 @@ export function getAnnouncement(courseID) {
                     payload: announcement
                 });
             })
-
-            dispatch({
-                type: END
-            })
+            endLoading(dispatch);
         }).catch(err => {
             console.log(err);
         });
     }
+}
+
+export function addTeachers(teachers) {
+    return dispatch => dispatch({
+        type: ADD_TEACHERS,
+        payload: teachers
+    });
+}
+
+export function addAdminCourse(course) {
+    return dispatch => {
+        dispatch({
+            type:ADMIN_ADD_COURSE,
+            payload: course
+        })
+    }
+}
+
+export function showSelectedCourseOnSidebar(courseID, considerProps) {
+    if (considerProps !== true)
+        courseID = store.getState().course.currentCourse.id;
+    
+    const courses = store.getState().user.user.registeredCourses;
+    courses.forEach(c => {
+        const sideBarBtn = document.getElementById(c.id);
+        if (c.id === courseID) sideBarBtn.classList.add('Selected');
+        else sideBarBtn.classList.remove('Selected');
+    });
 }

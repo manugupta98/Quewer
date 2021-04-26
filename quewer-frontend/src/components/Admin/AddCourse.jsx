@@ -1,10 +1,15 @@
 import './add-course.css';
-import { useEffect, useState, createRef } from 'react';
+import { useEffect, createRef } from 'react';
 import { Multiselect } from 'multiselect-react-dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { addAdminCourse } from '../../Redux/actions';
 
-export default function AddCourse({ list }) {
-    const [teachers, setTeachers] = useState([]);
+export default function AddCourse() {
+    const teachers = useSelector(state => state.admin.teachers);
     const multiSelect = createRef();
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const names = []
         names.push({ name: "R. GURURAJ", id: 1 });
@@ -15,7 +20,7 @@ export default function AddCourse({ list }) {
         names.push({ name: "Nikumani Choudhary", id: 6 });
         names.push({ name: "Aruna Malapati", id: 7 });
         names.sort((a, b) => a.name.localeCompare(b.name));
-        setTeachers(names);
+        // setTeachers(names);
     }, []);
 
     const reset = () => {
@@ -24,7 +29,15 @@ export default function AddCourse({ list }) {
     };
 
     const addCourse = () => {
-        console.log(multiSelect.current.getSelectedItems());
+        const idArray = multiSelect.current.getSelectedItems().map(i => {return {id: i.id}});
+        const title = document.getElementById('admin-add-title').value;
+        const name = document.getElementById('admin-add-name').value;
+        console.log(`${title}, ${name}, ${idArray.map(x => x.id)}`);
+        axios.post(process.env.REACT_APP_SERVER_URL + '/api/courses').then(res => {
+            console.log(res);
+            // const course = res.data
+            // dispatch(addAdminCourse(res));
+        }).catch(err => console.log(err));
     };
 
     return <div className="add-course">
@@ -32,16 +45,16 @@ export default function AddCourse({ list }) {
             <div className="info">
                 <div>
                     <h1>Course ID</h1>
-                    <input type="text" />
+                    <input id='admin-add-title' type="text" />
                 </div>
                 <div>
                     <h1>Course Name</h1>
-                    <input type="text" />
+                    <input id='admin-add-name' type="text" />
                 </div>
             </div>
             <div className="teachers">
                 <h1>Add Teachers:</h1>
-                <Multiselect options={teachers}
+                <Multiselect options={teachers.map(t => {return {name: t.name, id: t.id}})}
                     ref = {multiSelect}
                     displayValue="name" />
             </div>

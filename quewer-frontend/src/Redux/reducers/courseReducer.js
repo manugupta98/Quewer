@@ -1,4 +1,4 @@
-import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_FEEDBACK, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from '../constants';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_FEEDBACK, GET_FEEDBACKS, GET_ANNOUNCEMENTS, ADMIN_ADD_COURSE } from '../constants';
 
 const appState = {
     enrolledCourses: [],
@@ -87,6 +87,14 @@ export default function courseReducer(state = appState, action) {
                     ...state.currentCourse,
                     announcements: action.payload
                 }
+            }
+        }
+        case ADMIN_ADD_COURSE: {
+            const list = [...state.courseList];
+            list.push(action.payload);
+            return {
+                ...state,
+                courseList: list
             }
         }
         default:

@@ -4,6 +4,7 @@ import QuestionCard from '../question-card';
 import Button from '../button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {showSelectedCourseOnSidebar} from '../../Redux/actions';
 
 class AnswerPage extends React.Component {
 
@@ -15,6 +16,7 @@ class AnswerPage extends React.Component {
             card: this.props.location.state.question[0],
             courseID: this.props.location.state.courseID
         }
+        showSelectedCourseOnSidebar();
     }
 
     render() {
