@@ -53,10 +53,9 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
                 const tempQue = new Array(DAYS).fill(0), tempSol = new Array(DAYS).fill(0);
                 fillTimeData(data.questionsGraph, tempQue);
                 fillTimeData(data.answersGraph, tempSol);
-                
                 const newCourse = {
-                    students: x.registeredUsers.sort((a, b) => a.name.localeCompare(b.name)),
-                    teachers: x.teachers.sort((a, b) => a.name.localeCompare(b.name)),
+                    students: x.registeredUsers.map(u => {return {name: u.name, photo: u.photos[0].value}}).sort((a, b) => a.name.localeCompare(b.name)),
+                    teachers: x.teachers.map(u => {return {name: u.name, photo: u.photos[0].value}}).sort((a, b) => a.name.localeCompare(b.name)),
                     queCount: data.questionsCount,
                     solCount: data.answersCount,
                     queData: tempQue,
@@ -103,7 +102,7 @@ export default function CoursePieChart({ list, id, DAYS, opts }) {
                 </div>
                 <Chart className="graph" options={options} series={[{ name: 'Questions', data: course.queData }, { name: 'Answers', data: course.solData }]} height={280} width={450} />
                 <div className="participants">
-                    <div onClick={() => setTeacherPopUp(true)}><h1>{(course.teachers === undefined) ? 0 : course.teachers.length}</h1><h3>&nbsp;TEACHERS</h3></div>
+                    <div onClick={() => setTeacherPopUp(true)}><h1>{course.teachers.length}</h1><h3>&nbsp;TEACHERS</h3></div>
                     <div onClick={() => setStudentPopUp(true)}><h1>{course.students.length}</h1><h3>&nbsp;STUDENTS</h3></div>
                 </div>
             </div>

@@ -20,18 +20,19 @@ export default function AddCourse() {
         const idArray = multiSelect.current.getSelectedItems().map(i => i.id);
         const title = document.getElementById('admin-add-title').value;
         const name = document.getElementById('admin-add-name').value;
-
-        const objToSend = Serializer.serialize('course', {title: title, description: name, teachers: idArray});
-
-        axios.post(process.env.REACT_APP_SERVER_URL + '/api/courses', objToSend).then(res => {
-            console.log("Added!");
-            const newCourse = Serializer.deserializeAsync('course', res.data).then (data => {
-                reset();
-                console.log(data);
-                dispatch(addAdminCourse(data));
-                alert("Course Added Successfully!");
-            })
-        }).catch(err => console.log(err));
+        if (idArray.length === 0 || title === "" || name === "") alert("Please fill all the required details!");
+        else {
+            const objToSend = Serializer.serialize('course', { title: title, description: name, teachers: idArray });
+            axios.post(process.env.REACT_APP_SERVER_URL + '/api/courses', objToSend).then(res => {
+                console.log("Added!");
+                Serializer.deserializeAsync('course', res.data).then(data => {
+                    reset();
+                    console.log(data);
+                    dispatch(addAdminCourse(data));
+                    alert("Course Added Successfully!");
+                })
+            }).catch(err => console.log(err));
+        }
     };
 
     return <div className="add-course">
@@ -48,8 +49,8 @@ export default function AddCourse() {
             </div>
             <div className="teachers">
                 <h1>Add Teachers:</h1>
-                <Multiselect options={teachers.map(t => {return {name: t.name, id: t.id}})}
-                    ref = {multiSelect}
+                <Multiselect options={teachers.map(t => { return { name: t.name, id: t.id } })}
+                    ref={multiSelect}
                     displayValue="name" />
             </div>
         </form>
