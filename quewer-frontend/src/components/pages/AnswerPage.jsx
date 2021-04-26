@@ -20,6 +20,7 @@ class AnswerPage extends React.Component {
     render() {
         return (
             <div>
+                <h1 style={{margin: '10px 5%'}}>Post an Answer</h1>
                 <QuestionCard style={{width: '95%'}} id={this.state.card.id} {...this.state.card} courseID={this.state.courseID} postedBy={this.state.card.postedBy.name} />
                 <Link to={{pathname: `/postanswer`, state: {questionID: this.state.card.id, courseID: this.state.courseID}}} className='q-question' style={{textDecoration: 'none', color: 'black'}} >
                     <Button color='#29348EEE' textColor='white' text='Post an Answer' margin='0px 20px' />

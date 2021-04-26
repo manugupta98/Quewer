@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import MainPage from './pages/MainPage';
 import EnrollPage from './pages/EnrollPage';
@@ -14,6 +14,10 @@ import FeedbackPage from '../components/pages/FeedbackPage';
 import FeedbackDisplay from '../components/pages/FeedbackDisplay';
 import AnnouncementPage from './pages/AnnouncementPage';
 import AnnouncementDisplay from './pages/AnnouncementDisplay';
+import PrivateRoute from './PrivateRoute';
+import CheckLogin from './CheckLogin';
+import store from '../Redux/store';
+import MenuBar from './MenuBar';
 
 function App({loading, userType}) {
   return (
@@ -21,21 +25,25 @@ function App({loading, userType}) {
     {
       (loading) ? <Loading /> : null
     }
+    {
+      (store.getState().user.user.id !== null) ? <Redirect to="/checklogin" /> : null
+    }
     <Switch>
         <Route exact path='/' component={HomePage} />
+        <Route exact path='/checklogin' component={CheckLogin} />
         <Page>
-          <Route exact path='/main' component={MainPage} />
-          <Route path='/enroll' component={EnrollPage} />
-          <Route path='/postanswer' component={PostAnswer} />
-          <Route path='/postquestion' component={PostQuestion} />
-          <Route path='/course/:courseID' component={MainPage} />
-          <Route path='/question/:questionID' component={AnswerPage} />
-          <Route path='/admin' component={Admin} />
-          <Route path='/addcourse' component={AddCourse} />
-          <Route path='/postfeedback' component={FeedbackPage} />
-          <Route path='/postannouncement' component={AnnouncementPage} />
-          <Route path='/getfeedback' component={FeedbackDisplay} />
-          <Route path='/getannouncement' component={AnnouncementDisplay} />
+          <PrivateRoute exact path='/main' component={MenuBar} />
+          <PrivateRoute path='/enroll' component={EnrollPage} />
+          <PrivateRoute path='/postanswer' component={PostAnswer} />
+          <PrivateRoute path='/postquestion' component={PostQuestion} />
+          <PrivateRoute path='/course/:courseID' component={MainPage} />
+          <PrivateRoute path='/question/:questionID' component={AnswerPage} />
+          { (store.getState().user.user.type === "admin") ? <PrivateRoute path='/admin' component={Admin} /> : null }
+          <PrivateRoute path='/addcourse' component={AddCourse} />
+          <PrivateRoute path='/postfeedback' component={FeedbackPage} />
+          <PrivateRoute path='/postannouncement' component={AnnouncementPage} />
+          <PrivateRoute path='/getfeedback' component={FeedbackDisplay} />
+          <PrivateRoute path='/getannouncement' component={AnnouncementDisplay} />
         </Page>
     </Switch>
   </div>

@@ -1,5 +1,6 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION } from './constants';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import store from './store';
 const { QuestionSerializer, QuestionDeserializer } = require('./serializer/question');
 const JSONAPIDeserializer = require('jsonapi-serializer').Deserializer;
@@ -25,6 +26,11 @@ export function enrollCourse(courseID, courseName) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Course could not be enrolled, try again later.");
+            <Redirect to='/enroll' />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -49,6 +55,11 @@ export function fetchCourses() {
             })
         }).catch(err => {
             console.log(err);
+            alert("Failure in fetching courses");
+            <Redirect to='/main' />
+            dispatch({
+                type: END
+            })
         })
     }
 }
@@ -72,6 +83,11 @@ export const unenrollCourse = (courseID, courseName) => {
             })
         }).catch(err => {
             console.log(err);
+            alert("Course could not be unenrolled, try again later.");
+            <Redirect to='/enroll' />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -118,6 +134,11 @@ export function selectCourse(courseID, courseName) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Course contents could not be fetched, try again later.");
+            <Redirect to='/main' />
+            dispatch({
+                type: END
+            })
         })
     }
 }
@@ -148,16 +169,22 @@ export function addQuestion(question, courseID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Question could not be posted, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
         });
     }
 }
 
 export function userInfo() {
-    return dispatch => {
+    return async dispatch => {
         dispatch({
             type: START
         })
-        return axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
+        await axios.get(process.env.REACT_APP_SERVER_URL + "/api/users?include=courses").then((res) => {
+            localStorage.setItem("loggedIn", true);
             Serializer.deserializeAsync("user", res.data).then((user) => {
                 const newUser = {
                     id: user.id,
@@ -183,6 +210,10 @@ export function userInfo() {
             })
         }).catch((err) => {
             console.error(err);
+            <Redirect to='/main' />
+            dispatch({
+                type: END
+            })
         })
     }
 }
@@ -205,6 +236,10 @@ export function upvoteQuestion(courseID, questionID, upvote) {
             });
         }).catch(err => {
             console.log(err);
+            alert("Question could not be upvoted, try again later.");
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -227,6 +262,10 @@ export function upvoteAnswer(courseID, questionID, answerID, upvote) {
             });
         }).catch(err => {
             console.log(err);
+            alert("Answer could not be upvoted, try again later.");
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -249,6 +288,10 @@ export function bookmarkQuestion(courseID, questionID, bookmark) {
             });
         }).catch(err => {
             console.log(err);
+            alert("Question could not be bookmarked, try again later.");
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -271,6 +314,10 @@ export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
             });
         }).catch(err => {
             console.log(err);
+            alert("Answer could not be bookmarked, try again later.");
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -290,6 +337,11 @@ export function addAnswer(answer, questionID, courseID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Answer could not be posted, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -316,6 +368,11 @@ export function fetchAnswers(courseID, questionID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Answers could not be fetched, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -340,6 +397,11 @@ export function fetchStudents() {
             })
         }).catch(err => {
             console.log(err);
+            alert("Students lists could not be fetched, try again later.");
+            <Redirect to='/admin' />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -363,6 +425,11 @@ export function fetchTeachers() {
             })
         }).catch(err => {
             console.log(err);
+            alert("Teachers list could not be fetched, try again later.");
+            <Redirect to='/admin' />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -380,6 +447,11 @@ export function addFeedback(feedback, courseID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Feedback could not be posted, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -403,6 +475,11 @@ export function getFeedback(courseID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Feedbacks could not be fetched, try again later.");
+            <Redirect to='/enroll' />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -421,6 +498,11 @@ export function addAnnouncement(announcement, courseID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Announcement could not be posted, try again later.");
+            <Redirect to={`main`} />
+            dispatch({
+                type: END
+            })
         });
     }
 }
@@ -444,6 +526,85 @@ export function getAnnouncement(courseID) {
             })
         }).catch(err => {
             console.log(err);
+            alert("Announcements could not be fetched, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
+        });
+    }
+}
+
+export function getUserBookmarked(userID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/users/${userID}/bookmarks`).then(res => {
+            dispatch({
+                type: GET_CHOICE_QUESTION,
+                payload: res.data
+            });
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+            alert("Questions could not be fetched, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
+        });
+    }
+}
+
+export function getUserUpvoted(userID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/users/${userID}/upvotes`).then(res => {
+            dispatch({
+                type: GET_CHOICE_QUESTION,
+                payload: res.data
+            });
+            console.log(res.data);
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+            alert("Questions could not be fetched, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
+        });
+    }
+}
+
+export function getUserDownvoted(userID) {
+    return dispatch => {
+        dispatch({
+            type: START
+        })
+        return axios.get(process.env.REACT_APP_SERVER_URL + `/api/users/${userID}/downvotes`).then(res => {
+            dispatch({
+                type: GET_CHOICE_QUESTION,
+                payload: res.data
+            });
+            console.log(res.data)
+            dispatch({
+                type: END
+            })
+        }).catch(err => {
+            console.log(err);
+            alert("Questions could not be fetched, try again later.");
+            <Redirect to={`/main`} />
+            dispatch({
+                type: END
+            })
         });
     }
 }

@@ -52,13 +52,15 @@ class CourseEnrollCard extends React.Component {
                     {(this.props.description) ? <Description enroll>{this.props.description}</Description> : null}
                 </div>
                 <div className='status'>
-                    <Link to='/getfeedback' style={{textDecoration: 'none'}} >
+                    <Link to={{pathname: '/getfeedback', state: {name: this.props.title}}} style={{textDecoration: 'none'}} >
                         <Button color='#29348EEE' onClick={this.fetchFeedback} textColor='white' text='View Feedback' />
                     </Link>
                     {
-                        (this.state.enroll)
-                        ? <Button onClick={this.handleClick} color='rgb(255, 0, 0)' textColor='white' text='Unenroll' />
-                        : <Button onClick={this.handleClick} color='rgb(30, 144, 255)' textColor='white' text='Enroll' />
+                        (store.getState().user.user.type !== "teacher") ? 
+                            (this.state.enroll)
+                                ? <Button onClick={this.handleClick} color='rgb(255, 0, 0)' textColor='white' text='Unenroll' />
+                                : <Button onClick={this.handleClick} color='rgb(30, 144, 255)' textColor='white' text='Enroll' />
+                            : null
                     }
                 </div>
             </div>

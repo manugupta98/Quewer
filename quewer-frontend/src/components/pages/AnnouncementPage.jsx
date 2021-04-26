@@ -54,6 +54,7 @@ export default class AnnouncementPage extends React.Component {
     render() {
         return (
             <div className='post'>
+                <h1 style={{margin: '10px 5%'}}>Post an Announcement</h1>
                 <h1>Heading:</h1>
                 <textarea className="input" value={this.state.value} onChange={this.handleChange} />
                 <h1>Description:</h1>

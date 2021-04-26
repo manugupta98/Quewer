@@ -19,3 +19,4 @@ export const GET_FEEDBACKS = "course/getfeedbacks";
 export const GET_ANNOUNCEMENTS = "course/getannouncements";
 export const FETCH_STUDENTS = "dashboards/students";
 export const FETCH_TEACHERS = "dashboards/teachers";
+export const GET_CHOICE_QUESTION = "main/choicequestions";
