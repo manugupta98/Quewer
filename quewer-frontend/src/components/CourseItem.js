@@ -29,6 +29,6 @@ export default function CourseItem(props) {
         }
     }
     return (
-        <h4 className="menu-item" onClick={handleClick}>{props.icon}{props.name}</h4>
+        <h4 className="menu-item" id={props.id} onClick={handleClick}>{props.icon}{props.name}</h4>
     );
 }
