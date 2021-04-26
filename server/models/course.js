@@ -10,7 +10,7 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    teacher: {
+    teacher: [{
         id: {
             type: Schema.Types.ObjectId,
             ref: 'User',
@@ -28,7 +28,7 @@ const courseSchema = new mongoose.Schema({
             type: String,
             required: false
         }
-    },
+    }],
     registeredUsers:[{
         id: {
             type: Schema.Types.ObjectId,
