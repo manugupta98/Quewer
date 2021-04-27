@@ -22,3 +22,4 @@ export const FETCH_TEACHERS = "teachers";
 export const FETCH_STUDENTS = "students";
 export const ADMIN_ADD_COURSE = "courses";
 export const GET_CHOICE_QUESTION = "main/choicequestions";
+export const SET_CURRENT_QUESTION = "main/setcurrentquestion";

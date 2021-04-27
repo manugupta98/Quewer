@@ -1,4 +1,4 @@
-import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_COMMENT, ADMIN_ADD_COURSE, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION } from '../constants';
+import { COURSE_ADD, COURSE_SELECT, COURSE_DELETE, ADD_QUESTION, FETCH_COURSE_LIST, GET_ANSWERS, ADD_COMMENT, ADMIN_ADD_COURSE, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION, SET_CURRENT_QUESTION } from '../constants';
 const appState = {
     enrolledCourses: [],
     courseList: [],
@@ -10,6 +10,7 @@ const appState = {
         announcements: []
     },
     currentAnswers: [],
+    currentQuestion: {},
     choice: []
 };
 
@@ -52,7 +53,6 @@ export default function courseReducer(state = appState, action) {
         case ADD_QUESTION: {
             var questions = [...state.currentCourse.questions];
             questions.push(action.payload);
-            console.log(questions);
             return {
                 ...state,
                 currentCourse: {
@@ -65,12 +65,8 @@ export default function courseReducer(state = appState, action) {
             var answers = [...state.currentAnswers];
             let answerId = action.answerId;
             let comment = action.comment;
-            console.log(action);
             let index = answers.indexOf(answers.find(answer => answer.id === answerId));
-            console.log(answerId);
-            console.log(answers.find(answer => answer.id === answerId));
             let answer = answers[index]
-            console.log(answer);
             answer.comments.push(comment);
             return {
                 ...state,
@@ -117,6 +113,15 @@ export default function courseReducer(state = appState, action) {
             return {
                 ...state,
                 choice: action.payload
+            }
+        }
+        case SET_CURRENT_QUESTION: {
+            list = [...state.currentCourse.questions];
+            list = list.filter(question => question.id === action.payload);
+            const question = list[0];
+            return {
+                ...state,
+                currentQuestion: question
             }
         }
         default:

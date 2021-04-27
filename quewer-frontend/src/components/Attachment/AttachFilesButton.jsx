@@ -75,7 +75,6 @@ function Dropzone({ onChange }) {
         acceptedFiles.splice(acceptedFiles.indexOf(file), 1);
         setNewFiles(acceptedFiles);
         onChange(acceptedFiles);
-        console.log(acceptedFiles.length);
     }
 
     const showFiles = files.map(file => (

@@ -40,7 +40,6 @@ export default function Admin() {
         const end = `end=${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         date.setDate(date.getDate() - DAYS + 1);
         const start = `start=${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}&`;
-        console.log(process.env.REACT_APP_SERVER_URL + '/api/dashboards/students?' + start + end);
         axios.get(process.env.REACT_APP_SERVER_URL + '/api/dashboards/students?' + start + end).then(res => {
             const data = res.data.data;
 

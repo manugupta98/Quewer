@@ -24,10 +24,8 @@ export default function AddCourse() {
         else {
             const objToSend = Serializer.serialize('course', { title: title, description: name, teachers: idArray });
             axios.post(process.env.REACT_APP_SERVER_URL + '/api/courses', objToSend).then(res => {
-                console.log("Added!");
                 Serializer.deserializeAsync('course', res.data).then(data => {
                     reset();
-                    console.log(data);
                     dispatch(addAdminCourse(data));
                     alert("Course Added Successfully!");
                 })

@@ -5,15 +5,15 @@ import Button from '../button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {showSelectedCourseOnSidebar} from '../../Redux/actions';
+import store from '../../Redux/store';
 
 class AnswerPage extends React.Component {
 
     constructor(props) 
     {
         super(props);
-        console.log(props);
         this.state = {
-            card: this.props.location.state.question[0],
+            card: store.getState().course.currentQuestion,
             courseID: this.props.location.state.courseID
         }
         showSelectedCourseOnSidebar();

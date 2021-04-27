@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, ADD_COMMENT,USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, ADMIN_ADD_COURSE, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, ADD_COMMENT,USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, ADMIN_ADD_COURSE, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION, BOOKMARK_ANSWER, SET_CURRENT_QUESTION } from './constants';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import store from './store';
@@ -14,7 +14,6 @@ export function enrollCourse(courseID, courseName) {
     return dispatch => {
         startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/enroll`).then(res => {
-            console.log(`Course ${courseID} added!`);
             dispatch({
                 type: COURSE_ENROLL,
                 payload: {
@@ -62,7 +61,6 @@ export const unenrollCourse = (courseID, courseName) => {
     return dispatch => {
         startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/unenroll`).then(res => {
-            console.log(`Course ${courseID} removed!`);
             dispatch({
                 type: COURSE_UNENROLL,
                 payload: {
@@ -138,7 +136,6 @@ export function addQuestion(question, courseID, files) {
         startLoading(dispatch);
         question = Serializer.serialize("question", question);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions`, question).then(res => {
-            console.log("status", res)
             Serializer.deserializeAsync("question", res.data).then((question) => {
                 let form = new FormData();
                 for (let i = 0; i < files.length; i++) {
@@ -165,11 +162,8 @@ export function addComment(comment, courseId, questionId ,answerId,) {
         dispatch({
             type: START
         })
-        console.log(comment);
         comment = Serializer.serialize("comments", comment);
-        console.log(comment);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseId}/questions/${questionId}/answers/${answerId}/comments`, comment).then(res => {
-            console.log(res.data);
             let answer = Serializer.deserialize("answer", res.data);
             let newComment = answer.comments[answer.comments.length - 1];
             dispatch({
@@ -251,7 +245,7 @@ export function upvoteQuestion(courseID, questionID, upvote) {
 export function upvoteAnswer(courseID, questionID, answerID, upvote) {
     return dispatch => {
         startLoading(dispatch);
-        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}vote?action=${upvote}`).then(res => {
+        return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}/vote?action=${upvote}`).then(res => {
             dispatch({
                 type: UPVOTE_ANSWER,
                 payload: {
@@ -297,7 +291,7 @@ export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
         startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}/bookmark?action=${bookmark}`).then(res => {
             dispatch({
-                type: BOOKMARK_QUESTION,
+                type: BOOKMARK_ANSWER,
                 payload: {
                     type: bookmark,
                     id: answerID
@@ -317,11 +311,8 @@ export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
 export function addAnswer(answer, questionID, courseID, files) {
     return dispatch => {
         startLoading(dispatch);
-        console.log(answer);
         answer = Serializer.serialize("answer", answer);
-        console.log("after", answer);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`, answer).then(res => {
-            console.log("status", res)
             Serializer.deserializeAsync("answer", res.data).then((answer) => {
                 let form = new FormData();
                 for (let i = 0; i < files.length; i++) {
@@ -348,7 +339,6 @@ export function fetchAnswers(courseID, questionID) {
         startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`).then(res => {
             Serializer.deserializeAsync("answer", res.data).then((answers) => {
-                console.log(answers);
                 dispatch({
                     type: GET_ANSWERS,
                     payload: {
@@ -374,7 +364,6 @@ export function addFeedback(feedback, courseID) {
         startLoading(dispatch);
         feedback = Serializer.serialize("feedback", feedback);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/feedbacks`, feedback).then(res => {
-            console.log("status", res)
             endLoading(dispatch);
         }).catch(err => {
             console.log(err);
@@ -392,7 +381,6 @@ export function getFeedback(courseID) {
         startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/feedbacks`).then(res => {
             Serializer.deserializeAsync("feedback", res.data).then((feedback) => {
-                console.log(feedback);
                 dispatch({
                     type: GET_FEEDBACKS,
                     payload: feedback
@@ -415,9 +403,7 @@ export function addAnnouncement(announcement, courseID) {
     return dispatch => {
         startLoading(dispatch);
         announcement = Serializer.serialize("announcement", announcement);
-        console.log(announcement);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/announcements`, announcement).then(res => {
-            console.log("status", res)
             endLoading(dispatch);
         }).catch(err => {
             console.log(err);
@@ -435,7 +421,6 @@ export function getAnnouncement(courseID) {
         startLoading(dispatch);
         return axios.get(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/announcements`).then(res => {
             Serializer.deserializeAsync("announcement", res.data).then((announcement) => {
-                console.log(announcement);
                 dispatch({
                     type: GET_ANNOUNCEMENTS,
                     payload: announcement
@@ -513,7 +498,6 @@ export function getUserUpvoted(userID) {
                 type: GET_CHOICE_QUESTION,
                 payload: res.data
             });
-            console.log(res.data);
             dispatch({
                 type: END
             })
@@ -538,7 +522,6 @@ export function getUserDownvoted(userID) {
                 type: GET_CHOICE_QUESTION,
                 payload: res.data
             });
-            console.log(res.data)
             dispatch({
                 type: END
             })
@@ -572,4 +555,13 @@ export function showSelectedCourseOnSidebar(courseID, considerProps) {
         if (c.id === courseID) sideBarBtn.classList.add('Selected');
         else sideBarBtn.classList.remove('Selected');
     });
+}
+
+export function setCurrentQuestion(questionID) {
+    return dispatch => {
+        dispatch({
+            type: SET_CURRENT_QUESTION,
+            payload: questionID
+        })
+    }
 }

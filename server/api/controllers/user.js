@@ -2,7 +2,6 @@ const express = require("express");
 const User = require("../../models/user");
 const createError = require("http-errors");
 const Course = require("../../models/course");
-const { ReactWrapper } = require("enzyme");
 
 const Serializer = require('../../serializers/serializer');
 
