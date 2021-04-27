@@ -3,6 +3,7 @@ import '../style/upvote-bookmark.css';
 import { FaCaretSquareUp, FaBookmark, FaCaretSquareDown } from 'react-icons/fa';
 import { bookmarkQuestion, upvoteQuestion } from '../Redux/actions';
 import store from '../Redux/store';
+import { connect } from 'react-redux';
 
 class UpvoteBookmark extends React.Component {
     
@@ -19,40 +20,27 @@ class UpvoteBookmark extends React.Component {
     }
 
     componentDidMount() {
-        var user = store.getState().user.user;
-        var qid = '';
-        var upvoted = [];
-        var downvoted = [];
-        var bookmarked = [];
-        if(this.props.answer) {
-            qid = this.props.questionID;
-            upvoted = user.answerUpvoted;
-            downvoted = user.answerDownvoted;
-            bookmarked = user.answerBookmarks;
-        } else {
-            qid = this.props.questionID;
-            upvoted = user.questionUpvoted;
-            downvoted = user.questionDownvoted;
-            bookmarked = user.questionBookmarks;
-        }
         this.setState({
             upvoteCount: this.props.upvotes
         })
-        if(upvoted.includes(qid)) 
-            this.setState({
-                voted: 'upvote',
-                upvoteColor: 'rgb(14, 143, 206)'
-            })
-        if(downvoted.includes(qid))
-            this.setState({
-                voted: 'downvote',
-                downvoteColor: 'rgb(14, 143, 206)'
-            })
-        if(bookmarked.includes(qid))
-            this.setState({
-                bookmarked: true,
-                bookmarkColor: 'rgb(218, 165, 32)',
-            })
+        if(this.props.qUp.length >= 0 && this.props.aUp.length >= 0)
+            if(this.props.qUp.includes(this.props.questionID) || this.props.aUp.includes(this.props.questionID)) 
+                this.setState({
+                    voted: 'upvote',
+                    upvoteColor: 'rgb(14, 143, 206)'
+                })
+        if(this.props.qDown.length >= 0 && this.props.aDown.length >= 0)
+            if(this.props.qDown.includes(this.props.questionID) || this.props.aDown.includes(this.props.questionID))
+                this.setState({
+                    voted: 'downvote',
+                    downvoteColor: 'rgb(14, 143, 206)'
+                })
+        if(this.props.qBook.length >= 0 && this.props.aBook.length >= 0)
+            if(this.props.qBook.includes(this.props.questionID) || this.props.aBook.includes(this.props.questionID))
+                this.setState({
+                    bookmarked: true,
+                    bookmarkColor: 'rgb(218, 165, 32)',
+                })
     }
 
     handleUpvoteClick = () => {
@@ -144,4 +132,13 @@ class UpvoteBookmark extends React.Component {
     }
 }
 
-export default UpvoteBookmark;
+const mapStateToProps = state => ({
+    qUp: state.user.user.questionUpvoted,
+    qDown: state.user.user.questionDownvoted,
+    qBook: state.user.user.questionBookmarks,
+    aUp: state.user.user.answerUpvoted,
+    aDown: state.user.user.answerDownvoted,
+    aBook: state.user.user.answerBookmarks
+});
+
+export default connect(mapStateToProps)(UpvoteBookmark);

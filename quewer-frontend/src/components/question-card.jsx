@@ -18,7 +18,6 @@ import axios from 'axios';
 
 class QuestionCard extends React.Component {
 
-
     handleClick = () => {
         const courseID = store.getState().course.currentCourse.id;
         const questionID = this.props.id;

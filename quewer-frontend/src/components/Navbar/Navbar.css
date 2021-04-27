@@ -12,6 +12,7 @@
 
 .user-nav {
     justify-content: end;
+    cursor: pointer;
 }
 
 .appbarTitle {
