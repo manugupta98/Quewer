@@ -557,16 +557,11 @@ export function showSelectedCourseOnSidebar(courseID, considerProps) {
     });
 }
 
-export function setCurrentQuestion(questionID, qUp, qDown, qBook) {
+export function setCurrentQuestion(questionID) {
     return dispatch => {
         dispatch({
             type: SET_CURRENT_QUESTION,
-            payload: {
-                id: questionID,
-                qUp: qUp,
-                qDown: qDown,
-                qBook: qBook
-            }
+            payload: questionID
         })
     }
 }

@@ -118,19 +118,7 @@ export default function courseReducer(state = appState, action) {
         }
         case SET_CURRENT_QUESTION: {
             list = [...state.currentCourse.questions];
-            list = list.filter(question => question.id === action.payload.id);
-            if(list.length === 0) {
-                list = [...action.payload.qUp];
-                list = list.filter(question => question.id === action.payload.id);
-            }
-            if(list.length === 0) {
-                list = [...action.payload.qDown];
-                list = list.filter(question => question.id === action.payload.id);
-            }
-            if(list.length === 0) {
-                list = [...action.payload.qBook];
-                list = list.filter(question => question.id === action.payload.id);
-            }
+            list = list.filter(question => question.id === action.payload);
             const question = list[0];
             return {
                 ...state,
