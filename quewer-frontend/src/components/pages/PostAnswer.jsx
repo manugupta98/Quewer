@@ -6,10 +6,12 @@ import { Redirect } from 'react-router';
 import draftToHtml from 'draftjs-to-html';
 import store from '../../Redux/store';
 import { addAnswer, showSelectedCourseOnSidebar } from '../../Redux/actions';
+import AttachFilesButton from '../Attachment/AttachFilesButton';
 
 const {QuestionSerializer, QuestionDeserializer} = require('../../Redux/serializer/question');
 
 export default class PostAnswer extends React.Component {
+    files = []
     constructor() {
         super();
 
@@ -19,6 +21,7 @@ export default class PostAnswer extends React.Component {
             submit: false
         }
 
+        this.files = [];
         this.ref = React.createRef();
         showSelectedCourseOnSidebar();
     }
@@ -51,10 +54,15 @@ export default class PostAnswer extends React.Component {
                 id: this.props.location.state.questionID
             }
         };
-        store.dispatch(addAnswer(answer, this.props.location.state.questionID, this.props.location.state.courseID));
+        store.dispatch(addAnswer(answer, this.props.location.state.questionID, this.props.location.state.courseID, this.files));
+        this.files = []
         this.setState({
             submit: true
         })
+    }
+
+    onUpload = (newFiles) => {
+        this.files = newFiles;
     }
 
     render() {
@@ -66,6 +74,9 @@ export default class PostAnswer extends React.Component {
                      {(this.state.submit) ? <Redirect to={`/main`} />  : <Button color='#29348EEE' textColor='white' onClick={this.onSubmit} text='Submit' /> }
                     {
                         (this.state.anonymous) ? <Button color='#618CFB' textColor='white' text='Use your name' onClick={this.handleAnon} /> : <Button color='#29348EEE' textColor='white' text='Be anonymous' onClick={this.handleAnon} />
+                    }
+                    {
+                        <AttachFilesButton onUpload={this.onUpload}/>
                     }
                 </div>
             </div>

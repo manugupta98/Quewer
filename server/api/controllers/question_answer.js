@@ -102,8 +102,8 @@ module.exports = {
                 fs.mkdirSync(fileDir, {recursive: true});
             }
             
-            storage.file(`questionAndAnswer/${questionAndAnswerId}/${attachment.id}.${attachment.format}`).download({destination: fileName}).then(() => {
-                res.sendFile(fileName, { root: '.' });
+            storage.file(`questionAndAnswer/${questionAndAnswerId}/${attachment.id}.${attachment.format}`).download({destination: fileName}).then((downloadResponse) => {
+                res.download(fileName, attachment.name);
             }).catch((err) => {
                 console.log(err);
                 res.status(500).json();
