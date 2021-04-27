@@ -25,7 +25,7 @@ export default function ProfileAvatar({ profileImg }) {
     };
 
     const onLogout = () => {
-        axios.post(prpcess.env.REACT_APP_SERVER_URL + `/api/auth/logout`).then((res) => {
+        axios.post(process.env.REACT_APP_SERVER_URL + `/api/auth/logout`).then((res) => {
             if (res.status === 204){
                 localStorage.setItem('loggedIn', false);
                 window.location.href = process.env.REACT_APP_CLIENT_URL;
