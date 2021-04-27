@@ -64,9 +64,9 @@ class QuestionCard extends React.Component {
                                     <hr />
                                     <Description>{this.props.description}</Description>
                                     <Grid container spacing={0} alignItems='center' direction='row' justify='flex-end'>
-                                        {this.props.attachments.map(attachment => {
+                                        {this.props.attachments.map((attachment, index) => {
                                             return (
-                                                <Grid item style={{ margin: '10px 10px 10px 0px' }}>
+                                                <Grid key={index} item style={{ margin: '10px 10px 10px 0px' }}>
                                                     <Attachment canDelete={false} name={attachment.name} id={attachment.id} onDownload={this.downloadAttachment}/>
                                                 </Grid>
                                             )
@@ -82,9 +82,9 @@ class QuestionCard extends React.Component {
                                 <Description>{this.props.description}</Description>
 
                                 <Grid container spacing={0} alignItems='center' direction='row' justify='flex-end'>
-                                    {this.props.attachments.map(attachment => {
+                                    {this.props.attachments.map((attachment, index) => {
                                         return (
-                                            <Grid item style={{ margin: '10px 10px 10px 0px' }}>
+                                            <Grid key={index} item style={{ margin: '10px 10px 10px 0px' }}>
                                                 <Attachment canDelete={false} name={attachment.name} id={attachment.id} onDownload={this.downloadAttachment} />
                                             </Grid>
                                         )

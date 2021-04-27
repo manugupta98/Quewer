@@ -29,7 +29,6 @@ class MenuBar extends React.Component {
             document.getElementById("downvote").style.color = "#29348EEE";
             store.dispatch(getUserDownvoted(userID));
         }
-        console.log(this.props.list)
     }
 
     render() {
