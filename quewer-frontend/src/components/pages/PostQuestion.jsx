@@ -19,6 +19,7 @@ export default class PostQuestion extends React.Component {
             submit: false
         }
 
+        this.files = []
         this.ref = React.createRef();
         showSelectedCourseOnSidebar();
     }
@@ -50,6 +51,7 @@ export default class PostQuestion extends React.Component {
             }
         };
         store.dispatch(addQuestion(question, store.getState().course.currentCourse.id, this.files));
+        this.files = [];
         this.setState({
             submit: true
         })

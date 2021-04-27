@@ -21,28 +21,35 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Attachment({ file, canDelete, onDelete, name, id }) {
+export default function Attachment({ file, canDelete, onDelete, name, id, onDownload }) {
   const classes = useStyles();
 
   const deleteFile = () => {
     onDelete(file);
   }
 
+  const downloadFile = (event) => {
+    event.preventDefault();
+    onDownload(id);
+  }
+
   return (
     <Card className={classes.root}>
       {(typeof file !== 'undefined') ?
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            src={Thumbnail(file)}
-            component="img"
-          />
-          <CardContent>
-            <Typography className={classes.Typography} noWrap variant="body2" color="textSecondary" component="p">
-              {file.name}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+        <Tooltip title={file.name} placement="bottom">
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              src={Thumbnail(file)}
+              component="img"
+            />
+            <CardContent>
+              <Typography className={classes.Typography} noWrap variant="body2" color="textSecondary" component="p">
+                {file.name}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Tooltip>
         :
         null
       }
@@ -52,22 +59,21 @@ export default function Attachment({ file, canDelete, onDelete, name, id }) {
             {filesize(file.size,)}
           </Typography>
           :
-          <Typography className={classes.Typography} noWrap>
-            {name}
-          </Typography>
+          <Tooltip title={name} placement="bottom">
+            <Typography className={classes.Typography} noWrap>
+              {name}
+            </Typography>
+          </Tooltip>
         }
         {(canDelete) ?
-        <Tooltip title="Delete" placement="bottom">
-
           <IconButton aria-label="delete" onClick={deleteFile}>
             <DeleteIcon />
           </IconButton>
-        </Tooltip>
           :
           null
         }
-        <IconButton aria-label="download">
-          <DownloadIcon fontSize='small'/>
+        <IconButton aria-label="download" onClick={downloadFile}>
+          <DownloadIcon fontSize='small' />
         </IconButton>
       </CardActions>
     </Card>

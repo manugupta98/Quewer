@@ -3,7 +3,7 @@ const questionRouter = express.Router();
 const questionController = require('../controllers/question');
 const QuestionAndAnswerController = require('../controllers/question_answer');
 const multer  = require('multer');
-const upload = multer({ dest: 'tmp/'})
+const upload = multer({ dest: 'tmp/', limits: { fileSize: 10485760 }})
 
 // questionRouter.get('/courses', courseController.course);
 

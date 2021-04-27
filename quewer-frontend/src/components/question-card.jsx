@@ -6,10 +6,11 @@ import QFooter from './q-footer';
 import UpvoteBookmark from './upvote-bookmark';
 import { Link } from 'react-router-dom';
 import store from '../Redux/store';
-import { fetchAnswers, addComment} from '../Redux/actions';
+import { fetchAnswers, addComment } from '../Redux/actions';
 import CommentList from "./CommentsList";
 import Attachment from "./Attachment/attachment";
 import { Grid } from '@material-ui/core';
+import axios from 'axios';
 
 // const useStyles = makeStyles((theme) => ({
 
@@ -25,13 +26,30 @@ class QuestionCard extends React.Component {
     }
 
     addComment = (text) => {
-        let newComment = {comment: text};
+        let newComment = { comment: text };
         console.log(text);
         console.log(newComment);
         let courseId = this.props.course;
         let questionId = this.props.question;
         let answerId = this.props.id;
         store.dispatch(addComment(newComment, courseId, questionId, answerId));
+    }
+
+    downloadAttachment = (id) => {
+        let courseId = this.props.course;
+        let url;
+        if (this.props.answer) {
+            let questionId = this.props.question;
+            let answerId = this.props.id;
+            url = process.env.REACT_APP_SERVER_URL + `/api/courses/${courseId}/questions/${questionId}/answers/${answerId}/attachments/${id}`;
+        }
+        else{
+            let questionId = this.props.id;
+            url = process.env.REACT_APP_SERVER_URL + `/api/courses/${courseId}/questions/${questionId}/attachments/${id}`;
+        }
+
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
     }
 
     render() {
@@ -50,7 +68,7 @@ class QuestionCard extends React.Component {
                                         {this.props.attachments.map(attachment => {
                                             return (
                                                 <Grid item style={{ margin: '10px 10px 10px 0px' }}>
-                                                    <Attachment canDelete={false} name={attachment.name} id={attachment.id} />
+                                                    <Attachment canDelete={false} name={attachment.name} id={attachment.id} onDownload={this.downloadAttachment}/>
                                                 </Grid>
                                             )
                                         })
@@ -68,7 +86,7 @@ class QuestionCard extends React.Component {
                                     {this.props.attachments.map(attachment => {
                                         return (
                                             <Grid item style={{ margin: '10px 10px 10px 0px' }}>
-                                                <Attachment canDelete={false} name={attachment.name} id={attachment.id} />
+                                                <Attachment canDelete={false} name={attachment.name} id={attachment.id} onDownload={this.downloadAttachment} />
                                             </Grid>
                                         )
                                     })
@@ -82,7 +100,7 @@ class QuestionCard extends React.Component {
                 <QFooter username={this.props.postedBy} time={this.props.date}>
                     {this.props.tags.map((tag, index) => <Tag key={index} tag={tag} />)}
                 </QFooter>
-                {(this.props.answer) ? <CommentList comments={this.props.comments} addComment={this.addComment}/> : null}
+                {(this.props.answer) ? <CommentList comments={this.props.comments} addComment={this.addComment} /> : null}
             </div>
         );
     }

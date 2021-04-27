@@ -144,10 +144,8 @@ export function addQuestion(question, courseID, files) {
                 for (let i = 0; i < files.length; i++) {
                     form.append('attachments[]', files[i]);
                 }
-                // form.append('attachments', files);
                 axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${question.id}/attachments`, form).then(response => {
                     Serializer.deserializeAsync("question", response.data).then((newQuestion) => {
-                        console.log(newQuestion);
                         dispatch({
                             type: ADD_QUESTION,
                             payload: newQuestion
@@ -316,7 +314,7 @@ export function bookmarkAnswer(courseID, questionID, answerID, bookmark) {
     }
 }
 
-export function addAnswer(answer, questionID, courseID) {
+export function addAnswer(answer, questionID, courseID, files) {
     return dispatch => {
         startLoading(dispatch);
         console.log(answer);
@@ -324,6 +322,15 @@ export function addAnswer(answer, questionID, courseID) {
         console.log("after", answer);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers`, answer).then(res => {
             console.log("status", res)
+            Serializer.deserializeAsync("answer", res.data).then((answer) => {
+                let form = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    form.append('attachments[]', files[i]);
+                }
+                axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answer.id}/attachments`, form).then((response) => {
+                    
+                })
+            })
             endLoading(dispatch);
         }).catch(err => {
             console.log(err);
