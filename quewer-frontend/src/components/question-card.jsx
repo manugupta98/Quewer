@@ -21,7 +21,11 @@ class QuestionCard extends React.Component {
     handleClick = () => {
         const courseID = store.getState().course.currentCourse.id;
         const questionID = this.props.id;
-        store.dispatch(setCurrentQuestion(questionID));
+        const qUp = [...store.getState().user.user.questionUpvoted];
+        const qDown = [...store.getState().user.user.questionDownvoted];
+        const qBook = [...store.getState().user.user.questionBookmarks];
+        const current = [...store.getState().course.courseList.question];
+        store.dispatch(setCurrentQuestion(questionID, qUp, qDown, qBook));
         store.dispatch(fetchAnswers(courseID, questionID));
     }
 
