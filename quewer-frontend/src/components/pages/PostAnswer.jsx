@@ -73,7 +73,8 @@ export default class PostAnswer extends React.Component {
                 <div style={{marginTop: '10px'}}>
                      {(this.state.submit) ? <Redirect to={`/main`} />  : <Button color='#29348EEE' textColor='white' onClick={this.onSubmit} text='Submit' /> }
                     {
-                        (this.state.anonymous) ? <Button color='#618CFB' textColor='white' text='Use your name' onClick={this.handleAnon} /> : <Button color='#29348EEE' textColor='white' text='Be anonymous' onClick={this.handleAnon} />
+                        (store.getState().user.user.type === "student") ? 
+                        (this.state.anonymous) ? <Button color='#618CFB' textColor='white' text='Use your name' onClick={this.handleAnon} /> : <Button color='#29348EEE' textColor='white' text='Be anonymous' onClick={this.handleAnon} /> : null
                     }
                     {
                         <AttachFilesButton onUpload={this.onUpload}/>

@@ -40,7 +40,7 @@ class MenuBar extends React.Component {
                     <h3 id="upvote" style={{cursor: 'pointer'}} onClick={() => this.handleClick("upvote")}>Upvoted Questions</h3>
                     <h3 id="downvote" style={{cursor: 'pointer'}} onClick={() => this.handleClick("downvote")}>Downvoted Questions</h3>
                 </div>
-                <CardList component={QuestionCard} list={this.props.list} main />
+                <CardList component={QuestionCard} list={this.props.list} linked main />
             </div>
         );
     }

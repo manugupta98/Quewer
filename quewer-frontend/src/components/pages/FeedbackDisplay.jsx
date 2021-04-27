@@ -6,7 +6,6 @@ import Feedback from '../Feedback';
 
 function FeedbackDisplay({match, location}) {
     const list = useSelector(state => state.course.currentCourse.feedbacks);
-    console.log(location);
     return (
         <div>
             {(list.length > 0) ? <h1 style={{margin: '10px 5%'}}>Feedbacks for {location.state.name}</h1> : null}

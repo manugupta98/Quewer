@@ -26,7 +26,6 @@ export default function userReducer(state = appState, action) {
         case COURSE_ENROLL: {
             list = [...state.user.registeredCourses];
             list.push(action.payload);
-            console.log(list);
             return {
                 ...state,
                 user: {

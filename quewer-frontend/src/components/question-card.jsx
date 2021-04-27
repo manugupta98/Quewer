@@ -6,7 +6,7 @@ import QFooter from './q-footer';
 import UpvoteBookmark from './upvote-bookmark';
 import { Link } from 'react-router-dom';
 import store from '../Redux/store';
-import { fetchAnswers, addComment } from '../Redux/actions';
+import { fetchAnswers, addComment, setCurrentQuestion } from '../Redux/actions';
 import CommentList from "./CommentsList";
 import Attachment from "./Attachment/attachment";
 import { Grid } from '@material-ui/core';
@@ -21,13 +21,12 @@ class QuestionCard extends React.Component {
     handleClick = () => {
         const courseID = store.getState().course.currentCourse.id;
         const questionID = this.props.id;
+        store.dispatch(setCurrentQuestion(questionID));
         store.dispatch(fetchAnswers(courseID, questionID));
     }
 
     addComment = (text) => {
         let newComment = { comment: text };
-        console.log(text);
-        console.log(newComment);
         let courseId = this.props.course;
         let questionId = this.props.question;
         let answerId = this.props.id;
@@ -55,10 +54,13 @@ class QuestionCard extends React.Component {
         return (
             <div className='q-card-main' style={this.props.style}>
                 <div className='q-question-upvote'>
-                    <UpvoteBookmark questionID={this.props.id} courseID={store.getState().course.currentCourse.id} upvotes={this.props.upvotes} />
+                    {   (!this.props.answer) ? 
+                        <UpvoteBookmark questionID={this.props.id} courseID={this.props.course} upvotes={this.props.upvotes} /> : 
+                        <UpvoteBookmark questionID={this.props.question} courseID={this.props.course} answerID={this.props.id} upvotes={this.props.upvotes} answer />
+                    }
                     {
                         (this.props.linked) ?
-                            <Link to={{ pathname: `/question/${this.props.id}`, state: { courseID: store.getState().course.currentCourse.id, question: store.getState().course.currentCourse.questions.filter(question => question.id === this.props.id) } }} onClick={this.handleClick} className='q-question' style={{ textDecoration: 'none', color: 'black' }} >
+                            <Link to={{ pathname: `/question/${this.props.id}`, state: { courseID: this.props.course} }} onClick={this.handleClick} className='q-question' style={{ textDecoration: 'none', color: 'black' }} >
                                 <div>
                                     {this.props.title}
                                     <hr />

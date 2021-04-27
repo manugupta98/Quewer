@@ -12,7 +12,6 @@ class HomePage extends React.Component {
     window.location.href = loginUrl;
   }
   render() {
-    console.log(loginUrl);
     return (
       <div className="App FlexCard RowCard">
       <img src={logo} alt="Quewer Logo" id="logoImage"></img>
