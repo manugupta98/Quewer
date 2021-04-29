@@ -1,4 +1,4 @@
-import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, ADD_COMMENT,USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, ADMIN_ADD_COURSE, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION, BOOKMARK_ANSWER, SET_CURRENT_QUESTION } from './constants';
+import { COURSE_UNENROLL, COURSE_ENROLL, COURSE_ADD, COURSE_DELETE, COURSE_SELECT, FETCH_COURSE_LIST, SIDEBAR_TOGGLE, ADD_QUESTION, ADD_COMMENT,USER_INFO, START, END, UPVOTE_QUESTION, BOOKMARK_QUESTION, GET_ANSWERS, FETCH_STUDENTS, FETCH_TEACHERS, ADMIN_ADD_COURSE, UPVOTE_ANSWER, GET_FEEDBACKS, GET_ANNOUNCEMENTS, GET_CHOICE_QUESTION, BOOKMARK_ANSWER, SET_CURRENT_QUESTION, UPVOTE_COUNT_QUESTION, UPVOTE_COUNT_ANSWER } from './constants';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import store from './store';
@@ -220,7 +220,7 @@ export function userInfo() {
     }
 }
 
-export function upvoteQuestion(courseID, questionID, upvote) {
+export function upvoteQuestion(courseID, questionID, upvote, diff) {
     return dispatch => {
         startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/vote?action=${upvote}`).then(res => {
@@ -230,6 +230,11 @@ export function upvoteQuestion(courseID, questionID, upvote) {
                     type: upvote,
                     id: questionID
                 }
+            });
+            dispatch({
+                type: UPVOTE_COUNT_QUESTION,
+                id: questionID,
+                diff: diff
             });
             endLoading(dispatch);
         }).catch(err => {
@@ -242,7 +247,7 @@ export function upvoteQuestion(courseID, questionID, upvote) {
     }
 }
 
-export function upvoteAnswer(courseID, questionID, answerID, upvote) {
+export function upvoteAnswer(courseID, questionID, answerID, upvote, diff) {
     return dispatch => {
         startLoading(dispatch);
         return axios.post(process.env.REACT_APP_SERVER_URL + `/api/courses/${courseID}/questions/${questionID}/answers/${answerID}/vote?action=${upvote}`).then(res => {
@@ -253,6 +258,12 @@ export function upvoteAnswer(courseID, questionID, answerID, upvote) {
                     id: answerID
                 }
             });
+            dispatch({
+                type: UPVOTE_COUNT_ANSWER,
+                diff: diff,
+                id: answerID,
+                quesID: questionID
+            })
             endLoading(dispatch);
         }).catch(err => {
             console.log(err);

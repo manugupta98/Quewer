@@ -23,3 +23,5 @@ export const FETCH_STUDENTS = "students";
 export const ADMIN_ADD_COURSE = "courses";
 export const GET_CHOICE_QUESTION = "main/choicequestions";
 export const SET_CURRENT_QUESTION = "main/setcurrentquestion";
+export const UPVOTE_COUNT_QUESTION = 'upvote/count/question';
+export const UPVOTE_COUNT_ANSWER = 'upvote/count/answer';
