@@ -51,6 +51,7 @@ export default function userReducer(state = appState, action) {
                 list.push(action.payload.id);
                 let list1 = [...state.user.questionUpvoted]
                 list1 = list1.filter(id => id !== action.payload.id);
+                console.log("List of upvoted question", list)
                 return {
                     ...state,
                     user: {
