@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Attachment from './attachment'
+import { saveAs } from 'file-saver';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -40,16 +41,17 @@ const rejectStyle = {
     borderColor: '#ff1744'
 };
 
-function Dropzone({ onChange }) {
-    const [files, setNewFiles] = React.useState([]);
+function Dropzone({ onChange, initialFiles }) {
+    const [files, setNewFiles] = React.useState([...initialFiles]);
+    const [count, setFileCount] = React.useState(0);
 
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
         getFilesFromEvent: event => myCustomFileGetter(event),
-        accept: ['image/png', 'image/jpeg', 'image/webp', 'image/avif', 'image/tiff', 'application/pdf', 'application/zip'],
+        accept: ['image/*', 'application/pdf', 'application/zip'],
     });
 
     async function myCustomFileGetter(event) {
-        const files = acceptedFiles;
+        const newFiles = files;
         const fileList = event.dataTransfer ? event.dataTransfer.files : event.target.files;
 
         for (var i = 0; i < fileList.length; i++) {
@@ -59,12 +61,12 @@ function Dropzone({ onChange }) {
                 value: true
             });
 
-            files.push(file);
+            newFiles.push(file);
         }
 
-        onChange(files);
-        setNewFiles(files);
-        return files;
+        onChange(newFiles);
+        setNewFiles(newFiles);
+        return newFiles;
     }
 
     const style = useMemo(() => ({
@@ -72,14 +74,19 @@ function Dropzone({ onChange }) {
     }));
 
     const onDelete = (file) => {
-        acceptedFiles.splice(acceptedFiles.indexOf(file), 1);
-        setNewFiles(acceptedFiles);
-        onChange(acceptedFiles);
+        files.splice(files.indexOf(file), 1);
+        setNewFiles(files);
+        setFileCount(files.length);
+        onChange(files);
+    }
+
+    const onDownload = (file) => {
+        saveAs(file);
     }
 
     const showFiles = files.map(file => (
         <Grid item>
-            <Attachment file={file} canDelete={true} onDelete={onDelete} />
+            <Attachment file={file} canDelete={true} onDelete={onDelete} onDownload={onDownload}/>
         </Grid>
     ));
 
@@ -99,10 +106,10 @@ function Dropzone({ onChange }) {
     );
 }
 
-export default function AttachFilesButton({ onUpload }) {
+export default function AttachFilesButton({ onUpload, initialFiles}) {
 
     const [open, setOpen] = React.useState(false);
-    let files = [];
+    let files = [...initialFiles];
 
     const onChange = (newFiles) => {
         files = newFiles;
@@ -136,7 +143,7 @@ export default function AttachFilesButton({ onUpload }) {
                 <DialogTitle id="alert-dialog-slide-title">{"Attachments"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        <Dropzone onChange={onChange} />
+                        <Dropzone onChange={onChange} initialFiles={files}/>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

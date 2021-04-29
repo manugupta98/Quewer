@@ -7,6 +7,9 @@ import { addQuestion, showSelectedCourseOnSidebar } from '../../Redux/actions';
 import draftToHtml from 'draftjs-to-html';
 import { Redirect } from 'react-router';
 import AttachFilesButton from '../Attachment/AttachFilesButton';
+import Attachment from '../Attachment/attachment'
+import { Grid } from '@material-ui/core';
+import { saveAs } from 'file-saver';
 
 export default class PostQuestion extends React.Component {
     files = [];
@@ -59,6 +62,16 @@ export default class PostQuestion extends React.Component {
 
     onUpload = (newFiles) => {
         this.files = newFiles;
+        this.forceUpdate();
+    }
+
+    onDelete = (file) => {
+        this.files.splice(this.files.indexOf(file), 1);
+        this.forceUpdate();
+    }
+
+    onDownload = (file) => {
+        saveAs(file);
     }
 
     render() {
@@ -68,16 +81,25 @@ export default class PostQuestion extends React.Component {
                 <textarea className="input" value={this.state.value} onChange={this.handleChange} />
                 <h1>Question Description:</h1>
                 <QuewerEditor ref={this.ref} />
-                <div style={{ marginTop: '10px'}}>
+                <Grid style={{ marginTop: '10px' }} container spacing={2}>
+                    {
+                        this.files.map(file => (
+                            <Grid item>
+                                <Attachment file={file} canDelete={true} onDelete={this.onDelete} onDownload={this.onDownload} />
+                            </Grid>
+                        ))
+                    }
+                </Grid>
+                <div style={{ marginTop: '10px' }}>
                     {
                         (this.state.submit) ? <Redirect to={`/course/${store.getState().course.currentCourse.name}`} /> : <Button onClick={this.onSubmit} color='#29348EEE' textColor='white' text='Submit' />
                     }
                     {
-                        (store.getState().user.user.type === "student") ? 
-                        (this.state.anonymous) ? <Button color='#618CFB' textColor='white' text='Use your name' onClick={this.handleAnon} /> : <Button color='#29348EEE' textColor='white' text='Be anonymous' onClick={this.handleAnon} /> : null
+                        (store.getState().user.user.type === "student") ?
+                            (this.state.anonymous) ? <Button color='#618CFB' textColor='white' text='Use your name' onClick={this.handleAnon} /> : <Button color='#29348EEE' textColor='white' text='Be anonymous' onClick={this.handleAnon} /> : null
                     }
                     {
-                        <AttachFilesButton onUpload={this.onUpload}/>
+                        <AttachFilesButton onUpload={this.onUpload} initialFiles={this.files} />
                     }
                 </div>
             </div>

@@ -30,7 +30,7 @@ export default function Attachment({ file, canDelete, onDelete, name, id, onDown
 
   const downloadFile = (event) => {
     event.preventDefault();
-    onDownload(id);
+    onDownload((typeof file !== 'undefined') ? file : id);
   }
 
   return (
@@ -67,7 +67,7 @@ export default function Attachment({ file, canDelete, onDelete, name, id, onDown
         }
         {(canDelete) ?
           <IconButton aria-label="delete" onClick={deleteFile}>
-            <DeleteIcon />
+            <DeleteIcon fontSize='small' />
           </IconButton>
           :
           null

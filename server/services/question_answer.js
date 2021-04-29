@@ -1,6 +1,7 @@
 const QuestionAndAnswer = require("../models/question_answer").QuestinAndAnswer;
 const User = require("../models/user.js");
 const createError = require('http-errors')
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const Enum = require('enum');
 
@@ -8,102 +9,132 @@ const VOTE = new Enum(['upvote', 'downvote', 'cancel']);
 
 const BOOKMARK = new Enum(['bookmark', 'cancel']);
 
-class QuestionAndAnswerServices{
-    static async vote(user, questionId, action){
+class QuestionAndAnswerServices {
+    static async vote(user, questionId, action) {
         return new Promise((resolve, reject) => {
-            QuestionAndAnswer.findOne({_id: questionId}).then((questionAndAnswer) => {
 
-                // @todo change to mongoose operations for synchronous upvotes
+            let type = "question";
+            QuestionAndAnswer.findOne({ _id: questionId }).then((questionAndAnswer) => {
+                type = questionAndAnswer.__t.toLowerCase();
+            })
 
-                let upvotesList;
-                let downvotesList
+            let userUpdateQuery = {};
+            let questionAndAnswerUpdateQuery = {}
 
-                if (questionAndAnswer.__t === 'Question'){
-                    upvotesList = user.questionUpvoted;
-                    downvotesList = user.questionDownvoted;
-                }
-                else{
-                    upvotesList = user.answerUpvoted;
-                    downvotesList = user.answerDownvoted;
-                }
+            let pullUserDownvoted = {
+                [`${type}Downvoted`]: { $filter: { input: `$${type}Downvoted`, cond: { $ne: [ObjectId(questionId), '$$this'] } } }
+            };
+            let pushUserDownvoted = {
+                [`${type}Downvoted`]: { $setUnion: [`$${type}Downvoted`, [ObjectId(questionId)]] }
+            };
+            let pullUserUpvoted = {
+                [`${type}Upvoted`]: { $filter: { input: `$${type}Upvoted`, cond: { $ne: [ObjectId(questionId), '$$this'] } } }
+            };
+            let pushUserUpvoted = {
+                [`${type}Upvoted`]: { $setUnion: [`$${type}Upvoted`, [ObjectId(questionId)]] }
+            };
 
-                if (action === VOTE.upvote){
-                    if (questionAndAnswer.usersUpvoted.some(item => item == user.id) == false){
-                        questionAndAnswer.usersUpvoted.push(user.id,);
-                        upvotesList.push(questionId,);
-                        questionAndAnswer.upvotes++; 
+            if (action === VOTE.upvote) {
+                userUpdateQuery = {
+                    $set: {
+                        ...pushUserUpvoted,
+                        ...pullUserDownvoted
                     }
-                    if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
-                        questionAndAnswer.usersDownvoted.remove(user.id,);
-                        downvotesList.remove(questionId,);
-                        questionAndAnswer.upvotes--;
+                };
+                questionAndAnswerUpdateQuery = [
+                    {$set: {
+                        usersUpvoted: { $setUnion: ['$usersUpvoted', [user._id]], },
+                        usersDownvoted: { $filter: { input: '$usersDownvoted', cond: { $ne: [user._id, '$$this'] } } }
+                    }},
+                    {$set: {
+                        upvotes: {$subtract: [{$size: '$usersUpvoted'}, {$size: '$usersDownvoted'}]}
+                    }}
+                ];
+            }
+            else if (action === VOTE.downvote) {
+                userUpdateQuery = {
+                    $set: {
+                        ...pullUserUpvoted,
+                        ...pushUserDownvoted
                     }
-                }
-                else if (action === VOTE.downvote){
-                    if (questionAndAnswer.usersUpvoted.some(item => item == user.id)){
-                        questionAndAnswer.usersUpvoted.remove(user.id,);
-                        upvotesList.remove(questionId,);
-                        questionAndAnswer.upvotes--;
+                };
+                questionAndAnswerUpdateQuery = [
+                    {$set: {
+                        usersDownvoted: { $setUnion: ['$usersDownvoted', [user._id]], },
+                        usersUpvoted: { $filter: { input: '$usersUpvoted', cond: { $ne: [user._id, '$$this'] } } }
+                    }},
+                    {$set: {
+                        upvotes: {$subtract: [{$size: '$usersUpvoted'}, {$size: '$usersDownvoted'}]}
+                    }}
+                ];
+            }
+            else if (action === VOTE.cancel) {
+                userUpdateQuery = {
+                    $set: {
+                        ...pullUserUpvoted,
+                        ...pullUserDownvoted
                     }
-                    if (questionAndAnswer.usersDownvoted.some(item => item == user.id) == false){
-                        questionAndAnswer.usersDownvoted.push(user.id,);
-                        downvotesList.push(questionId,);
-                        questionAndAnswer.upvotes--;
-                    }
-                }
-                else if (action === VOTE.cancel){
-                    if (questionAndAnswer.usersUpvoted.some(item => item == user.id)){
-                        questionAndAnswer.usersUpvoted.remove(user.id,);
-                        upvotesList.remove(questionId,);
-                        questionAndAnswer.upvotes--;
-                    }else if (questionAndAnswer.usersDownvoted.some(item => item == user.id)){
-                        questionAndAnswer.usersDownvoted.remove(user.id,);
-                        downvotesList.remove(questionId,);
-                        questionAndAnswer.upvotes++;
-                    }
-                }
-
-                questionAndAnswer.save();
-                user.save();
-                console.log(questionAndAnswer);
-                resolve(questionAndAnswer);
+                };
+                questionAndAnswerUpdateQuery = [
+                    {$set: {
+                        usersDownvoted: { $filter: { input: '$usersDownvoted', cond: { $ne: [user._id, '$this'] } } },
+                        usersUpvoted: { $filter: { input: '$usersUpvoted', cond: { $ne: [user._id, '$$this'] } } }
+                    }},
+                    {$set: {
+                        upvotes: {$subtract: [{$size: '$usersUpvoted'}, {$size: '$usersDownvoted'}]}
+                    }}
+                ];
+            }
+            console.log(questionAndAnswerUpdateQuery);
+            let promises = [
+                User.updateOne({ _id: user.id }, [userUpdateQuery]),
+                QuestionAndAnswer.updateOne({ _id: questionId }, [...questionAndAnswerUpdateQuery])
+            ];
+            Promise.all(promises).then((userRes, questionAndAnswerRes) => {
+                QuestionAndAnswer.findOne({ _id: questionId }).then((questionAndAnswer) => {
+                    resolve(questionAndAnswer);
+                })
             })
         })
     }
 
-    static async bookmark(user, questionId, action){
+    static async bookmark(user, questionId, action) {
         return new Promise((resolve, reject) => {
-            QuestionAndAnswer.findOne({_id: questionId}).then((questionAndAnswer) => {
 
-                // @todo change to mongoose operations for synchronous upvotes
+            let type = "question";
+            QuestionAndAnswer.findOne({ _id: questionId }).then((questionAndAnswer) => {
+                type = questionAndAnswer.__t.toLowerCase();
+            })
 
-                let bookmarksList;
+            let userUpdateQuery = {};
 
-                if (questionAndAnswer.__t === 'Question'){
-                    bookmarksList = user.questionBookmarks;
-                }
-                else{
-                    bookmarksList = user.answerBookmarks;
+            let pullUserBookmark = {
+                [`${type}Bookmarks`]: { $filter: { input: `$${type}Bookmarks`, cond: { $ne: [ObjectId(questionId), '$$this'] } } }
+            };
+            let pushUserBookmark = {
+                [`${type}Bookmarks`]: { $setUnion: [`$${type}Bookmarks`, [ObjectId(questionId)]] }
+            };
 
-                }
-
-                if (action === BOOKMARK.bookmark){
-                    if (bookmarksList.some(item => item == questionId) == false){
-                        bookmarksList.push(questionId,);
+            if (action === BOOKMARK.bookmark) {
+                userUpdateQuery = {
+                    $set: {
+                        ...pushUserBookmark
                     }
-                }
-                else if (action === BOOKMARK.cancel){
-                    if (bookmarksList.some(item => item == questionId)){
-                        bookmarksList.remove(questionId,);
+                };
+            }
+            else if (action === BOOKMARK.cancel) {
+                userUpdateQuery = {
+                    $set: {
+                        ...pullUserBookmark
                     }
-                }
+                };
+            }
 
-                console.log(user);
-                user.save();
-                resolve(user);
+            User.updateOne({ _id: user.id }, [userUpdateQuery]).then(() => {
+                resolve();
             })
         })
     }
 }
 
-module.exports = {QuestionAndAnswerServices, VOTE, BOOKMARK};
+module.exports = { QuestionAndAnswerServices, VOTE, BOOKMARK };

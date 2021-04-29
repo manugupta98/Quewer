@@ -3,7 +3,7 @@ const User = require("../models/user.js");
 const createError = require('http-errors')
 const lodash = require('lodash');
 const UserSerializer = require("../serializers/user.js");
-const { HttpError } = require("http-errors");
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 class CourseServices {
@@ -18,10 +18,8 @@ class CourseServices {
             if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item.id == user.id)) {
                 throw createError.Conflict("Already Registered", { expose: true });
             }
-            user.registeredCourses.push(course.id,);
-            course.registeredUsers.push({ id: user.id, name: user.displayName, photos: user.photos, type: user.type },);
-            user.save();
-            course.save();
+            User.updateOne({_id: user.id}, {$push: {registeredCourses: course.id}});
+            Course.updateOne({_id: course.id}, {$push: {registeredUsers: user.id}});
         });
     }
 
@@ -33,10 +31,8 @@ class CourseServices {
             if (!(user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id))) {
                 throw createError.Conflict("Not Registered", { expose: true });
             }
-            user.registeredCourses.splice(user.registeredCourses.indexOf(course.id,), 1);
-            course.registeredUsers.splice(course.registeredUsers.findIndex(item => item.id === user.id), 1);
-            user.save();
-            course.save();
+            User.updateOne({_id: user.id}, {$pull: {registeredCourses: course.id}});
+            Course.updateOne({_id: course.id}, {$pull: {registeredUsers: user.id}});
         });
     }
     static async addCourse(user, course) {
@@ -44,27 +40,35 @@ class CourseServices {
             throw createError.Forbidden("", { expose: true });
         }
         return new Promise((resolve, reject) => {
-            let promises = course.teachers.map(teacherId => User.findOne({ _id: teacherId, type: 'teacher' }))
-            Promise.all(promises).then((teachers) => {
-                if (teachers.map(teacher => typeof teacher === 'undefined').includes(true)) {
+
+            let teacherIds = course.teachers;
+            User.find({ _id: { $in: teacherIds }, type: 'teacher' }).then((teachers) => {
+                if (teachers.length !== course.teachers.length) {
                     throw createError.NotFound("Teacher not found");
                 }
+
                 course.teachers = [];
                 teachers.map(teacher => {
                     course.teachers.push({ id: teacher.id, name: teacher.displayName, photos: teacher.photos, type: teacher.type, });
                 })
-                Course.create(course).then((course) => {
-                    teachers.map(teacher => {
-                        teacher.registeredCourses.push(course.id,);
-                    })
-                    console.log('Course added successfully :) ');
-                    resolve(course);
-                })
-            })
-        }).catch((err) => {
-            console.log('Course adding unsuccessfully :) ');
-            throw createError.InternalServerError("Course cannot be added successfully", { expose: true });
-        });
+                return Course.create(course)
+            }).then((course) => {
+                User.updateMany({
+                    _id: { $in: teacherIds }
+                },
+                    {
+                        $push: {
+                            registeredCourses: course._id
+                        }
+                    }
+                )
+                console.log('Course added successfully :) ');
+                resolve(course);
+            }).catch((err) => {
+                console.log('Course adding unsuccessfully :) ');
+                throw createError.InternalServerError("Course cannot be added successfully", { expose: true });
+            });
+        })
     }
     static async deleteCourse(user, courseId) {
         if (user.type !== "admin") {
