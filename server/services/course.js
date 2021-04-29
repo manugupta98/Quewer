@@ -18,8 +18,10 @@ class CourseServices {
             if (user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item.id == user.id)) {
                 throw createError.Conflict("Already Registered", { expose: true });
             }
-            User.updateOne({_id: user.id}, {$push: {registeredCourses: course.id}});
-            Course.updateOne({_id: course.id}, {$push: {registeredUsers: user.id}});
+            user.registeredCourses.push(course.id,);
+            course.registeredUsers.push({ id: user.id, name: user.displayName, photos: user.photos, type: user.type },);
+            user.save();
+            course.save();
         });
     }
 
@@ -31,8 +33,10 @@ class CourseServices {
             if (!(user.registeredCourses.some(item => item == course.id) || course.registeredUsers.some(item => item == user.id))) {
                 throw createError.Conflict("Not Registered", { expose: true });
             }
-            User.updateOne({_id: user.id}, {$pull: {registeredCourses: course.id}});
-            Course.updateOne({_id: course.id}, {$pull: {registeredUsers: user.id}});
+            user.registeredCourses.splice(user.registeredCourses.indexOf(course.id,), 1);
+            course.registeredUsers.splice(course.registeredUsers.findIndex(item => item.id === user.id), 1);
+            user.save();
+            course.save();
         });
     }
     static async addCourse(user, course) {
