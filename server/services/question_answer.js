@@ -77,7 +77,7 @@ class QuestionAndAnswerServices {
                 };
                 questionAndAnswerUpdateQuery = [
                     {$set: {
-                        usersDownvoted: { $filter: { input: '$usersDownvoted', cond: { $ne: [user._id, '$this'] } } },
+                        usersDownvoted: { $filter: { input: '$usersDownvoted', cond: { $ne: [user._id, '$$this'] } } },
                         usersUpvoted: { $filter: { input: '$usersUpvoted', cond: { $ne: [user._id, '$$this'] } } }
                     }},
                     {$set: {
